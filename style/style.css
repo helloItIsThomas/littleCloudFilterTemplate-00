@@ -1,0 +1,196 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.moveGUI {
+  background-color: white;
+  position: absolute;
+  margin-bottom: 39px;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+
+#image-container {
+  margin: 0;
+  padding: 0;
+  overflow: 0;
+  display: flex;
+  justify-content: center;
+}
+
+#image-input {
+  position: absolute;
+  box-sizing: border-box;
+  left: 60px;
+  bottom: 9px;
+  margin: 0;
+  padding: 5px;
+  z-index: 10;
+
+  overflow: 0;
+}
+
+#guiBottom {
+  /* opacity: 0; */
+  position: absolute;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: white;
+  font-family: monospace;
+  font-size: large;
+  z-index: 0;
+}
+
+#badFile {
+  opacity: 0;
+  position: absolute;
+  color: white;
+  background-color: red;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: monospace;
+  font-size: large;
+  z-index: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+/* ********* */
+
+.dg.main {
+  width: 95% !important;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  color: blue;
+  box-sizing: border-box !important;
+  background-color: white !important;
+}
+
+.dg.main ul li {
+  background-color: white !important;
+
+  display: flex;
+}
+.dg.main ul li div {
+  background-color: white !important;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  background-color: white !important;
+}
+
+.dg.main ul li {
+  border: none;
+
+  box-sizing: border-box !important;
+  margin: 5px;
+  margin-left: 0;
+  margin-right: 0;
+}
+.folder .dg .title {
+  font-weight: bold;
+
+  color: red;
+  border: none !important;
+}
+
+.folder .dg .cr.number.cr.number.has-slider .slider {
+  border: 1px solid blue !important;
+  border-radius: 10px !important;
+}
+
+.cr.string .c * {
+  width: 15% !important;
+  background-color: white !important;
+  color: blue !important;
+  box-sizing: border-box !important;
+  padding-left: 3px !important;
+  border: 1px solid blue !important;
+}
+
+.cr.number .c div input {
+  /* width: 15% !important; */
+  box-sizing: border-box !important;
+  padding-left: 3px !important;
+  background-color: white !important;
+  color: blue !important;
+  border: 1px solid blue !important;
+}
+
+.folder .dg * {
+  margin: 0px;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  color: blue;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.dg.main ul li {
+  border-left: none !important;
+}
+.dg .c .slider {
+  background-color: white !important;
+  box-sizing: border-box;
+  margin-left: 5px !important;
+  border: 1px solid blue;
+  border-radius: 10px !important;
+}
+.dg .c .slider-fg {
+  /* border-radius: 10px; */
+  border-radius: 10px !important;
+  background-color: blue !important;
+}
+
+.close-bottom {
+  display: none;
+  box-sizing: border-box !important;
+  background: lightgray !important;
+  border: 1px solid blue !important;
+  color: blue;
+}
+
+#closeGui {
+  left: 15px;
+  bottom: 15px;
+  position: absolute;
+  box-sizing: border-box !important;
+  background: lightgray !important;
+  border: 1px solid blue !important;
+  color: blue;
+  z-index: 10;
+}
+
+.dg.main ul .folder {
+  border-top: 1px solid blue !important;
+}
+
+.dg.main ul .cr.boolean {
+  margin-left: -5px;
+}
+
+.dg.main ul .cr.number.has-slider {
+  margin-left: -5px;
+}
+
+.title-class {
+  border-top: 2px solid blue !important;
+  color: red !important;
+  font-weight: bold;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "p5shaderlibdemo-00",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "canvas-record": "^5.1.0",
+    "dat.gui": "^0.7.9",
+    "p5": "^1.9.2",
+    "p5.js-svg": "^1.5.1"
+  }
+}
