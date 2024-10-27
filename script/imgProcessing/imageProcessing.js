@@ -1,4 +1,12 @@
-import { sv } from "./variables.js";
+import { sv } from "../utils/variables.js";
+import {
+  Application,
+  Assets,
+  Texture,
+  ImageSource,
+  Sprite,
+  Rectangle,
+} from "pixi.js";
 
 export function updateCellData() {
   let _imgs = Array.isArray(sv.animUnderImgs)
@@ -9,6 +17,7 @@ export function updateCellData() {
 
   // Preprocess images
   const processedImages = _imgs.map((img) => {
+    // const imgData = ctx.getImageData(0, 0, img.width, img.height).data;
     const processed = img.get();
     processed.filter(p.GRAY);
     return processed;
@@ -37,6 +46,44 @@ export function updateCellData() {
         height: sv.cellH,
       };
     }
+  }
+  sv.pApp.renderer.resize(sv.gridW, sv.gridH);
+
+  const _cCanv = sv.circleGraphics.canvas;
+  const _sCanv = sv.customShapeGraphics.canvas;
+
+  // Create ImageSource from canvases
+  const cImageSource = new ImageSource({ resource: _cCanv });
+  const sImageSource = new ImageSource({ resource: _sCanv });
+  const frame = new Rectangle(
+    0,
+    0,
+    sv.cells[0].width * 1.0,
+    sv.cells[0].height * 1.0
+  );
+  sv.cTex = new Texture({ source: cImageSource, frame: frame });
+  sv.sTex = new Texture({ source: sImageSource, frame: frame });
+
+  for (let n = 0; n < sv.totalCells; n++) {
+    const cell = sv.cells[n];
+    const cSprite = new Sprite(sv.cTex);
+    if (n == 0) {
+      // console.log(cSprite.texture.frame.x);
+    }
+    const sSprite = new Sprite(sv.sTex);
+    const s2Sprite = new Sprite(sv.sTex);
+    cSprite.x = cell.x;
+    cSprite.y = cell.y;
+    sSprite.x = cell.x;
+    sSprite.y = cell.y;
+    s2Sprite.x = cell.x;
+    s2Sprite.y = cell.y;
+    sv.pApp.stage.addChild(cSprite);
+    sv.pApp.stage.addChild(sSprite);
+    sv.pApp.stage.addChild(s2Sprite);
+    sv.circles.push(cSprite);
+    sv.shapes.push(sSprite);
+    sv.shapes2.push(s2Sprite);
   }
 }
 

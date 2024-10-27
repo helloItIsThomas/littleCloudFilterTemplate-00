@@ -1,13 +1,13 @@
 import { sv } from "./variables.js";
-import { updateCellData } from "./imageProcessing.js";
-import { scaleToPreview } from "./draw.js";
+import { updateCellData } from "../imgProcessing/imageProcessing.js";
 import { Recorder } from "canvas-record";
 import { AVC, HEVC } from "media-codecs";
 import {
   createCircleGraphics,
   createCustomShapeGraphics,
-} from "./createShapeGraphics.js";
+} from "../rendering/createShapeGraphics.js";
 import { scaleDims } from "./utils.js";
+import { Application, Assets, Texture, Sprite } from "pixi.js";
 
 document.getElementById("closeGui").addEventListener("click", function () {
   const guiElement = document.querySelector(".moveGUI");
@@ -42,7 +42,7 @@ export function recalculateGrid() {
   sv.cellH = sv.gridH / sv.rowCount;
   if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
   if (sv.circleGraphics) sv.circleGraphics.remove();
-  sv.customShapeGraphics = createCustomShapeGraphics(sv.cellW);
+  sv.customShapeGraphics = createCustomShapeGraphics(sv.cellW / 2);
   sv.circleGraphics = createCircleGraphics(sv.cellW);
 }
 
@@ -54,31 +54,28 @@ export function imageLoaded(p) {
   recordingScaleText.style.left = "300px";
 
   const imgs = sv.animUnderImgs;
+
   if (imgs.length > 1) {
-    imgs.forEach((img) => {
-      img = scaleDims(img);
-    });
+    console.log("larger than 1");
+    // imgs.forEach((img) => {
+    // img = scaleDims(img);
+    // });
     sv.gridW = imgs[0].width;
     sv.gridH = imgs[0].height;
   } else {
-    imgs[0] = scaleDims(imgs[0]);
+    console.log("smaller than 1");
+    // imgs[0] = scaleDims(imgs[0]);
     sv.gridW = imgs[0].width;
     sv.gridH = imgs[0].height;
   }
-  if (sv.printBuffer) sv.printBuffer.remove();
-  if (sv.previewBuffer) sv.previewBuffer.remove();
-  sv.printBuffer = p.createGraphics(sv.gridW, sv.gridH);
-  sv.previewBuffer = p.createGraphics(p.windowWidth, p.windowHeight);
-  recalculateGrid();
 
+  recalculateGrid();
   updateCellData();
 
   sv.customShapeGraphics = createCustomShapeGraphics(sv.cellW);
   sv.circleGraphics = createCircleGraphics(sv.cellW);
 
-  scaleToPreview(p);
-
-  const context = sv.printBuffer.drawingContext;
+  const context = sv.p.drawingContext;
   context.imageSmoothingEnabled = true;
   sv.canvasRecorder = new Recorder(context, {
     name: "canvas-record-example",

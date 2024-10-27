@@ -10,9 +10,8 @@ body {
 }
 
 .moveGUI {
-  background-color: white;
   position: absolute;
-  margin-bottom: 39px;
+  margin-bottom: 50px;
   left: 0;
   width: 100%;
   z-index: 1;
@@ -32,37 +31,22 @@ body {
   position: absolute;
   box-sizing: border-box;
   left: 60px;
-  bottom: 9px;
+  bottom: 15px;
   margin: 0;
   padding: 5px;
-  z-index: 10;
 
   overflow: 0;
-}
-
-#guiBottom {
-  /* opacity: 0; */
-  position: absolute;
-  color: white;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-  background-color: white;
-  font-family: monospace;
-  font-size: large;
-  z-index: 0;
 }
 
 #badFile {
   opacity: 0;
   position: absolute;
   color: white;
-  background-color: red;
   padding: 10px;
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  background-color: red;
   font-family: monospace;
   font-size: large;
   z-index: 0;
@@ -72,6 +56,9 @@ body {
 /* ********* */
 
 .dg.main {
+  /* Display none here for debugging filer yo */
+  display: none !important;
+
   width: 95% !important;
   text-shadow: none !important;
   text-decoration: none !important;
@@ -168,13 +155,12 @@ body {
 
 #closeGui {
   left: 15px;
-  bottom: 15px;
+  bottom: 21px;
   position: absolute;
   box-sizing: border-box !important;
   background: lightgray !important;
   border: 1px solid blue !important;
   color: blue;
-  z-index: 10;
 }
 
 .dg.main ul .folder {

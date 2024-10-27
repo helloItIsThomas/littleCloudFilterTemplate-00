@@ -1,23 +1,24 @@
-import { sv } from "./variables.js";
+import { sv } from "../utils/variables.js";
 
 export function createCircleGraphics(size) {
   const pg = sv.p.createGraphics(size, size);
 
   pg.noStroke();
-  if (sv.hasColor) pg.fill("#0000ff");
-  else pg.fill(0);
+  pg.fill(0);
 
   pg.clear();
+
+  // pg.noFill();
+  // pg.stroke("#00ff00");
+  // pg.rect(0, 0, size, size);
 
   // Draw the circle centered in the graphics buffer
   pg.ellipseMode(sv.p.CENTER);
   pg.translate(size / 2, size / 2);
 
-  // The circle should fit within the concave part of the hourglass shape.
-  // We'll use a size that matches the inner circle of the hourglass shape.
-  const circleDiameter = size * 0.4; // Adjust the scale as needed
+  const circleDiameter = size * 0.45; // Adjust the scale as needed
 
-  pg.ellipse(0, 0, circleDiameter, circleDiameter);
+  pg.ellipse(-size * 0.25, -size * 0.25, circleDiameter, circleDiameter);
 
   return pg;
 }
@@ -26,8 +27,7 @@ export function createCustomShapeGraphics(size) {
   const pg = sv.p.createGraphics(size, size);
 
   pg.noStroke();
-  if (sv.hasColor) pg.fill("#0000ff");
-  else pg.fill(0);
+  pg.fill(0);
 
   pg.clear();
 

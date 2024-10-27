@@ -1,7 +1,7 @@
 import * as dat from "dat.gui";
 import { recalculateGrid } from "./eventHandlers";
 import { startRecording, stopRecording } from "./recording";
-import { updateCellData } from "./imageProcessing";
+import { updateCellData } from "../imgProcessing/imageProcessing";
 import { createInput } from "./input";
 
 export const gui = new dat.GUI({
@@ -13,6 +13,7 @@ var customContainer = document
   .appendChild(gui.domElement);
 
 export const sv = {
+  pApp: null,
   canvasRecorder: null,
   stepPromise: null,
   p: null,
@@ -29,14 +30,11 @@ export const sv = {
   cells: [],
   animUnderImgs: [],
   debugImgToggle: 0,
-  overlayImages: [],
-  blueOverlayImages: [],
-  numOverlayImages: 0,
   slidingPieceImgs: [],
   manualScale: 1.0,
   speed: 0.02,
   params: {
-    showSingleImgMode: true,
+    showSingleImgMode: false,
     contrast: 5.0,
     clipOutliers: false,
     scaleDynamically: true,
@@ -44,7 +42,11 @@ export const sv = {
   },
   customShapeGraphics: null,
   circleGraphics: null,
-  hasColor: true,
+  cTex: null,
+  sTex: null,
+  circles: [],
+  shapes: [],
+  shapes2: [],
 
   rowCount: null,
   colCount: null,
@@ -54,11 +56,8 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "70",
-  noiseOffset: 0.0,
-
-  previewBuffer: null,
-  printBuffer: null,
+  gridResolution: "60",
+  noiseOffset: 3.4,
 
   testSVG: null,
   testImages: null,
@@ -66,6 +65,7 @@ export const sv = {
   isRecording: false,
   takeScreenshot: false,
   tempUploadFiles: [],
+  // multiImgMode: false,
 
   // HTML elements
   inputElement: null,
@@ -85,7 +85,7 @@ recordingController.onChange((value) => {
 });
 screenshotController.onChange((value) => {
   if (value) {
-    sv.printBuffer.save();
+    sv.p.save();
     screenshotController.setValue(false);
   }
 });
@@ -98,11 +98,6 @@ const gridResController = general
 general.add(sv, "manualScale", 0.1, 1.0).name("Manual Scale");
 general.add(sv, "speed", 0.0, 0.1).name("Speed");
 general.add(sv, "noiseOffset", 0, 10, 0.1).name("Noise Offset");
-const colorController = general.add(sv, "hasColor").name("Color");
-
-colorController.onChange((value) => {
-  recalculateGrid();
-});
 
 gridResController.onChange((value) => {
   if (value < 140) sv.gridResolution = value;
