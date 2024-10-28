@@ -45,7 +45,7 @@ export default function (p) {
     await loadImagesWithP5(p);
     console.log("all images have loaded");
 
-    sv.p.noLoop();
+    // sv.p.noLoop();
 
     sv.imgDiv = p.createDiv();
     sv.imgDiv.id("image-container");

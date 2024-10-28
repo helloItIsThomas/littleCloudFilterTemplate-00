@@ -3,10 +3,9 @@ import { Sprite, Rectangle, Texture } from "pixi.js";
 
 export function updateGraphicsPositions() {
   for (let c of sv.circles) {
-    console.log(c);
-    // console.log(c.texture.frame);
-    // c.texture.frame.width = sv.cellW * 0.5;
-    // c.texture.frame;
+    c.sprite.x =
+      c.originalX +
+      sv.p.sin(c.i * 0.05 + sv.p.frameCount * 0.05) * c.sprite.width * 0.5;
   }
   for (let s of sv.shapes) {
     s.x = 10000;

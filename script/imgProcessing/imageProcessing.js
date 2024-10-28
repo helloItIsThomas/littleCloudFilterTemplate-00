@@ -6,6 +6,8 @@ import {
   ImageSource,
   Sprite,
   Rectangle,
+  Graphics,
+  Container,
 } from "pixi.js";
 
 export function updateCellData() {
@@ -55,35 +57,48 @@ export function updateCellData() {
   // Create ImageSource from canvases
   const cImageSource = new ImageSource({ resource: _cCanv });
   const sImageSource = new ImageSource({ resource: _sCanv });
-  const frame = new Rectangle(
-    0,
-    0,
-    sv.cells[0].width * 1.0,
-    sv.cells[0].height * 1.0
-  );
-  sv.cTex = new Texture({ source: cImageSource, frame: frame });
-  sv.sTex = new Texture({ source: sImageSource, frame: frame });
+  sv.cTex = new Texture({ source: cImageSource });
+  sv.sTex = new Texture({ source: sImageSource });
+
+  const debugFrame = new Graphics();
+  debugFrame.rect(0, 0, 500, 500);
+  debugFrame.fill(0xff0000);
+  sv.pApp.stage.addChild(debugFrame);
+
+  debugFrame.x = sv.pApp.screen.width * 0.5;
+  debugFrame.y = sv.pApp.screen.height * 0.5;
 
   for (let n = 0; n < sv.totalCells; n++) {
     const cell = sv.cells[n];
+    const mask = new Graphics()
+      .rect(cell.x, cell.y, cell.width, cell.height)
+      .fill(0xff0000);
+    const maskContainer = new Container();
+    maskContainer.mask = mask;
+    maskContainer.addChild(mask);
+    sv.pApp.stage.addChild(maskContainer);
     const cSprite = new Sprite(sv.cTex);
-    if (n == 0) {
-      // console.log(cSprite.texture.frame.x);
-    }
-    const sSprite = new Sprite(sv.sTex);
-    const s2Sprite = new Sprite(sv.sTex);
+    maskContainer.addChild(cSprite);
     cSprite.x = cell.x;
     cSprite.y = cell.y;
-    sSprite.x = cell.x;
-    sSprite.y = cell.y;
-    s2Sprite.x = cell.x;
-    s2Sprite.y = cell.y;
-    sv.pApp.stage.addChild(cSprite);
-    sv.pApp.stage.addChild(sSprite);
-    sv.pApp.stage.addChild(s2Sprite);
-    sv.circles.push(cSprite);
-    sv.shapes.push(sSprite);
-    sv.shapes2.push(s2Sprite);
+    sv.circles.push({
+      i: n,
+      sprite: cSprite,
+      originalX: cell.x,
+      originalY: cell.y,
+    });
+
+    // const sSprite = new Sprite(sv.sTex);
+    // const s2Sprite = new Sprite(sv.sTex);
+    // sSprite.x = cell.x;
+    // sSprite.y = cell.y;
+    // s2Sprite.x = cell.x;
+    // s2Sprite.y = cell.y;
+    // sv.pApp.stage.addChild(cSprite);
+    // sv.pApp.stage.addChild(sSprite);
+    // sv.pApp.stage.addChild(s2Sprite);
+    // sv.shapes.push(sSprite);
+    // sv.shapes2.push(s2Sprite);
   }
 }
 
