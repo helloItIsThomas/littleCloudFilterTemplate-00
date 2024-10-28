@@ -1,6 +1,7 @@
 import { sv } from "./variables";
 
 export function drawIcon() {
+  console.log("• running drawIcon •");
   const p = sv.p;
   const x = p.windowWidth * 0.5;
   const y = p.windowHeight * 0.5;

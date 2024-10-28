@@ -17,6 +17,7 @@ document.getElementById("closeGui").addEventListener("click", function () {
 });
 
 export function handleMultFiles(p, totalUploadNum) {
+  console.log("• Running handleMultFiles() •");
   sv.animUnderImgs = [];
 
   sv.tempUploadFiles.forEach((_file) => {
@@ -35,6 +36,7 @@ export function handleMultFiles(p, totalUploadNum) {
 }
 
 export function recalculateGrid() {
+  console.log("• Running recalculateGrid() •");
   sv.colCount = sv.gridResolution;
   sv.rowCount = Math.floor((sv.gridH / sv.gridW) * sv.gridResolution);
   sv.totalCells = sv.rowCount * sv.colCount;
@@ -47,6 +49,7 @@ export function recalculateGrid() {
 }
 
 export function imageLoaded(p) {
+  console.log("• Running imageLoaded() •");
   const recordingScaleText = document.createElement("div");
   recordingScaleText.style.position = "absolute";
   recordingScaleText.style.bottom = "30px";

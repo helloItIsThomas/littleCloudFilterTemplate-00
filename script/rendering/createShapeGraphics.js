@@ -8,11 +8,6 @@ export function createCircleGraphics(size) {
 
   pg.clear();
 
-  // pg.noFill();
-  // pg.stroke("#00ff00");
-  // pg.rect(0, 0, size, size);
-
-  // Draw the circle centered in the graphics buffer
   pg.ellipseMode(sv.p.CENTER);
   pg.translate(size / 2, size / 2);
 

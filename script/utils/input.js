@@ -2,6 +2,7 @@ import { sv } from "./variables.js";
 import { handleMultFiles } from "./eventHandlers.js";
 
 export function createInput() {
+  console.log("• Running createInput() •");
   if (sv.inputElement) sv.inputElement.remove();
   let canUploadMultiple = false;
   if (!sv.params.showSingleImgMode) canUploadMultiple = true;

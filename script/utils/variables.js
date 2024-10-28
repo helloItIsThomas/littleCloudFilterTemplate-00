@@ -14,11 +14,12 @@ var customContainer = document
 
 export const sv = {
   pApp: null,
+  ticker: null,
+  frameCount: null,
   canvasRecorder: null,
   stepPromise: null,
   p: null,
   setupDone: false,
-  frameRate: 60,
   clock: null,
   constantClock: null,
   clockState: "forward",
@@ -56,7 +57,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "30",
+  gridResolution: "80",
   noiseOffset: 3.4,
 
   testSVG: null,

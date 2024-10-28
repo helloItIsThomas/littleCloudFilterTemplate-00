@@ -1,4 +1,5 @@
 export function scaleDims(_img) {
+  console.log("• running scaleDims •");
   const maxRes = 1000;
   const maxPixels = maxRes * maxRes;
   const width = _img.width;

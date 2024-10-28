@@ -3,6 +3,7 @@ import { map2 } from "../utils/easing.js";
 import { Application, Assets, Texture, Sprite } from "pixi.js";
 
 export function redrawSlidingTiles() {
+  console.log("• running redrawSlidingTiles() •");
   let debugClock = sv.p.sin(sv.p.millis() * 0.001);
   let thisClock = debugClock;
 
@@ -47,8 +48,6 @@ export function redrawSlidingTiles() {
           y: (sv.cellH - shapeSize) / 2,
         },
       ];
-
-      let originPos = cell.x;
 
       drawShapeInCell(
         sv.circles[n],

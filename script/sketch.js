@@ -1,5 +1,5 @@
 import "p5.js-svg";
-import { Application, Assets, Sprite } from "pixi.js";
+import { Application, Ticker, Assets, Sprite } from "pixi.js";
 
 import { sv } from "./utils/variables.js";
 import { handleMultFiles, imageLoaded } from "./utils/eventHandlers.js";
@@ -13,6 +13,9 @@ await sv.pApp.init({
   background: "#1099bb",
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
+
+sv.ticker = new Ticker();
+sv.ticker.stop();
 
 async function loadImagesWithP5(p) {
   const loadImage = (path) => {
@@ -50,18 +53,20 @@ export default function (p) {
     sv.imgDiv = p.createDiv();
     sv.imgDiv.id("image-container");
     p.createCanvas(p.windowWidth, p.windowHeight).parent(sv.imgDiv);
-    p.frameRate(sv.frameRate);
 
     imageLoaded(p);
 
     createInput();
+
+    sv.ticker.start();
   }
 
   p.setup = function () {
     mySetup();
   };
 
-  p.draw = function () {
+  sv.ticker.add((deltaTime) => {
+    sv.stats.begin();
     sv.constantClock += sv.speed;
 
     if (sv.setupDone) {
@@ -73,5 +78,6 @@ export default function (p) {
       draw();
       if (sv.isRecording) drawIcon();
     }
-  };
+    sv.stats.end();
+  });
 }
