@@ -8,6 +8,7 @@ import {
   Rectangle,
   Graphics,
   Container,
+  RenderTexture,
 } from "pixi.js";
 
 export function updateCellData() {
@@ -15,12 +16,12 @@ export function updateCellData() {
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs
     : [sv.animUnderImgs]; // Ensure _imgs is always an array
+
   const p = sv.p;
   sv.cells = []; // Clear and redefine the array
 
   // Preprocess images
   const processedImages = _imgs.map((img) => {
-    // const imgData = ctx.getImageData(0, 0, img.width, img.height).data;
     const processed = img.get();
     processed.filter(p.GRAY);
     return processed;
@@ -42,7 +43,7 @@ export function updateCellData() {
       sv.cells[gridIndex++] = {
         gridIndex,
         currentImgIndex: 0,
-        brightness: brightnessValues, // Array of brightness values for all images or single value if only one image
+        brightness: brightnessValues,
         x: xPos,
         y: yPos,
         width: sv.cellW,
@@ -50,6 +51,7 @@ export function updateCellData() {
       };
     }
   }
+
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
 
   const _cCanv = sv.circleGraphics.canvas;
@@ -61,46 +63,27 @@ export function updateCellData() {
   sv.cTex = new Texture({ source: cImageSource });
   sv.sTex = new Texture({ source: sImageSource });
 
-  const debugFrame = new Graphics();
-  debugFrame.rect(0, 0, 500, 500);
-  debugFrame.fill(0xff0000);
-  sv.pApp.stage.addChild(debugFrame);
-
-  debugFrame.x = sv.pApp.screen.width * 0.5;
-  debugFrame.y = sv.pApp.screen.height * 0.5;
-
   console.log("totalCells: " + sv.totalCells);
+
   for (let n = 0; n < sv.totalCells; n++) {
     const cell = sv.cells[n];
-    const mask = new Graphics()
-      .rect(cell.x, cell.y, cell.width, cell.height)
-      .fill(0xff0000);
-    const maskContainer = new Container();
-    maskContainer.mask = mask;
-    maskContainer.addChild(mask);
-    sv.pApp.stage.addChild(maskContainer);
-    const cSprite = new Sprite(sv.cTex);
-    maskContainer.addChild(cSprite);
+
+    // Create a texture frame for the cell to avoid using masks
+    const cellFrame = new Rectangle(cell.x, cell.y, cell.width, cell.height);
+    const cellTexture = new Texture(sv.cTex.baseTexture, cellFrame);
+
+    const cSprite = new Sprite(cellTexture);
     cSprite.x = cell.x;
     cSprite.y = cell.y;
+
+    sv.pApp.stage.addChild(cSprite);
+
     sv.circles.push({
       i: n,
       sprite: cSprite,
       originalX: cell.x,
       originalY: cell.y,
     });
-
-    // const sSprite = new Sprite(sv.sTex);
-    // const s2Sprite = new Sprite(sv.sTex);
-    // sSprite.x = cell.x;
-    // sSprite.y = cell.y;
-    // s2Sprite.x = cell.x;
-    // s2Sprite.y = cell.y;
-    // sv.pApp.stage.addChild(cSprite);
-    // sv.pApp.stage.addChild(sSprite);
-    // sv.pApp.stage.addChild(s2Sprite);
-    // sv.shapes.push(sSprite);
-    // sv.shapes2.push(s2Sprite);
   }
 }
 

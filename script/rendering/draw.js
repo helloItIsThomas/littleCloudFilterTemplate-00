@@ -27,13 +27,12 @@ function createStatsGUI() {
 }
 
 export function draw() {
-  console.log("running (my) draw");
-  // sv.frameCount = sv.ticker.lastTime * 0.05;
-  // sv.clock = sv.frameCount * sv.speed;
+  sv.frameCount = sv.ticker.lastTime * 0.05;
+  sv.clock = sv.frameCount * sv.speed;
 
   // redrawSlidingTiles();
   // if (!sv.params.showSingleImgMode) {
   // redrawSlidingTiles();
   // } else redrawThisImage();
-  // updateGraphicsPositions();
+  updateGraphicsPositions();
 }

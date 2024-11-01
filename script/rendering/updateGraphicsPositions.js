@@ -2,7 +2,7 @@ import { sv } from "../utils/variables.js";
 import { Sprite, Rectangle, Texture } from "pixi.js";
 
 export function updateGraphicsPositions() {
-  console.log(" • running updateGraphicsPositions • ");
+  console.log(sv.frameCount);
   for (let c of sv.circles) {
     const noisyValue = sv.p.noise(c.i);
     c.sprite.x =
