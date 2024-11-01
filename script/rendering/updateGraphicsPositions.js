@@ -2,6 +2,10 @@ import { sv } from "../utils/variables.js";
 import { Sprite, Rectangle, Texture } from "pixi.js";
 
 export function updateGraphicsPositions() {
+  sv.spritesheet.gotoAndStop(
+    sv.p.abs(sv.p.map(sv.p.mouseX, 0, window.innerWidth, 0, 100))
+  );
+
   for (let c of sv.circles) {
     const noisyValue = sv.p.noise(c.i);
     c.sprite.x =
