@@ -15,9 +15,11 @@ await sv.pApp.init({
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
 
 sv.ticker = new Ticker();
+sv.ticker.autoStart = false;
 sv.ticker.stop();
 
 async function loadImagesWithP5(p) {
+  console.log("running loadImagesWithP5");
   const loadImage = (path) => {
     return new Promise((resolve, reject) => {
       p.loadImage(
@@ -40,15 +42,17 @@ async function loadImagesWithP5(p) {
 }
 
 export default function (p) {
+  console.log("running main sketch");
   sv.p = p;
 
   sv.stepPromise = Promise.resolve();
 
   async function mySetup() {
+    console.log("running mySetup");
     await loadImagesWithP5(p);
     console.log("all images have loaded");
 
-    // sv.p.noLoop();
+    sv.p.noLoop();
 
     sv.imgDiv = p.createDiv();
     sv.imgDiv.id("image-container");

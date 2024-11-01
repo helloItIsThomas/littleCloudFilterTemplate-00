@@ -57,7 +57,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "80",
+  gridResolution: "120",
   noiseOffset: 3.4,
 
   testSVG: null,
@@ -124,6 +124,7 @@ let contrastController,
 
 // Function to add advanced parameters
 function addAdvancedParameters() {
+  console.log(" • running addAdvancedParameters • ");
   contrastController = gui.add(sv.params, "contrast", 0, 10).name("Contrast");
 
   clipController = gui.add(sv.params, "clipOutliers").name("Clip Outliers");
@@ -139,6 +140,7 @@ function addAdvancedParameters() {
 
 // Function to remove advanced parameters
 function removeAdvancedParameters() {
+  console.log(" • running removeAdvancedParameters • ");
   if (contrastController) gui.remove(contrastController);
   if (clipController) gui.remove(clipController);
   if (scaleDynamicController) gui.remove(scaleDynamicController);
@@ -151,6 +153,7 @@ function removeAdvancedParameters() {
 
 // Function to dynamically update the visibility of parameters
 function updateVisibility() {
+  console.log(" • running updateVisibility • ");
   createInput();
   removeAdvancedParameters(); // Always remove first to avoid duplicates
   if (sv.params.showSingleImgMode) {

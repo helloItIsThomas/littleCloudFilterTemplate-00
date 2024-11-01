@@ -1,6 +1,7 @@
 import { sv } from "../utils/variables.js";
 
 export function createCircleGraphics(size) {
+  console.log("running createCircleGraphics");
   const pg = sv.p.createGraphics(size, size);
 
   pg.noStroke();
@@ -19,6 +20,7 @@ export function createCircleGraphics(size) {
 }
 
 export function createCustomShapeGraphics(size) {
+  console.log("running createCustomShapeGraphics");
   const pg = sv.p.createGraphics(size, size);
 
   pg.noStroke();

@@ -75,6 +75,7 @@ function drawShapeInCell(
   cellWidth,
   cellHeight
 ) {
+  console.log(" • running drawShapeInCell • ");
   // Compute the shape's position on the canvas
   const shapeCanvasX = cellX + shapeX;
   const shapeCanvasY = cellY + shapeY;

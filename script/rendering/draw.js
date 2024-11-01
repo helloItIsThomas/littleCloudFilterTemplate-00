@@ -27,14 +27,13 @@ function createStatsGUI() {
 }
 
 export function draw() {
-  sv.frameCount = sv.ticker.lastTime * 0.05;
-  sv.clock = sv.frameCount * sv.speed;
-  // sv.p.clear();
-  // sv.p.background("#fff");
+  console.log("running (my) draw");
+  // sv.frameCount = sv.ticker.lastTime * 0.05;
+  // sv.clock = sv.frameCount * sv.speed;
 
   // redrawSlidingTiles();
   // if (!sv.params.showSingleImgMode) {
   // redrawSlidingTiles();
   // } else redrawThisImage();
-  updateGraphicsPositions();
+  // updateGraphicsPositions();
 }

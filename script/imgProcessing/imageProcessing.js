@@ -11,6 +11,7 @@ import {
 } from "pixi.js";
 
 export function updateCellData() {
+  console.log("running updateCellData");
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs
     : [sv.animUnderImgs]; // Ensure _imgs is always an array
@@ -68,6 +69,7 @@ export function updateCellData() {
   debugFrame.x = sv.pApp.screen.width * 0.5;
   debugFrame.y = sv.pApp.screen.height * 0.5;
 
+  console.log("totalCells: " + sv.totalCells);
   for (let n = 0; n < sv.totalCells; n++) {
     const cell = sv.cells[n];
     const mask = new Graphics()
@@ -103,6 +105,7 @@ export function updateCellData() {
 }
 
 function calculateAverageBrightness(p, imgSection) {
+  console.log("running calculateAverageBrightness");
   imgSection.loadPixels();
   let sumBrightness = 0;
   for (let i = 0; i < imgSection.pixels.length; i += 4) {
