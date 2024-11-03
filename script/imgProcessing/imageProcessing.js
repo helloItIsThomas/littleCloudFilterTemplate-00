@@ -75,7 +75,8 @@ export function updateCellData() {
     const cSprite = new Sprite(cellTexture);
     cSprite.x = cell.x;
     cSprite.y = cell.y;
-    // sv.pApp.stage.addChild(cSprite);
+
+    sv.pApp.stage.addChild(cSprite);
 
     sv.circles.push({
       i: n,

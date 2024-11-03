@@ -33,28 +33,28 @@ sv.ticker.stop();
 async function loadImagesWithP5(p) {
   console.log("running loadImagesWithP5");
 
-  const sheet = await Assets.load("/assets/spritesheet/spritesheet.json");
-  if (!sheet) {
-    console.error("Failed to load spritesheet.");
-  } else console.log("SUCCESS SPRITESHEET LOAD");
+  // const sheet = await Assets.load("/assets/spritesheet/spritesheet.json");
+  // if (!sheet) {
+  // console.error("Failed to load spritesheet.");
+  // } else console.log("SUCCESS SPRITESHEET LOAD");
 
   // START of AnimatedSprite Approach
-  let i;
-  const time = 10;
-  for (i = 0; i < 150; i++) {
-    const framekey = `frame_${i.toString().padStart(5, "0")}.png`;
-    const texture = Texture.from(framekey);
-    sv.sSheetTextures.push({ texture, time });
-  }
+  // let i;
+  // const time = 10;
+  // for (i = 0; i < 150; i++) {
+  // const framekey = `frame_${i.toString().padStart(5, "0")}.png`;
+  // const texture = Texture.from(framekey);
+  // sv.sSheetTextures.push({ texture, time });
+  // }
 
-  sv.spritesheet = new AnimatedSprite(sv.sSheetTextures);
-  sv.spritesheet.animationSpeed = 1.0;
-  sv.spritesheet.anchor.set(0.5);
-  sv.spritesheet.x = sv.pApp.screen.width * 0.5;
-  sv.spritesheet.y = sv.pApp.screen.height * 0.5;
-  sv.spritesheet.play();
-  sv.pApp.stage.addChild(sv.spritesheet);
-  // END of AnimatedSprite Approachs
+  // sv.spritesheet = new AnimatedSprite(sv.sSheetTextures);
+  // sv.spritesheet.animationSpeed = 1.0;
+  // sv.spritesheet.anchor.set(0.5);
+  // sv.spritesheet.x = sv.pApp.screen.width * 0.5;
+  // sv.spritesheet.y = sv.pApp.screen.height * 0.5;
+  // sv.spritesheet.play();
+  // sv.pApp.stage.addChild(sv.spritesheet);
+  // END of AnimatedSprite Approach
 
   const loadImage = (path) => {
     return new Promise((resolve, reject) => {
