@@ -11,8 +11,8 @@ export function redrawSlidingTiles() {
 
   for (let n = 0; n < sv.totalCells; n++) {
     const cell = sv.cells[n];
-    sv.shapes[n].x = 10000;
-    sv.shapes2[n].x = 10000;
+    // sv.shapes[n].x = 10000;
+    // sv.shapes2[n].x = 10000;
 
     const noisyValue = sv.p.noise(n);
 
