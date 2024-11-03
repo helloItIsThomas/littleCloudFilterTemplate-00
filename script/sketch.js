@@ -54,7 +54,7 @@ async function loadImagesWithP5(p) {
   sv.spritesheet.y = sv.pApp.screen.height * 0.5;
   sv.spritesheet.play();
   sv.pApp.stage.addChild(sv.spritesheet);
-  // END of AnimatedSprite Approach
+  // END of AnimatedSprite Approachs
 
   const loadImage = (path) => {
     return new Promise((resolve, reject) => {
