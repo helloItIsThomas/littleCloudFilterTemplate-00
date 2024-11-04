@@ -1,17 +1,6 @@
 import { sv } from "../utils/variables.js";
 import { createAddSprites } from "./createAddSprites.js";
 import { calculateAverageBrightnessP5 } from "../utils/calculateAverageBrightnessP5.js";
-import {
-  Application,
-  Assets,
-  Texture,
-  ImageSource,
-  Sprite,
-  Rectangle,
-  Graphics,
-  Container,
-  RenderTexture,
-} from "pixi.js";
 import { shaderRendering } from "../rendering/shaderRendering.js";
 
 export function updateCellData() {

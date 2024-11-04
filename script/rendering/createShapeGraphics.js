@@ -20,7 +20,7 @@ export function createCircleGraphics(size) {
 }
 
 export function createShapeGraphic(size) {
-  console.log("running createShapeGraphic");
+  console.log("running createCustomShapeGraphics");
   const pg = sv.p.createGraphics(size, size);
 
   pg.noStroke();

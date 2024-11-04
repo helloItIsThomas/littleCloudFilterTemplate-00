@@ -32,6 +32,14 @@ sv.ticker = new Ticker();
 sv.ticker.autoStart = false;
 sv.ticker.stop();
 
+async function loadImagesWithPixi() {
+  // Load the background image asynchronously
+  sv.spinnyBG = await Assets.load(
+    "https://pixijs.com/assets/bg_scene_rotate.jpg"
+  );
+  console.log("Image loaded and sprite added to stage");
+}
+
 async function loadImagesWithP5(p) {
   console.log("running loadImagesWithP5");
 
@@ -65,6 +73,8 @@ export default function (p) {
   async function mySetup() {
     console.log("running mySetup");
     await loadImagesWithP5(p);
+    await loadImagesWithPixi();
+    // const spinnyBG = Assets.load("https://pixijs.com/assets/bg_scene_rotate.jpg");
     console.log("all images have loaded");
 
     sv.imgDiv = p.createDiv();

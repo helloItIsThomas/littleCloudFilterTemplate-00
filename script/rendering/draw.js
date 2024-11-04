@@ -1,6 +1,5 @@
 import { sv } from "../utils/variables.js";
-import { redrawSlidingTiles } from "./redrawSlidingTiles.js";
-import { updateGraphicsPositions } from "./updateGraphicsPositions.js";
+
 import Stats from "stats.js";
 
 sv.stats;
@@ -9,7 +8,6 @@ createStatsGUI();
 
 function createStatsGUI() {
   console.log("creating stats gui");
-  //Create new Graphs (FPS, MS, MB)
   sv.stats = new Stats();
   sv.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 
@@ -30,9 +28,20 @@ export function draw() {
   sv.frameCount = sv.ticker.lastTime * 0.05;
   sv.clock = sv.frameCount * sv.speed;
 
-  // redrawSlidingTiles();
-  // if (!sv.params.showSingleImgMode) {
-  // redrawSlidingTiles();
-  // } else redrawThisImage();
-  updateGraphicsPositions();
+  const data = sv.instancePositionBuffer.data;
+
+  let count = 0;
+
+  for (let i = 0; i < sv.totalTriangles; i++) {
+    const triangle = sv.triangles[i];
+
+    triangle.x += triangle.speed;
+    triangle.x %= 800;
+
+    data[count++] = triangle.x;
+    data[count++] = triangle.y;
+  }
+
+  sv.instancePositionBuffer.update();
+  // updateGraphicsPositions();
 }
