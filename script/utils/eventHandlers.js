@@ -4,7 +4,7 @@ import { Recorder } from "canvas-record";
 import { AVC, HEVC } from "media-codecs";
 import {
   createCircleGraphics,
-  createCustomShapeGraphics,
+  createShapeGraphic,
 } from "../rendering/createShapeGraphics.js";
 import { scaleDims } from "./utils.js";
 import { Application, Assets, Texture, Sprite } from "pixi.js";
@@ -44,7 +44,7 @@ export function recalculateGrid() {
   sv.cellH = sv.gridH / sv.rowCount;
   if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
   if (sv.circleGraphics) sv.circleGraphics.remove();
-  sv.customShapeGraphics = createCustomShapeGraphics(sv.cellW / 2);
+  sv.customShapeGraphics = createShapeGraphic(sv.cellW / 2);
   sv.circleGraphics = createCircleGraphics(sv.cellW);
 }
 
@@ -75,7 +75,7 @@ export function imageLoaded(p) {
   recalculateGrid();
   updateCellData();
 
-  sv.customShapeGraphics = createCustomShapeGraphics(sv.cellW);
+  sv.customShapeGraphics = createShapeGraphic(sv.cellW);
   sv.circleGraphics = createCircleGraphics(sv.cellW);
 
   const context = sv.p.drawingContext;

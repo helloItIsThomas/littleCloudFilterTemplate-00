@@ -59,7 +59,7 @@ export function updateCellData() {
 
       let brightnessValues = processedImages.map((image) => {
         let cell = image.get(xPos, yPos, sv.cellW, sv.cellH);
-        return calculateAverageBrightness(p, cell);
+        return calculateAverageBrightnessP5(p, cell);
       });
 
       // Create cell once

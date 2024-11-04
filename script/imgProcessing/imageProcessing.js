@@ -1,4 +1,6 @@
 import { sv } from "../utils/variables.js";
+import { createAddSprites } from "./createAddSprites.js";
+import { calculateAverageBrightnessP5 } from "../utils/calculateAverageBrightnessP5.js";
 import {
   Application,
   Assets,
@@ -10,6 +12,7 @@ import {
   Container,
   RenderTexture,
 } from "pixi.js";
+import { shaderRendering } from "../rendering/shaderRendering.js";
 
 export function updateCellData() {
   console.log("running updateCellData");
@@ -36,7 +39,7 @@ export function updateCellData() {
 
       let brightnessValues = processedImages.map((image) => {
         let cell = image.get(xPos, yPos, sv.cellW, sv.cellH);
-        return calculateAverageBrightness(p, cell);
+        return calculateAverageBrightnessP5(p, cell);
       });
 
       // Create cell once
@@ -52,67 +55,8 @@ export function updateCellData() {
     }
   }
 
+  shaderRendering();
+  // createAddSprites();
+
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
-
-  const _cCanv = sv.circleGraphics.canvas;
-  const _sCanv = sv.customShapeGraphics.canvas;
-
-  // Create ImageSource from canvases
-  const cImageSource = new ImageSource({ resource: _cCanv });
-  const sImageSource = new ImageSource({ resource: _sCanv });
-  sv.cTex = new Texture({ source: cImageSource });
-  sv.sTex = new Texture({ source: sImageSource });
-
-  for (let n = 0; n < sv.totalCells; n++) {
-    const cell = sv.cells[n];
-
-    // Create a texture frame for the cell to avoid using masks
-    const cellFrame = new Rectangle(cell.x, cell.y, cell.width, cell.height);
-    const circleTexture = new Texture(sv.cTex.baseTexture, cellFrame);
-    const shapeTexture = new Texture(sv.sTex.baseTexture, cellFrame);
-
-    const cSprite = new Sprite(circleTexture);
-    cSprite.x = cell.x;
-    cSprite.y = cell.y;
-    const sSprite = new Sprite(shapeTexture);
-    sSprite.x = cell.x;
-    sSprite.y = cell.y;
-    const sSprite2 = new Sprite(shapeTexture);
-    sSprite2.x = cell.x;
-    sSprite2.y = cell.y;
-
-    sv.pApp.stage.addChild(cSprite);
-    sv.pApp.stage.addChild(sSprite);
-    sv.pApp.stage.addChild(sSprite2);
-
-    sv.circles.push({
-      i: n,
-      sprite: cSprite,
-      originalX: cell.x,
-      originalY: cell.y,
-    });
-    sv.shapes.push({
-      i: n,
-      sprite: sSprite,
-      originalX: cell.x,
-      originalY: cell.y,
-    });
-    sv.shapes2.push({
-      i: n,
-      sprite: sSprite2,
-      originalX: cell.x,
-      originalY: cell.y,
-    });
-  }
-}
-
-function calculateAverageBrightness(p, imgSection) {
-  console.log("running calculateAverageBrightness");
-  imgSection.loadPixels();
-  let sumBrightness = 0;
-  for (let i = 0; i < imgSection.pixels.length; i += 4) {
-    sumBrightness += imgSection.pixels[i];
-  }
-  let avgBrightness = sumBrightness / (imgSection.pixels.length / 4);
-  return avgBrightness;
 }

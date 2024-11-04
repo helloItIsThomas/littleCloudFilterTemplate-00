@@ -12,6 +12,7 @@ import {
 import { sv } from "./utils/variables.js";
 import { handleMultFiles, imageLoaded } from "./utils/eventHandlers.js";
 import { draw } from "./rendering/draw.js";
+// import { loadShaderFiles } from "./utils/loadShaderFiles.js";
 
 import { drawIcon } from "./utils/recordingIcon.js";
 import { createInput } from "./utils/input";
@@ -22,6 +23,7 @@ await sv.pApp.init({
   autoDensity: true,
   resolution: 2,
   resizeTo: window,
+  preference: "webgl",
   // autoDensity: true,
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
@@ -64,8 +66,6 @@ export default function (p) {
     console.log("running mySetup");
     await loadImagesWithP5(p);
     console.log("all images have loaded");
-
-    // sv.p.noLoop();
 
     sv.imgDiv = p.createDiv();
     sv.imgDiv.id("image-container");
