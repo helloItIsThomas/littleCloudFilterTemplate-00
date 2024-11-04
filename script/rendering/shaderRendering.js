@@ -10,41 +10,24 @@ import {
   Texture,
   GlProgram,
 } from "pixi.js";
-// import vertex from "../../shader/vert.vert";
-// import fragment from "../../shader/frag.frag";
-const vertex = `
-in vec2 aPosition;
-in vec2 aUV;
-in vec2 aPositionOffset;
 
-out vec2 vUV;
+let vertex;
+let fragment;
 
-uniform mat3 uProjectionMatrix;
-uniform mat3 uWorldTransformMatrix;
-uniform mat3 uTransformMatrix;
-
-
-void main() {
-
-    mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
-    gl_Position = vec4((mvp * vec3(aPosition + aPositionOffset, 1.0)).xy, 0.0, 1.0);
-
-    vUV = aUV;
-}
-`;
-
-const fragment = `
-in vec2 vUV;
-uniform sampler2D uTexture;
-uniform float time;
-
-void main() {
-    gl_FragColor = texture(uTexture, vUV + sin( (time + (vUV.x) * 14.) ) * 0.1 );
-}
-`;
+const vertexLoader = import.meta.glob("../../shader/vert.vert", { as: "raw" });
+vertexLoader["../../shader/vert.vert"]().then((vertexLoader) => {
+  console.log(typeof vertexLoader); // shader code as string
+  vertex = vertexLoader;
+});
+const fragmentLoader = import.meta.glob("../../shader/frag.frag", {
+  as: "raw",
+});
+fragmentLoader["../../shader/frag.frag"]().then((fragmentLoader) => {
+  fragment = fragmentLoader;
+});
 
 export function shaderRendering() {
-  sv.totalTriangles = 140;
+  sv.totalTriangles = sv.totalCells;
 
   // need a buffer big enough to store x, y of totalTriangles
   sv.instancePositionBuffer = new Buffer({
@@ -55,10 +38,11 @@ export function shaderRendering() {
   sv.triangles = [];
 
   for (let i = 0; i < sv.totalTriangles; i++) {
+    const cell = sv.cells[i];
     sv.triangles[i] = {
-      x: 800 * Math.random(),
-      y: 600 * Math.random(),
-      speed: 1 + Math.random() * 2,
+      x: cell.x,
+      y: cell.y + 20,
+      speed: 1,
     };
   }
 

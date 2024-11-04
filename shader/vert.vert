@@ -8,7 +8,6 @@ uniform mat3 uProjectionMatrix;
 uniform mat3 uWorldTransformMatrix;
 uniform mat3 uTransformMatrix;
 
-
 void main() {
 
     mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
