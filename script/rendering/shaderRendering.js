@@ -30,17 +30,6 @@ fragmentLoader["../../shader/frag.frag"]().then((fragmentLoader) => {
 export function shaderRendering() {
   sv.totalTriangles = sv.totalCells;
 
-  const instanceIDData = new Float32Array(sv.totalTriangles);
-
-  for (let i = 0; i < sv.totalTriangles; i++) {
-    instanceIDData[i] = i;
-  }
-  // instanceIDData, true, false
-  const instanceIDBuffer = new Buffer({
-    data: instanceIDData,
-    usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
-  });
-
   sv.instancePositionBuffer = new Buffer({
     data: new Float32Array(sv.totalTriangles * 2),
     usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
@@ -52,36 +41,47 @@ export function shaderRendering() {
     const cell = sv.cells[i];
     sv.triangles[i] = {
       x: cell.x,
-      y: cell.y + 20,
+      y: cell.y,
       speed: 1,
     };
   }
-  const scaler = 0.5;
 
+  // Create a new buffer for unique IDs
+  const instanceIndexBuffer = new Buffer({
+    data: new Float32Array(
+      [...Array(sv.totalTriangles).keys()].map(
+        (i) => i / (sv.totalTriangles - 1)
+      )
+    ),
+    usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
+  });
+
+  const sclr = 1.0;
   const geometry = new Geometry({
+    topology: "triangle-strip",
+    instanceCount: sv.totalTriangles,
     attributes: {
       aPosition: [
-        -10 * scaler,
-        -10 * scaler,
-        10 * scaler,
-        -10 * scaler,
-        10 * scaler,
-        10 * scaler,
-        -10 * scaler,
-        10 * scaler,
+        0.0,
+        0.0,
+        sv.cellW * sclr,
+        0.0,
+        sv.cellW * sclr,
+        sv.cellH * sclr,
+        0.0,
+        sv.cellH * sclr,
       ],
       aUV: [0, 0, 1, 0, 1, 1, 0, 1],
       aPositionOffset: {
         buffer: sv.instancePositionBuffer,
         instance: true,
       },
-      //   aInstanceID: {
-      // buffer: instanceIDBuffer,
-      // instance: true,
-      //   },
+      aIndex: {
+        buffer: instanceIndexBuffer,
+        instance: true,
+      },
     },
     indexBuffer: [0, 1, 2, 0, 2, 3],
-    instanceCount: sv.totalTriangles,
   });
 
   const gl = { vertex, fragment };
@@ -92,8 +92,8 @@ export function shaderRendering() {
   const shader = Shader.from({
     gl,
     resources: {
-      uTexture: jff.source, //sv.spinnyBG.source,
-      uSampler: jff.source.style, //sv.spinnyBG.source.style,
+      uTexture: jff.source,
+      uSampler: jff.source.style,
       waveUniforms: {
         time: { value: 1, type: "f32" },
       },
@@ -104,9 +104,8 @@ export function shaderRendering() {
   sv.triangleMesh = new Mesh({
     geometry,
     shader,
+    drawMode: "triangle-list",
   });
-
-  // triangle.position.set(128 / 2, 128 / 2);
 
   sv.pApp.stage.addChild(sv.triangleMesh);
 }

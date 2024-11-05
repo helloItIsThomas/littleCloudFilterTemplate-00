@@ -59,6 +59,17 @@ export function imageLoaded(p) {
 
   const imgs = sv.animUnderImgs;
 
+  imgs.forEach((img) => {
+    const aspectRatio = img.width / img.height;
+    if (window.innerWidth / window.innerHeight > aspectRatio) {
+      img.width = window.innerHeight * aspectRatio;
+      img.height = window.innerHeight;
+    } else {
+      img.width = window.innerWidth;
+      img.height = window.innerWidth / aspectRatio;
+    }
+  });
+
   if (imgs.length > 1) {
     console.log("larger than 1");
     // imgs.forEach((img) => {
@@ -68,7 +79,6 @@ export function imageLoaded(p) {
     sv.gridH = imgs[0].height;
   } else {
     console.log("smaller than 1");
-    // imgs[0] = scaleDims(imgs[0]);
     sv.gridW = imgs[0].width;
     sv.gridH = imgs[0].height;
   }

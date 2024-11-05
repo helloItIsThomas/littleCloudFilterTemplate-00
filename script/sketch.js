@@ -22,7 +22,7 @@ await sv.pApp.init({
   background: "#1099bb",
   autoDensity: true,
   resolution: 2,
-  resizeTo: window,
+  // resizeTo: window,
   preference: "webgl",
   // autoDensity: true,
 });
