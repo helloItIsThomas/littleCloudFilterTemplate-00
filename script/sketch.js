@@ -23,7 +23,7 @@ await sv.pApp.init({
   clearBeforeRender: true,
   autoDensity: true,
   resolution: 2,
-  // resizeTo: window,
+  resizeTo: window,
   preference: "webgl",
   // autoDensity: true,
 });
@@ -60,7 +60,8 @@ async function loadImagesWithP5(p) {
     });
   };
 
-  const sourceImgPaths = ["/assets/debug/star.png", "/assets/debug/circle.png"];
+  // const sourceImgPaths = ["/assets/debug/star.png", "/assets/debug/circle.png"];
+  const sourceImgPaths = ["/assets/debug/satan.png"];
 
   await Promise.all(sourceImgPaths.map(loadImage));
 }

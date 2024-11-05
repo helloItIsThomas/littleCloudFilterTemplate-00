@@ -38,7 +38,7 @@ export function updateCellData() {
   console.log("running updateCellData");
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs
-    : [sv.animUnderImgs]; // Ensure _imgs is always an array
+    : [sv.animUnderImgs];
 
   const p = sv.p;
   sv.cells = []; // Clear and redefine the array

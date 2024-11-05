@@ -56,6 +56,8 @@ export function shaderRendering() {
     usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
   });
 
+  const brightnessBuffer = new Buffer({});
+
   const sclr = 1.0;
   const geometry = new Geometry({
     topology: "triangle-strip",

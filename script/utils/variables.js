@@ -49,6 +49,7 @@ export const sv = {
     scaleDynamically: true,
     startInvisible: false,
   },
+  bb: null,
   customShapeGraphics: null,
   circleGraphics: null,
   cTex: null,
@@ -65,7 +66,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "140",
+  gridResolution: "40",
   noiseOffset: 3.4,
 
   testSVG: null,
@@ -113,7 +114,8 @@ gridResController.onChange((value) => {
   else sv.gridResolution = 140;
 
   recalculateGrid();
-  updateCellData(sv.animUnderImgs);
+  console.log("about to run updateCellData from variables.js");
+  updateCellData();
 });
 
 // Add the toggle parameter to control visibility

@@ -7,14 +7,12 @@ uniform float time;
 
 void main() {
     // Define movement speeds for each texture
-    float speed1 = 10.5; // Adjust the speed as needed
-    float speed2 = 10.75;
-    float speed3 = 10.0;
+    float speed1 = 1.5;
 
     // Calculate time-based offsets
-    float offset1 = time * speed1 * (vIndex);
-    float offset2 = time * speed2 * (vIndex);
-    float offset3 = time * speed3 * (vIndex);
+    float offset1 = time * speed1;
+    float offset2 = time * speed1;
+    float offset3 = time * speed1;
 
     // Apply offsets to the UV coordinates
     vec2 uv1 = vUV + vec2(offset1, 0.0);
@@ -32,5 +30,5 @@ void main() {
     vec4 tex3 = texture2D(uTexture, uv3);
 
     // Combine textures
-    gl_FragColor = tex3;
+    gl_FragColor = tex1;
 }

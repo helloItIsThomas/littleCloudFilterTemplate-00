@@ -45,6 +45,7 @@ export function recalculateGrid() {
   sv.cellH = sv.gridH / sv.rowCount;
   if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
   if (sv.circleGraphics) sv.circleGraphics.remove();
+  // if (sv.brightnessBuffer) sv.brightnessBuffer.remove();
   sv.customShapeGraphics = createShapeGraphic(sv.cellW / 2);
   sv.circleGraphics = createCircleGraphics(sv.cellW);
 }
@@ -70,6 +71,8 @@ export function imageLoaded(p) {
     }
   });
 
+  imgs.map((img) => {});
+
   if (imgs.length > 1) {
     console.log("larger than 1");
     // imgs.forEach((img) => {
@@ -84,6 +87,9 @@ export function imageLoaded(p) {
   }
 
   recalculateGrid();
+  console.log(
+    "about to run updateCellData from eventHandlers.js (imageLoaded())"
+  );
   updateCellData();
 
   sv.customShapeGraphics = createShapeGraphic(sv.cellW);
