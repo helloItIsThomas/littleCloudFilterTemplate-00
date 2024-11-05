@@ -34,13 +34,13 @@ export function draw() {
 
   for (let i = 0; i < sv.totalTriangles; i++) {
     const triangle = sv.triangles[i];
-
-    triangle.x += triangle.speed;
-    triangle.x %= 800;
-
     data[count++] = triangle.x;
     data[count++] = triangle.y;
+    // triangle.x += triangle.speed;
+    // triangle.x %= 800;
   }
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = sv.clock % 1.0;
+  // console.log(sv.triangleMesh.shader.resources.waveUniforms.uniforms.time);
 
   sv.instancePositionBuffer.update();
   // updateGraphicsPositions();

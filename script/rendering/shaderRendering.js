@@ -8,6 +8,7 @@ import {
   Shader,
   Geometry,
   Texture,
+  ImageSource,
   GlProgram,
 } from "pixi.js";
 
@@ -76,23 +77,27 @@ export function shaderRendering() {
 
   const gl = { vertex, fragment };
 
+  let jfjf = new ImageSource({ resource: sv.customShapeGraphics.canvas });
+  let jff = new Texture({ source: jfjf });
+
   const shader = Shader.from({
     gl,
     resources: {
-      uTexture: sv.spinnyBG.source,
-      uSampler: sv.spinnyBG.source.style,
+      uTexture: jff.source, //sv.spinnyBG.source,
+      uSampler: jff.source.style, //sv.spinnyBG.source.style,
       waveUniforms: {
         time: { value: 1, type: "f32" },
       },
     },
   });
 
-  const triangleMesh = new Mesh({
+  //   let s = sv.shader;
+  sv.triangleMesh = new Mesh({
     geometry,
     shader,
   });
 
   // triangle.position.set(128 / 2, 128 / 2);
 
-  sv.pApp.stage.addChild(triangleMesh);
+  sv.pApp.stage.addChild(sv.triangleMesh);
 }

@@ -1,7 +1,6 @@
 import { sv } from "../utils/variables.js";
 import { createAddSprites } from "./createAddSprites.js";
 import { calculateAverageBrightnessP5 } from "../utils/calculateAverageBrightnessP5.js";
-import { shaderRendering } from "../rendering/shaderRendering.js";
 
 export function updateCellData() {
   console.log("running updateCellData");
@@ -44,7 +43,6 @@ export function updateCellData() {
     }
   }
 
-  shaderRendering();
   // createAddSprites();
 
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);

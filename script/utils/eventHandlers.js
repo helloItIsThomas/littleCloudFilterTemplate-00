@@ -2,6 +2,7 @@ import { sv } from "./variables.js";
 import { updateCellData } from "../imgProcessing/imageProcessing.js";
 import { Recorder } from "canvas-record";
 import { AVC, HEVC } from "media-codecs";
+import { shaderRendering } from "../rendering/shaderRendering.js";
 import {
   createCircleGraphics,
   createShapeGraphic,
@@ -77,6 +78,8 @@ export function imageLoaded(p) {
 
   sv.customShapeGraphics = createShapeGraphic(sv.cellW);
   sv.circleGraphics = createCircleGraphics(sv.cellW);
+
+  shaderRendering();
 
   const context = sv.p.drawingContext;
   context.imageSmoothingEnabled = true;

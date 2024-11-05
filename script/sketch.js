@@ -74,7 +74,6 @@ export default function (p) {
     console.log("running mySetup");
     await loadImagesWithP5(p);
     await loadImagesWithPixi();
-    // const spinnyBG = Assets.load("https://pixijs.com/assets/bg_scene_rotate.jpg");
     console.log("all images have loaded");
 
     sv.imgDiv = p.createDiv();

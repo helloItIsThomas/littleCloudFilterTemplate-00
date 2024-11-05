@@ -17,6 +17,7 @@ export const sv = {
   ticker: null,
   frameCount: null,
   spinnyBG: null,
+  triangleMesh: null,
   instancePositionBuffer: null,
   totalTriangles: null,
   triangles: null,
