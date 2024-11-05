@@ -30,7 +30,17 @@ fragmentLoader["../../shader/frag.frag"]().then((fragmentLoader) => {
 export function shaderRendering() {
   sv.totalTriangles = sv.totalCells;
 
-  // need a buffer big enough to store x, y of totalTriangles
+  const instanceIDData = new Float32Array(sv.totalTriangles);
+
+  for (let i = 0; i < sv.totalTriangles; i++) {
+    instanceIDData[i] = i;
+  }
+  // instanceIDData, true, false
+  const instanceIDBuffer = new Buffer({
+    data: instanceIDData,
+    usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
+  });
+
   sv.instancePositionBuffer = new Buffer({
     data: new Float32Array(sv.totalTriangles * 2),
     usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
@@ -46,32 +56,31 @@ export function shaderRendering() {
       speed: 1,
     };
   }
+  const scaler = 0.5;
 
   const geometry = new Geometry({
     attributes: {
       aPosition: [
-        -10,
-        -10, // x, y
-        10,
-        -20, // x, y
-        10,
-        10,
+        -10 * scaler,
+        -10 * scaler,
+        10 * scaler,
+        -10 * scaler,
+        10 * scaler,
+        10 * scaler,
+        -10 * scaler,
+        10 * scaler,
       ],
-      aUV: [
-        0,
-        0, // u, v
-        1,
-        0, // u, v
-        1,
-        1,
-        0,
-        1,
-      ],
+      aUV: [0, 0, 1, 0, 1, 1, 0, 1],
       aPositionOffset: {
         buffer: sv.instancePositionBuffer,
         instance: true,
       },
+      //   aInstanceID: {
+      // buffer: instanceIDBuffer,
+      // instance: true,
+      //   },
     },
+    indexBuffer: [0, 1, 2, 0, 2, 3],
     instanceCount: sv.totalTriangles,
   });
 
