@@ -9,12 +9,17 @@ export function createCircleGraphics(size) {
 
   pg.clear();
 
+  // pg.noFill();
+  // pg.stroke(255, 0, 0);
+  // pg.rect(0, 0, size, size);
+
   pg.ellipseMode(sv.p.CENTER);
   pg.translate(size / 2, size / 2);
 
-  const circleDiameter = size * 0.45; // Adjust the scale as needed
+  const circleDiameter = size * 0.5; // Adjust the scale as needed
 
-  pg.ellipse(-size * 0.25, -size * 0.25, circleDiameter, circleDiameter);
+  pg.ellipse(size * 0.0, 0.0, circleDiameter, circleDiameter);
+  // pg.ellipse(size * 0.5, 0.0, circleDiameter, circleDiameter);
 
   return pg;
 }
@@ -25,6 +30,8 @@ export function createShapeGraphic(size) {
 
   pg.noStroke();
   pg.fill(0);
+  // pg.noFill();
+  // pg.stroke(255, 0, 0);
 
   pg.clear();
 

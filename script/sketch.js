@@ -20,6 +20,7 @@ import { createInput } from "./utils/input";
 sv.pApp = new Application();
 await sv.pApp.init({
   background: "#1099bb",
+  clearBeforeRender: true,
   autoDensity: true,
   resolution: 2,
   // resizeTo: window,

@@ -86,14 +86,16 @@ export function shaderRendering() {
 
   const gl = { vertex, fragment };
 
-  let jfjf = new ImageSource({ resource: sv.customShapeGraphics.canvas });
-  let jff = new Texture({ source: jfjf });
+  let src1 = new ImageSource({ resource: sv.customShapeGraphics.canvas });
+  let tex1 = new Texture({ source: src1 });
+  let src2 = new ImageSource({ resource: sv.circleGraphics.canvas });
+  let tex2 = new Texture({ source: src2 });
 
   const shader = Shader.from({
     gl,
     resources: {
-      uTexture: jff.source,
-      uSampler: jff.source.style,
+      uTexture: tex1.source,
+      uTexture2: tex2.source,
       waveUniforms: {
         time: { value: 1, type: "f32" },
       },

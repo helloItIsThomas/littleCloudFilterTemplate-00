@@ -39,7 +39,7 @@ export function draw() {
     // triangle.x += triangle.speed;
     // triangle.x %= 800;
   }
-  sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = sv.clock % 1.0;
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = sv.clock;
   // console.log(sv.triangleMesh.shader.resources.waveUniforms.uniforms.time);
 
   sv.instancePositionBuffer.update();
