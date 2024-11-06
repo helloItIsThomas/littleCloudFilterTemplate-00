@@ -7,7 +7,7 @@ export class Still {
   }
   populateGrid(image, sv, calculateAverageBrightnessP5) {
     const tempCanv = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
-    tempCanv.pixelDensity(1);
+    // tempCanv.pixelDensity(1);
     tempCanv.clear();
 
     for (let y = 0; y < sv.rowCount; y++) {
@@ -18,7 +18,7 @@ export class Still {
 
         // Calculate brightness
         const brightnessValues = calculateAverageBrightnessP5(sv.p, cellImage);
-        const brightness = brightnessValues[0]; // Assuming we're using the first index for brightness
+        const brightness = brightnessValues;
 
         // Populate canvas with brightness value (for texture representation)
         tempCanv.set(x, y, sv.p.color(brightness, brightness, brightness));
@@ -35,6 +35,7 @@ export class Still {
       }
     }
     tempCanv.updatePixels();
+    tempCanv.save();
     this.brightnessTex = tempCanv;
   }
 }

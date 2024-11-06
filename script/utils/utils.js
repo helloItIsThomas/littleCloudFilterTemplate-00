@@ -50,3 +50,22 @@ export function fitImageToWindow(img) {
 
   return resizedImg;
 }
+
+export function updateClock(time, pauseDuration) {
+  const cycleDuration = 2 + pauseDuration * 2; // Full cycle duration with pauses
+  const cycleTime = time % cycleDuration;
+
+  if (cycleTime < 1) {
+    // Move from 0.0 to 1.0 over 1 second
+    return cycleTime;
+  } else if (cycleTime < 1 + pauseDuration) {
+    // Pause at 1.0
+    return 1.0;
+  } else if (cycleTime < 2 + pauseDuration) {
+    // Move from 1.0 back to 0.0 over 1 second
+    return 2 + pauseDuration - cycleTime;
+  } else {
+    // Pause at 0.0
+    return 0.0;
+  }
+}

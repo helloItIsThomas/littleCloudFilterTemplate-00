@@ -49,7 +49,6 @@ export const sv = {
     scaleDynamically: true,
     startInvisible: false,
   },
-  bb: [],
   customShapeGraphics: null,
   circleGraphicLeft: null,
   circleGraphicRight: null,
@@ -67,7 +66,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "10",
+  gridResolution: "120",
   noiseOffset: 3.4,
 
   testSVG: null,

@@ -9,13 +9,11 @@ export function updateCellData() {
     ? sv.animUnderImgs
     : [sv.animUnderImgs]; // Ensure _imgs is always an array
 
-  const p = sv.p;
-
   // Preprocess images
   const processedImages = _imgs.map((img) => {
     img = fitImageToWindow(img);
     const processed = img.get();
-    processed.filter(p.GRAY);
+    processed.filter(sv.p.GRAY);
     return processed;
   });
 
@@ -28,17 +26,6 @@ export function updateCellData() {
     still.currentImageIndex = i;
     return still;
   });
-  // Create cell once
-  // sv.cells[gridIndex++] = {
-  // gridIndex,
-  // currentImgIndex: 0,
-  // brightness: brightnessValues,
-  // x: xPos,
-  // y: yPos,
-  // width: sv.cellW,
-  // height: sv.cellH,
-  // };
-  // sv.bb.updatePixels();
 
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
 }

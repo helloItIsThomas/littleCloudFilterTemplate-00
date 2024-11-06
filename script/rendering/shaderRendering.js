@@ -94,8 +94,12 @@ export function shaderRendering() {
   let src3 = new ImageSource({ resource: sv.circleGraphicRight.canvas });
   let tex3 = new Texture({ source: src3 });
 
-  let srcB = new ImageSource({ resource: sv.bb.canvas });
-  let bTex = new Texture({ source: srcB });
+  let bTexes = [];
+  bTexes = sv.stills.map((still) => {
+    let src = new ImageSource({ resource: still.brightnessTex.canvas });
+    let tex = new Texture({ source: src });
+    return tex;
+  });
   const art1 = sv.p.int(tex1.source.width / tex1.source.height);
   const art2 = sv.p.int(tex2.source.width / tex2.source.height);
   const art3 = sv.p.int(tex3.source.width / tex3.source.height);
@@ -106,7 +110,8 @@ export function shaderRendering() {
       hourglassTex: tex1.source,
       leftCircleTex: tex2.source,
       rightCircleTex: tex3.source,
-      bTex: bTex.source,
+      bTex: bTexes[0].source,
+      bTex2: bTexes[1].source,
       waveUniforms: {
         time: { value: 1, type: "f32" },
         gridResolution: { value: sv.gridResolution, type: "f32" },

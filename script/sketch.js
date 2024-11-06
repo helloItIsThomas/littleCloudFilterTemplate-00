@@ -23,9 +23,9 @@ await sv.pApp.init({
   clearBeforeRender: true,
   autoDensity: true,
   resolution: 2,
+  antialias: true,
   resizeTo: window,
   preference: "webgl",
-  // autoDensity: true,
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
 
@@ -57,8 +57,8 @@ async function loadImagesWithP5(p) {
     });
   };
 
-  // const sourceImgPaths = ["/assets/debug/star.png", "/assets/debug/circle.png"];
-  const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/star.png"];
+  const sourceImgPaths = ["/assets/debug/star.png", "/assets/debug/circle.png"];
+  // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/star.png"];
 
   await Promise.all(sourceImgPaths.map(loadImage));
 }
@@ -70,6 +70,7 @@ export default function (p) {
   sv.stepPromise = Promise.resolve();
 
   async function mySetup() {
+    // console.log();
     console.log("running mySetup");
     await loadImagesWithP5(p);
     await loadImagesWithPixi();

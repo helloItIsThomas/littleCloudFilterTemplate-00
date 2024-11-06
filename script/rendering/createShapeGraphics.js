@@ -14,6 +14,7 @@ export function createLeftCircle(size) {
   const w = size * 2;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
+  pg.pixelDensity(3);
   pg.noStroke();
   pg.fill(0);
   pg.background(0, 255, 0);
@@ -30,6 +31,7 @@ export function createRightCircle(size) {
   const w = size * 2;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
+  pg.pixelDensity(3);
   pg.noStroke();
   pg.fill(0);
   pg.background(0, 255, 0);
@@ -46,6 +48,7 @@ export function createShapeGraphic(size) {
   const width = size * 2;
   const height = size;
   const pg = sv.p.createGraphics(width, height);
+  pg.pixelDensity(3);
 
   pg.noStroke();
   pg.fill(0);

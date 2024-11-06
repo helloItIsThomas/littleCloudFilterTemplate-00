@@ -5,6 +5,7 @@ uniform sampler2D hourglassTex;
 uniform sampler2D leftCircleTex;
 uniform sampler2D rightCircleTex;
 uniform sampler2D bTex;
+uniform sampler2D bTex2;
 uniform float time;
 uniform float gridResolution;
 uniform float hgAR;
@@ -22,7 +23,10 @@ void main() {
 
     // Sample bTex at the calculated normalized coordinates
     vec4 bTexColor = texture2D(bTex, vec2(x, y));
-    float brightness = bTexColor.r;
+    vec4 bTexColor2 = texture2D(bTex2, vec2(x, y));
+
+    vec4 testLerp = mix(bTexColor, bTexColor2, abs(sin(time)));
+    float brightness = testLerp.r;
 
     float hgOff = 0.0;
     float lcOff = 0.0;
@@ -54,6 +58,9 @@ void main() {
         hgVal = 0.5;
     }
 
+    vec2 debug = vUV;
+    debug.x = fract(debug.x + time);
+    debug.y = fract(debug.y);
     // Wrap UV coordinates to stay within [0, 1] range
     hgUV.x = fract(hgUV.x + hgVal);
     lcUV.x = fract(lcUV.x + 0.125 + lVal);
@@ -65,6 +72,6 @@ void main() {
     vec4 rightCircle = texture2D(rightCircleTex, rcUV);
 
     // Output color
-    gl_FragColor = rightCircle + leftCircle + hourglass;
+    gl_FragColor = hourglass;
     // gl_FragColor = vec4(tempVal, tempVal, tempVal, 1.0);
 }

@@ -1,4 +1,5 @@
 import { sv } from "../utils/variables.js";
+import { updateClock } from "../utils/utils";
 
 import Stats from "stats.js";
 
@@ -28,6 +29,10 @@ export function draw() {
   sv.frameCount = sv.ticker.lastTime * 0.05;
   sv.clock = sv.frameCount * sv.speed;
 
+  const newClock = updateClock(performance.now() / 1000, 0.8);
+
+  console.log(newClock);
+
   const data = sv.instancePositionBuffer.data;
 
   let count = 0;
@@ -39,7 +44,9 @@ export function draw() {
     // triangle.x += triangle.speed;
     // triangle.x %= 800;
   }
-  sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = sv.clock;
+
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = newClock;
+  // sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = 1.0;
   // console.log(sv.triangleMesh.shader.resources.waveUniforms.uniforms.time);
 
   sv.instancePositionBuffer.update();
