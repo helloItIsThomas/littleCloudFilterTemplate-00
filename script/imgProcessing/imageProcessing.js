@@ -59,10 +59,7 @@ export function updateCellData() {
     }
   }
   sv.bb.updatePixels();
-  sv.bb.save();
-  console.log("sv.cells.length: ", sv.cells.length);
-
-  // time to create the brightness texture here
+  sv.p.save(sv.bb);
 
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
 }

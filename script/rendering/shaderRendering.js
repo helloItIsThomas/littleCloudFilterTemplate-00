@@ -92,16 +92,20 @@ export function shaderRendering() {
   let tex2 = new Texture({ source: src2 });
   let srcB = new ImageSource({ resource: sv.bb.canvas });
   let bTex = new Texture({ source: srcB });
+  const art1 = sv.p.int(tex1.source.width / tex1.source.height);
+  const art2 = sv.p.int(tex2.source.width / tex2.source.height);
 
   const shader = Shader.from({
     gl,
     resources: {
-      uTexture: tex1.source,
+      uTexture1: tex1.source,
       uTexture2: tex2.source,
       bTex: bTex.source,
       waveUniforms: {
         time: { value: 1, type: "f32" },
         gridResolution: { value: sv.gridResolution, type: "f32" },
+        uTex1AspectRatio: { value: art1, type: "f32" },
+        uTex2AspectRatio: { value: art2, type: "f32" },
       },
     },
   });

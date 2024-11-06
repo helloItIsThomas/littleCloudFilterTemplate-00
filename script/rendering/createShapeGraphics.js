@@ -10,24 +10,29 @@ export function createCircleGraphics(size) {
   pg.fill(0);
 
   pg.clear();
+  pg.background(255, 0, 0);
 
   // pg.noFill();
   // pg.stroke(255, 0, 0);
   // pg.rect(0, 0, size, size);
 
   pg.ellipseMode(sv.p.CENTER);
-  pg.translate(w / 2, h / 2);
 
-  const circleDiameter = h * 0.8; // Adjust the scale as needed
+  const circleDiameter = h * 1.0; // Adjust the scale as needed
+
+  pg.translate(circleDiameter * 0.5, h / 2);
 
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
 
+  sv.p.save(pg);
   return pg;
 }
 
 export function createShapeGraphic(size) {
   console.log("running createCustomShapeGraphics");
-  const pg = sv.p.createGraphics(size, size);
+  const width = size * 2;
+  const height = size;
+  const pg = sv.p.createGraphics(width, height);
 
   pg.noStroke();
   pg.fill(0);
