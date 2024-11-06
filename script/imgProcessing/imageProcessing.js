@@ -19,45 +19,44 @@ export function updateCellData() {
     return processed;
   });
 
+  console.log(processedImages);
+
   let gridIndex = 0;
+  sv.bb = [];
+  processedImages.forEach((image, i) => {
+    const tempCanv = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
+    tempCanv.pixelDensity(1);
+    tempCanv.clear();
 
-  sv.bb = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
-  sv.bb.pixelDensity(1);
-  sv.bb.clear();
+    for (let y = 0; y < sv.rowCount; y++) {
+      for (let x = 0; x < sv.colCount; x++) {
+        let xPos = x * sv.cellW;
+        let yPos = y * sv.cellH;
 
-  for (let y = 0; y < sv.rowCount; y++) {
-    for (let x = 0; x < sv.colCount; x++) {
-      let xPos = x * sv.cellW;
-      let yPos = y * sv.cellH;
-
-      let brightnessValues = processedImages.map((image) => {
         let cell = image.get(xPos, yPos, sv.cellW, sv.cellH);
-        return calculateAverageBrightnessP5(p, cell);
-      });
-
-      // below should be changed later to support 2 or more images
-      sv.bb.set(
-        x,
-        y,
-        sv.p.color(
-          brightnessValues[0],
-          brightnessValues[0],
-          brightnessValues[0]
-        )
-      );
-
-      // Create cell once
-      sv.cells[gridIndex++] = {
-        gridIndex,
-        currentImgIndex: 0,
-        brightness: brightnessValues,
-        x: xPos,
-        y: yPos,
-        width: sv.cellW,
-        height: sv.cellH,
-      };
+        const brightnessValues = calculateAverageBrightnessP5(p, cell);
+        tempCanv.set(
+          x,
+          y,
+          sv.p.color(
+            brightnessValues[i],
+            brightnessValues[i],
+            brightnessValues[i]
+          )
+        );
+      }
     }
-  }
+  });
+  // Create cell once
+  // sv.cells[gridIndex++] = {
+  // gridIndex,
+  // currentImgIndex: 0,
+  // brightness: brightnessValues,
+  // x: xPos,
+  // y: yPos,
+  // width: sv.cellW,
+  // height: sv.cellH,
+  // };
   sv.bb.updatePixels();
 
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
