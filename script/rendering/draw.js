@@ -31,8 +31,6 @@ export function draw() {
 
   const newClock = updateClock(performance.now() / 1000, 0.8);
 
-  console.log(newClock);
-
   const data = sv.instancePositionBuffer.data;
 
   let count = 0;
