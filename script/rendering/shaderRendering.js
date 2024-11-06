@@ -102,16 +102,16 @@ export function shaderRendering() {
   const shader = Shader.from({
     gl,
     resources: {
-      uTexture1: tex1.source,
-      uTexture2: tex2.source,
-      uTexture3: tex3.source,
+      hourglassTex: tex1.source,
+      leftCircleTex: tex2.source,
+      rightCircleTex: tex3.source,
       bTex: bTex.source,
       waveUniforms: {
         time: { value: 1, type: "f32" },
         gridResolution: { value: sv.gridResolution, type: "f32" },
-        uTex1AspectRatio: { value: art1, type: "f32" },
-        uTex2AspectRatio: { value: art2, type: "f32" },
-        uTex3AspectRatio: { value: art3, type: "f32" },
+        hgAR: { value: art1, type: "f32" },
+        lcAR: { value: art2, type: "f32" },
+        rcAR: { value: art3, type: "f32" },
       },
     },
   });

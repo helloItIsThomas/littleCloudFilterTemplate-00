@@ -11,56 +11,34 @@ export function createAllThreeGraphics() {
 
 export function createLeftCircle(size) {
   console.log("running createLeftCircle");
-  const w = size * 3;
+  const w = size;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
-
   pg.noStroke();
   pg.fill(0);
-
+  pg.background(0, 255, 0);
   pg.clear();
-  // pg.background(255, 0, 0);
-
-  // pg.noFill();
-  // pg.stroke(255, 0, 0);
-  // pg.rect(0, 0, size, size);
-
   pg.ellipseMode(sv.p.CENTER);
-
-  const circleDiameter = h * 0.6; // Adjust the scale as needed
-
-  pg.translate(0.0, h / 2);
-
+  const circleDiameter = h * 0.55; // Adjust the scale as needed
+  pg.translate(w - circleDiameter * 0.5, h / 2);
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
-
   sv.p.save(pg);
   return pg;
 }
 
 export function createRightCircle(size) {
   console.log("running createRightCircle");
-  const w = size * 3;
+  const w = size;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
-
   pg.noStroke();
   pg.fill(0);
-
+  pg.background(0, 255, 0);
   pg.clear();
-  // pg.background(255, 0, 0);
-
-  // pg.noFill();
-  // pg.stroke(255, 0, 0);
-  // pg.rect(0, 0, size, size);
-
   pg.ellipseMode(sv.p.CENTER);
-
-  const circleDiameter = h * 0.6; // Adjust the scale as needed
-
-  pg.translate(0.0, h / 2);
-
+  const circleDiameter = h * 0.55; // Adjust the scale as needed
+  pg.translate(circleDiameter * 0.5, h / 2);
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
-
   sv.p.save(pg);
   return pg;
 }
