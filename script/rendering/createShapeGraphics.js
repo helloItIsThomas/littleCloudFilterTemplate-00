@@ -11,7 +11,7 @@ export function createAllThreeGraphics() {
 
 export function createLeftCircle(size) {
   console.log("running createLeftCircle");
-  const w = size;
+  const w = size * 2;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
   pg.noStroke();
@@ -19,16 +19,15 @@ export function createLeftCircle(size) {
   pg.background(0, 255, 0);
   pg.clear();
   pg.ellipseMode(sv.p.CENTER);
-  const circleDiameter = h * 0.55; // Adjust the scale as needed
-  pg.translate(w - circleDiameter * 0.5, h / 2);
+  const circleDiameter = h * 0.5; // Adjust the scale as needed
+  pg.translate(circleDiameter * 0.5, h / 2);
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
-  sv.p.save(pg);
   return pg;
 }
 
 export function createRightCircle(size) {
   console.log("running createRightCircle");
-  const w = size;
+  const w = size * 2;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
   pg.noStroke();
@@ -36,10 +35,9 @@ export function createRightCircle(size) {
   pg.background(0, 255, 0);
   pg.clear();
   pg.ellipseMode(sv.p.CENTER);
-  const circleDiameter = h * 0.55; // Adjust the scale as needed
-  pg.translate(circleDiameter * 0.5, h / 2);
+  const circleDiameter = h * 0.5; // Adjust the scale as needed
+  pg.translate(w - circleDiameter * 0.5, h / 2);
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
-  sv.p.save(pg);
   return pg;
 }
 
@@ -52,7 +50,7 @@ export function createShapeGraphic(size) {
   pg.noStroke();
   pg.fill(0);
   // pg.noFill();
-  pg.stroke(0, 0, 255);
+  // pg.stroke(0, 0, 255);
 
   pg.clear();
 
