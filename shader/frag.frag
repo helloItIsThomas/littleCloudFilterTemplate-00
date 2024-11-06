@@ -38,5 +38,5 @@ void main() {
     vec4 tex2 = texture2D(uTexture2, uv2);
 
     // Output color
-    gl_FragColor = tex1;
+    gl_FragColor = tex2;
 }
