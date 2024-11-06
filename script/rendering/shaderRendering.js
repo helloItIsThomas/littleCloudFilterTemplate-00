@@ -28,6 +28,7 @@ fragmentLoader["../../shader/frag.frag"]().then((fragmentLoader) => {
 });
 
 export function shaderRendering() {
+  console.log("°·°‡€ﬁﬂrunning shader rendering·°‡ﬁﬂ");
   sv.totalTriangles = sv.totalCells;
 
   sv.instancePositionBuffer = new Buffer({
@@ -104,22 +105,32 @@ export function shaderRendering() {
   const art2 = sv.p.int(tex2.source.width / tex2.source.height);
   const art3 = sv.p.int(tex3.source.width / tex3.source.height);
 
+  let resources = {};
+
+  // Prepare resources dynamically
+  resources = {
+    hourglassTex: tex1.source,
+    leftCircleTex: tex2.source,
+    rightCircleTex: tex3.source,
+    waveUniforms: {
+      time: { value: 1, type: "f32" },
+      gridResolution: { value: sv.gridResolution, type: "f32" },
+      hgAR: { value: art1, type: "f32" },
+      lcAR: { value: art2, type: "f32" },
+      rcAR: { value: art3, type: "f32" },
+    },
+  };
+
+  resources.waveUniforms.numBTexes = { value: bTexes.length, type: "i32" };
+
+  bTexes.forEach((tex, index) => {
+    console.log("index: ", index + 1);
+    resources[`bTex${index + 1}`] = tex.source;
+  });
+
   const shader = Shader.from({
     gl,
-    resources: {
-      hourglassTex: tex1.source,
-      leftCircleTex: tex2.source,
-      rightCircleTex: tex3.source,
-      bTex: bTexes[0].source,
-      bTex2: bTexes[1].source,
-      waveUniforms: {
-        time: { value: 1, type: "f32" },
-        gridResolution: { value: sv.gridResolution, type: "f32" },
-        hgAR: { value: art1, type: "f32" },
-        lcAR: { value: art2, type: "f32" },
-        rcAR: { value: art3, type: "f32" },
-      },
-    },
+    resources,
   });
 
   //   let s = sv.shader;
@@ -128,6 +139,6 @@ export function shaderRendering() {
     shader,
     drawMode: "triangle-list",
   });
-
+  sv.pApp.stage.removeChildren();
   sv.pApp.stage.addChild(sv.triangleMesh);
 }

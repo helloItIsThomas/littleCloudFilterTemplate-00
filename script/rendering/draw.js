@@ -48,5 +48,4 @@ export function draw() {
   // console.log(sv.triangleMesh.shader.resources.waveUniforms.uniforms.time);
 
   sv.instancePositionBuffer.update();
-  // updateGraphicsPositions();
 }

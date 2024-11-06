@@ -1,3 +1,5 @@
+import { calculateAverageBrightnessP5 } from "../utils/calculateAverageBrightnessP5";
+
 export class Still {
   constructor() {
     this.processedImage = null;
@@ -5,9 +7,9 @@ export class Still {
     this.brightnessTex = null;
     this.cells = [];
   }
-  populateGrid(image, sv, calculateAverageBrightnessP5) {
+  populateGrid(image, sv) {
     const tempCanv = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
-    // tempCanv.pixelDensity(1);
+    tempCanv.pixelDensity(1);
     tempCanv.clear();
 
     for (let y = 0; y < sv.rowCount; y++) {

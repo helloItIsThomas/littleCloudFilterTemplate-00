@@ -4,13 +4,15 @@ in float vIndex;
 uniform sampler2D hourglassTex;
 uniform sampler2D leftCircleTex;
 uniform sampler2D rightCircleTex;
-uniform sampler2D bTex;
+uniform sampler2D bTex1;
 uniform sampler2D bTex2;
+
 uniform float time;
 uniform float gridResolution;
 uniform float hgAR;
 uniform float lcAR;
 uniform float rcAR;
+uniform int numBTexes;
 
 void main() {
     // Convert normalized vIndex to an absolute index
@@ -22,11 +24,14 @@ void main() {
     float y = floor(indexFloat / gridResolution) / gridResolution;
 
     // Sample bTex at the calculated normalized coordinates
-    vec4 bTexColor = texture2D(bTex, vec2(x, y));
-    vec4 bTexColor2 = texture2D(bTex2, vec2(x, y));
+    vec4 bTexColor = texture2D(bTex1, vec2(x, y));
+    float brightness = bTexColor.r;
 
-    vec4 testLerp = mix(bTexColor, bTexColor2, abs(sin(time)));
-    float brightness = testLerp.r;
+    if(numBTexes == 2) {
+        vec4 bTexColor2 = texture2D(bTex2, vec2(x, y));
+        vec4 testLerp = mix(bTexColor, bTexColor2, abs(sin(time)));
+        brightness = testLerp.r;
+    }
 
     float hgOff = 0.0;
     float lcOff = 0.0;
@@ -72,6 +77,6 @@ void main() {
     vec4 rightCircle = texture2D(rightCircleTex, rcUV);
 
     // Output color
+    // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     gl_FragColor = hourglass;
-    // gl_FragColor = vec4(tempVal, tempVal, tempVal, 1.0);
 }

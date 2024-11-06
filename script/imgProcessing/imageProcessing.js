@@ -1,5 +1,4 @@
 import { sv } from "../utils/variables.js";
-import { calculateAverageBrightnessP5 } from "../utils/calculateAverageBrightnessP5.js";
 import { fitImageToWindow } from "../utils/utils.js";
 import { Still } from "./Stills.js";
 
@@ -17,12 +16,14 @@ export function updateCellData() {
     return processed;
   });
 
+  console.log(processedImages.length);
+
   sv.stills = [];
 
   sv.stills = processedImages.map((image, i) => {
     const still = new Still();
     still.processedImage = image;
-    still.populateGrid(image, sv, calculateAverageBrightnessP5);
+    still.populateGrid(image, sv);
     still.currentImageIndex = i;
     return still;
   });
