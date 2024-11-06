@@ -88,24 +88,30 @@ export function shaderRendering() {
 
   let src1 = new ImageSource({ resource: sv.customShapeGraphics.canvas });
   let tex1 = new Texture({ source: src1 });
-  let src2 = new ImageSource({ resource: sv.circleGraphics.canvas });
+  let src2 = new ImageSource({ resource: sv.circleGraphicLeft.canvas });
   let tex2 = new Texture({ source: src2 });
+  let src3 = new ImageSource({ resource: sv.circleGraphicRight.canvas });
+  let tex3 = new Texture({ source: src3 });
+
   let srcB = new ImageSource({ resource: sv.bb.canvas });
   let bTex = new Texture({ source: srcB });
   const art1 = sv.p.int(tex1.source.width / tex1.source.height);
   const art2 = sv.p.int(tex2.source.width / tex2.source.height);
+  const art3 = sv.p.int(tex3.source.width / tex3.source.height);
 
   const shader = Shader.from({
     gl,
     resources: {
       uTexture1: tex1.source,
       uTexture2: tex2.source,
+      uTexture3: tex3.source,
       bTex: bTex.source,
       waveUniforms: {
         time: { value: 1, type: "f32" },
         gridResolution: { value: sv.gridResolution, type: "f32" },
         uTex1AspectRatio: { value: art1, type: "f32" },
         uTex2AspectRatio: { value: art2, type: "f32" },
+        uTex3AspectRatio: { value: art3, type: "f32" },
       },
     },
   });

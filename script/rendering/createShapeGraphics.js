@@ -1,7 +1,16 @@
 import { sv } from "../utils/variables.js";
 
-export function createCircleGraphics(size) {
-  console.log("running createCircleGraphics");
+export function createAllThreeGraphics() {
+  if (sv.circleGraphicLeft) sv.circleGraphicLeft.remove();
+  if (sv.circleGraphicRight) sv.circleGraphicRight.remove();
+  if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
+  sv.circleGraphicLeft = createLeftCircle(sv.cellW);
+  sv.circleGraphicRight = createRightCircle(sv.cellW);
+  sv.customShapeGraphics = createShapeGraphic(sv.cellW / 2);
+}
+
+export function createLeftCircle(size) {
+  console.log("running createLeftCircle");
   const w = size * 3;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
@@ -10,7 +19,7 @@ export function createCircleGraphics(size) {
   pg.fill(0);
 
   pg.clear();
-  pg.background(255, 0, 0);
+  // pg.background(255, 0, 0);
 
   // pg.noFill();
   // pg.stroke(255, 0, 0);
@@ -18,9 +27,37 @@ export function createCircleGraphics(size) {
 
   pg.ellipseMode(sv.p.CENTER);
 
-  const circleDiameter = h * 1.0; // Adjust the scale as needed
+  const circleDiameter = h * 0.6; // Adjust the scale as needed
 
-  pg.translate(circleDiameter * 0.5, h / 2);
+  pg.translate(0.0, h / 2);
+
+  pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
+
+  sv.p.save(pg);
+  return pg;
+}
+
+export function createRightCircle(size) {
+  console.log("running createRightCircle");
+  const w = size * 3;
+  const h = size;
+  const pg = sv.p.createGraphics(w, h);
+
+  pg.noStroke();
+  pg.fill(0);
+
+  pg.clear();
+  // pg.background(255, 0, 0);
+
+  // pg.noFill();
+  // pg.stroke(255, 0, 0);
+  // pg.rect(0, 0, size, size);
+
+  pg.ellipseMode(sv.p.CENTER);
+
+  const circleDiameter = h * 0.6; // Adjust the scale as needed
+
+  pg.translate(0.0, h / 2);
 
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
 
@@ -37,7 +74,7 @@ export function createShapeGraphic(size) {
   pg.noStroke();
   pg.fill(0);
   // pg.noFill();
-  // pg.stroke(255, 0, 0);
+  pg.stroke(0, 0, 255);
 
   pg.clear();
 

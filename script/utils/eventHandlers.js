@@ -3,10 +3,7 @@ import { updateCellData } from "../imgProcessing/imageProcessing.js";
 import { Recorder } from "canvas-record";
 import { AVC, HEVC } from "media-codecs";
 import { shaderRendering } from "../rendering/shaderRendering.js";
-import {
-  createCircleGraphics,
-  createShapeGraphic,
-} from "../rendering/createShapeGraphics.js";
+import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
 import { scaleDims } from "./utils.js";
 import { Application, Assets, Texture, Sprite } from "pixi.js";
 
@@ -43,11 +40,8 @@ export function recalculateGrid() {
   sv.totalCells = sv.rowCount * sv.colCount;
   sv.cellW = sv.gridW / sv.colCount;
   sv.cellH = sv.gridH / sv.rowCount;
-  if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
-  if (sv.circleGraphics) sv.circleGraphics.remove();
-  // if (sv.brightnessBuffer) sv.brightnessBuffer.remove();
-  sv.customShapeGraphics = createShapeGraphic(sv.cellW / 2);
-  sv.circleGraphics = createCircleGraphics(sv.cellW);
+
+  createAllThreeGraphics();
 }
 
 export function imageLoaded(p) {
@@ -92,8 +86,7 @@ export function imageLoaded(p) {
   );
   updateCellData();
 
-  sv.customShapeGraphics = createShapeGraphic(sv.cellW);
-  sv.circleGraphics = createCircleGraphics(sv.cellW);
+  createAllThreeGraphics();
 
   shaderRendering();
 

@@ -51,7 +51,8 @@ export const sv = {
   },
   bb: null,
   customShapeGraphics: null,
-  circleGraphics: null,
+  circleGraphicLeft: null,
+  circleGraphicRight: null,
   cTex: null,
   sTex: null,
   circles: [],
@@ -66,7 +67,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "110",
+  gridResolution: "2",
   noiseOffset: 3.4,
 
   testSVG: null,

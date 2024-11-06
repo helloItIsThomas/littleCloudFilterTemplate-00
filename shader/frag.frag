@@ -23,7 +23,8 @@ void main() {
     float brightness = bTexColor.r;
 
     // Calculate time-based offsets
-    float offset1 = brightness + time * (1.0 - brightness) + vIndex;
+    // float offset1 = brightness + time * (1.0 - brightness) + vIndex;
+    float offset1 = 0.0;
 
     // Apply offsets to the UV coordinates
     vec2 uv1 = vUV / vec2(uTex1AspectRatio, 1.0) + vec2(offset1, 0.0);
@@ -34,9 +35,10 @@ void main() {
     uv2.x = fract(uv2.x);
 
     // Sample each texture with its own offset
-    vec4 tex1 = texture2D(uTexture1, uv1);
-    vec4 tex2 = texture2D(uTexture2, uv2);
+    vec4 hourglass = texture2D(uTexture1, uv1);
+    vec4 circle1 = texture2D(uTexture2, uv2);
+    vec4 circle2 = texture2D(uTexture2, uv2);
 
     // Output color
-    gl_FragColor = tex2;
+    gl_FragColor = circle2;
 }
