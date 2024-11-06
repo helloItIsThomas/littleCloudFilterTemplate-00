@@ -40,10 +40,24 @@ void main() {
     // map brightness from 0.25 => 0.4 to rcUV.x 0.0 => 0.25
     // map brightness from 0.6 => 1.0 to rcUV.x 0.25 => 1.0
 
+    float lVal = min(brightness / 0.25, 1.0);
+    float rVal = 0.0;
+    if(brightness <= 0.4) {
+        rVal = min((brightness - 0.25) / (0.4 - 0.25), 1.0) * 0.25;
+    } else if(brightness > 0.6) {
+        rVal = 0.25 + ((brightness - 0.6) / (1.0 - 0.6)) * 0.75;
+    }
+    float hgVal = 0.0;
+    if(brightness > 0.25 && brightness <= 0.6) {
+        hgVal = ((brightness - 0.25) / (0.6 - 0.25)) * 0.5;
+    } else if(brightness > 0.6) {
+        hgVal = 0.5;
+    }
+
     // Wrap UV coordinates to stay within [0, 1] range
-    hgUV.x = fract(hgUV.x + time);
-    lcUV.x = fract(lcUV.x + 0.125 + time);
-    rcUV.x = fract(rcUV.x - 0.625 + time);
+    hgUV.x = fract(hgUV.x + hgVal);
+    lcUV.x = fract(lcUV.x + 0.125 + lVal);
+    rcUV.x = fract(rcUV.x - 0.625 + rVal);
 
     // Sample each texture with its own offset
     vec4 hourglass = texture2D(hourglassTex, hgUV);
@@ -52,4 +66,5 @@ void main() {
 
     // Output color
     gl_FragColor = rightCircle + leftCircle + hourglass;
+    // gl_FragColor = vec4(tempVal, tempVal, tempVal, 1.0);
 }
