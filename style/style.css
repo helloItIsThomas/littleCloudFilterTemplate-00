@@ -154,6 +154,7 @@ body {
 }
 
 #closeGui {
+  display: none;
   left: 15px;
   bottom: 21px;
   position: absolute;

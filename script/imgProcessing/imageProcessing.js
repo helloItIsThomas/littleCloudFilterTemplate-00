@@ -59,7 +59,7 @@ export function updateCellData() {
     }
   }
   sv.bb.updatePixels();
-  sv.p.save(sv.bb);
+  // sv.p.save(sv.bb);
 
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
 }

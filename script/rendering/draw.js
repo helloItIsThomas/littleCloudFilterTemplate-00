@@ -12,7 +12,8 @@ function createStatsGUI() {
   sv.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 
   var thisParent = document.getElementById("modal_4-content");
-  thisParent.appendChild(sv.stats.domElement);
+  // i changed this
+  // thisParent.appendChild(sv.stats.domElement);
 
   var statsALL = document
     .getElementById("modal_4-content")
