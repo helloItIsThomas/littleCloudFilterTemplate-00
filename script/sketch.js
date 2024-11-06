@@ -19,7 +19,7 @@ import { createInput } from "./utils/input";
 
 sv.pApp = new Application();
 await sv.pApp.init({
-  background: "#1099bb",
+  background: "#D30403",
   clearBeforeRender: true,
   autoDensity: true,
   resolution: 2,
@@ -35,9 +35,6 @@ sv.ticker.stop();
 
 async function loadImagesWithPixi() {
   // Load the background image asynchronously
-  sv.spinnyBG = await Assets.load(
-    "https://pixijs.com/assets/bg_scene_rotate.jpg"
-  );
   console.log("Image loaded and sprite added to stage");
 }
 
@@ -105,6 +102,7 @@ export default function (p) {
       }
       draw();
       if (sv.isRecording) drawIcon();
+    } else {
     }
     sv.stats.end();
   });

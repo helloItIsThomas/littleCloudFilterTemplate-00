@@ -1,5 +1,4 @@
 import { sv } from "../utils/variables.js";
-import { createAddSprites } from "./createAddSprites.js";
 import { calculateAverageBrightnessP5 } from "../utils/calculateAverageBrightnessP5.js";
 import { fitImageToWindow } from "../utils/utils.js";
 
@@ -64,8 +63,6 @@ export function updateCellData() {
   console.log("sv.cells.length: ", sv.cells.length);
 
   // time to create the brightness texture here
-
-  // createAddSprites();
 
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
 }

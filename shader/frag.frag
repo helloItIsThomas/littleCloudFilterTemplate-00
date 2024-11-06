@@ -20,13 +20,13 @@ void main() {
     vec4 bTexColor = texture2D(bTex, vec2(x, y));
     float brightness = bTexColor.r;
 
-    float speed1 = 10.5;
+    float speed1 = 1.5;
 
     // Calculate time-based offsets
     float offset1 = time * speed1 * brightness;
 
     // Apply offsets to the UV coordinates
-    vec2 uv1 = vUV + vec2(offset1, 0.0);
+    vec2 uv1 = vUV / vec2(3.0, 1.0) + vec2(offset1, 0.0);
 
     // Wrap UV coordinates to stay within [0, 1] range
     uv1.x = fract(uv1.x);
