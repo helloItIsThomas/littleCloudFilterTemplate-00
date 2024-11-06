@@ -56,8 +56,6 @@ export function shaderRendering() {
     usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
   });
 
-  const brightnessBuffer = new Buffer({});
-
   const sclr = 1.0;
   const geometry = new Geometry({
     topology: "triangle-strip",
@@ -92,14 +90,18 @@ export function shaderRendering() {
   let tex1 = new Texture({ source: src1 });
   let src2 = new ImageSource({ resource: sv.circleGraphics.canvas });
   let tex2 = new Texture({ source: src2 });
+  let srcB = new ImageSource({ resource: sv.bb.canvas });
+  let bTex = new Texture({ source: srcB });
 
   const shader = Shader.from({
     gl,
     resources: {
       uTexture: tex1.source,
       uTexture2: tex2.source,
+      bTex: bTex.source,
       waveUniforms: {
         time: { value: 1, type: "f32" },
+        gridResolution: { value: sv.gridResolution, type: "f32" },
       },
     },
   });

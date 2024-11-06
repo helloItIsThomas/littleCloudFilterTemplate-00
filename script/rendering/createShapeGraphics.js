@@ -16,7 +16,7 @@ export function createCircleGraphics(size) {
   pg.ellipseMode(sv.p.CENTER);
   pg.translate(size / 2, size / 2);
 
-  const circleDiameter = size * 0.5; // Adjust the scale as needed
+  const circleDiameter = size * 0.9; // Adjust the scale as needed
 
   pg.ellipse(size * 0.0, 0.0, circleDiameter, circleDiameter);
   // pg.ellipse(size * 0.5, 0.0, circleDiameter, circleDiameter);
