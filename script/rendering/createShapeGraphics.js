@@ -2,7 +2,7 @@ import { sv } from "../utils/variables.js";
 
 export function createCircleGraphics(size) {
   console.log("running createCircleGraphics");
-  const w = size * 3;
+  const w = size * 2;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
 
@@ -13,16 +13,16 @@ export function createCircleGraphics(size) {
   pg.background(255, 0, 0);
 
   // pg.noFill();
-  pg.stroke(0, 0, 0);
-  pg.rect(0, 0, size, size * 1.0);
+  // pg.stroke(0, 0, 0);
+  // pg.rect(0, 0, size, size * 1.0);
 
   pg.ellipseMode(sv.p.CENTER);
 
-  const circleDiameter = h * 1.0; // Adjust the scale as needed
+  const circleDiameter = h * 0.5; // Adjust the scale as needed
 
-  pg.translate(circleDiameter * 0.2, h / 2);
+  pg.translate(circleDiameter * 0.5, h / 2);
 
-  // pg.circle(0.0, 0.0, circleDiameter * 0.3);
+  pg.circle(0.0, 0.0, circleDiameter);
 
   // sv.p.save(pg);
   return pg;

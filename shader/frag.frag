@@ -31,7 +31,7 @@ void main() {
     vec2 uv2 = vUV / vec2(uTex2AspectRatio, 1.0) + vec2(offset2, 0.0);
 
     // Wrap UV coordinates to stay within [0, 1] range
-    uv2.x = fract(uv1.x + time * 4.666 * brightness);
+    uv2.x = fract(uv1.x);
     uv1.x = fract(uv2.x);
 
     // Sample each texture with its own offset
@@ -42,5 +42,5 @@ void main() {
     vec4 combinedColor = mix(tex1, tex2, brightness);
 
     // Output combined color
-    gl_FragColor = tex2 + vec4(0.0, sin(brightness), 0.0, 1.0);
+    gl_FragColor = tex2;
 }
