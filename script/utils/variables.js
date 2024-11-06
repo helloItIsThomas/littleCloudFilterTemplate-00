@@ -36,7 +36,7 @@ export const sv = {
   endLoop: 1.99,
   stateStartTime: null,
   clearImage: null,
-  cells: [],
+  stills: [],
   animUnderImgs: [],
   debugImgToggle: 0,
   slidingPieceImgs: [],

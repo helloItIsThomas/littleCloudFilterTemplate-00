@@ -1,6 +1,7 @@
 import { sv } from "../utils/variables.js";
 import { calculateAverageBrightnessP5 } from "../utils/calculateAverageBrightnessP5.js";
 import { fitImageToWindow } from "../utils/utils.js";
+import { Still } from "./Stills.js";
 
 export function updateCellData() {
   console.log("running updateCellData");
@@ -9,7 +10,6 @@ export function updateCellData() {
     : [sv.animUnderImgs]; // Ensure _imgs is always an array
 
   const p = sv.p;
-  sv.cells = []; // Clear and redefine the array
 
   // Preprocess images
   const processedImages = _imgs.map((img) => {
@@ -19,33 +19,14 @@ export function updateCellData() {
     return processed;
   });
 
-  console.log(processedImages);
+  sv.stills = [];
 
-  let gridIndex = 0;
-  sv.bb = [];
-  processedImages.forEach((image, i) => {
-    const tempCanv = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
-    tempCanv.pixelDensity(1);
-    tempCanv.clear();
-
-    for (let y = 0; y < sv.rowCount; y++) {
-      for (let x = 0; x < sv.colCount; x++) {
-        let xPos = x * sv.cellW;
-        let yPos = y * sv.cellH;
-
-        let cell = image.get(xPos, yPos, sv.cellW, sv.cellH);
-        const brightnessValues = calculateAverageBrightnessP5(p, cell);
-        tempCanv.set(
-          x,
-          y,
-          sv.p.color(
-            brightnessValues[i],
-            brightnessValues[i],
-            brightnessValues[i]
-          )
-        );
-      }
-    }
+  sv.stills = processedImages.map((image, i) => {
+    const still = new Still();
+    still.processedImage = image;
+    still.populateGrid(image, sv, calculateAverageBrightnessP5);
+    still.currentImageIndex = i;
+    return still;
   });
   // Create cell once
   // sv.cells[gridIndex++] = {
@@ -57,7 +38,7 @@ export function updateCellData() {
   // width: sv.cellW,
   // height: sv.cellH,
   // };
-  sv.bb.updatePixels();
+  // sv.bb.updatePixels();
 
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
 }

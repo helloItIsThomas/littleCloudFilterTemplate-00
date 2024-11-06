@@ -38,7 +38,8 @@ export function shaderRendering() {
   sv.triangles = [];
 
   for (let i = 0; i < sv.totalTriangles; i++) {
-    const cell = sv.cells[i];
+    // assuming the grid of both images is the same...
+    const cell = sv.stills[0].cells[i];
     sv.triangles[i] = {
       x: cell.x,
       y: cell.y,
