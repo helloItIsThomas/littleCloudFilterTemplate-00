@@ -69,3 +69,25 @@ export function updateClock(time, pauseDuration) {
     return 0.0;
   }
 }
+function easeInOut(t) {
+  return t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2;
+}
+
+export function updateClockEase(time, pauseDuration) {
+  const cycleDuration = 2 + pauseDuration * 2; // Full cycle duration with pauses
+  const cycleTime = time % cycleDuration;
+
+  if (cycleTime < 1) {
+    // Move from 0.0 to 1.0 over 1 second with ease-in-out
+    return easeInOut(cycleTime);
+  } else if (cycleTime < 1 + pauseDuration) {
+    // Pause at 1.0
+    return 1.0;
+  } else if (cycleTime < 2 + pauseDuration) {
+    // Move from 1.0 back to 0.0 over 1 second with ease-in-out
+    return easeInOut(1 - (cycleTime - (1 + pauseDuration)));
+  } else {
+    // Pause at 0.0
+    return 0.0;
+  }
+}

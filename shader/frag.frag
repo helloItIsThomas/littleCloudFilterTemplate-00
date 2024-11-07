@@ -33,7 +33,7 @@ void main() {
         brightness = testLerp.r;
     }
     brightness = bTexColor.r + time;
-    // brightness = time;
+    // brightness = 0.0;
 
     // Apply offsets to the UV coordinates
     vec2 hgUV = vUV / vec2(hgAR, 1.0);
@@ -50,70 +50,45 @@ void main() {
     float hgUV_x;
     float rcUV_x;
 
+    float point1 = 0.2;
+    float point2 = 0.4;
+    float point3 = 0.8;
+
     // Map brightness to lcUV.x (0.0 to 0.25 for brightness 0.0 to 0.25)
-    if(brightness <= 0.25) {
-        lcUV_x = brightness / 0.25 * 0.25;
+    if(brightness <= point1) {
+        lcUV_x = brightness / point1 * point1;
     } else {
-        lcUV_x = 0.25;
+        lcUV_x = point1;
     }
 
     // Map brightness to hgUV.x (0.0 to 0.5 for brightness 0.25 to 0.6)
-    if(brightness > 0.25 && brightness <= 0.6) {
-        hgUV_x = (brightness - 0.25) / (0.6 - 0.25) * 0.5;
-    } else if(brightness > 0.6) {
+    if(brightness > point1 && brightness <= point2) {
+        hgUV_x = (brightness - point1) / (point2 - point1) * 0.5;
+    } else if(brightness > point2) {
         hgUV_x = 0.5;
     } else {
         hgUV_x = 0.0;
     }
 
 // Map brightness to rcUV.x
-    if(brightness > 0.25 && brightness <= 0.4) {
+    if(brightness > point1 && brightness <= point2) {
     // Map 0.25 - 0.4 brightness to 0.0 - 0.25 rcUV.x
-        rcUV_x = (brightness - 0.25) / (0.4 - 0.25) * 0.25;
-    } else if(brightness > 0.4 && brightness <= 0.6) {
+        rcUV_x = (brightness - point1) / (point2 - point1) * point1;
+    } else if(brightness > point2 && brightness <= point3) {
     // Keep rcUV_x constant at 0.25 in the mid-range to prevent snapping
-        rcUV_x = 0.25;
-    } else if(brightness > 0.6) {
+        rcUV_x = point1;
+    } else if(brightness > point3) {
     // Map 0.6 - 1.0 brightness to 0.25 - 1.0 rcUV.x
-        rcUV_x = 0.25 + (brightness - 0.6) / (1.0 - 0.6) * 0.75;
+        rcUV_x = point1 + (brightness - point3) / (1.0 - point3) * 0.75;
     } else {
         rcUV_x = 0.0;
     }
 
-    // float minClampVal = 0.0;
-    // float maxClampVal = 0.7;
-    // hgUV.x = clamp(hgUV.x + hgUV_x, minClampVal, maxClampVal);
-    // lcUV.x = clamp(lcUV.x + 0.125 + lcUV_x, minClampVal, maxClampVal);
-    // rcUV.x = clamp(rcUV.x - 0.125 + rcUV_x, minClampVal, maxClampVal);
-
     float minClampVal = 0.0;
-    float maxClampVal = 0.8;
-    float interval1 = hgUV.x + hgUV_x;
-    float interval2 = lcUV.x + 0.125 + lcUV_x;
-    float interval3 = rcUV.x - 0.125 + rcUV_x;
-
-// Find minimum and maximum of the intervals to check range
-    float minValue = min(min(interval1, interval2), interval3);
-    float maxValue = max(max(interval1, interval2), interval3);
-
-// Calculate the necessary shift to fit within minClampVal and maxClampVal
-    float shift = 0.0;
-    if(minValue < minClampVal) {
-        shift = minClampVal - minValue;
-    } else if(maxValue > maxClampVal) {
-        shift = maxClampVal - maxValue;
-    }
-
-// Apply shift or set to 0.0 if minValue reaches minClampVal
-    if(maxValue <= maxClampVal) {
-        hgUV.x = 1.0;
-        lcUV.x = 1.0;
-        rcUV.x = 1.0;
-    } else {
-        hgUV.x = interval1 + shift;
-        lcUV.x = interval2 + shift;
-        rcUV.x = interval3 + shift;
-    }
+    float maxClampVal = 1.0;
+    hgUV.x = clamp(hgUV.x + hgUV_x, minClampVal, maxClampVal);
+    lcUV.x = clamp(lcUV.x + 0.125 + lcUV_x, minClampVal, maxClampVal);
+    rcUV.x = clamp(rcUV.x - 0.125 + rcUV_x, minClampVal, maxClampVal);
 
     // float timeOrBrightness = brightness;
     // hgUV.x = clamp(hgUV.x + timeOrBrightness, 0.0, 1.0);
@@ -127,6 +102,6 @@ void main() {
 
     // Output color
     // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    gl_FragColor = hourglass + rightCircle + leftCircle;
     // gl_FragColor = rightCircle + leftCircle + hourglass;
-    gl_FragColor = hourglass;
 }

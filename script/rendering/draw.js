@@ -1,5 +1,5 @@
 import { sv } from "../utils/variables.js";
-import { updateClock } from "../utils/utils";
+import { updateClock, updateClockEase } from "../utils/utils";
 
 import Stats from "stats.js";
 
@@ -29,7 +29,7 @@ export function draw() {
   sv.frameCount = sv.ticker.lastTime * 0.05;
   sv.clock = sv.frameCount * sv.speed;
 
-  const newClock = updateClock(performance.now() / 1000, 0.8);
+  const newClock = updateClockEase(performance.now() / 1000, 0.8);
   // const newClock = sv.clock % 1.0;
 
   const data = sv.instancePositionBuffer.data;
