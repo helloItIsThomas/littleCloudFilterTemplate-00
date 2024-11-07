@@ -50,32 +50,40 @@ export function createRightCircle(size) {
 }
 
 export function createShapeGraphic(size) {
-  console.log("running createCustomShapeGraphics");
+  const scaleAmount = 0.8;
+  console.log("running createShapeGraphic");
+
+  // Define quad dimensions
   const width = size * 2;
   const height = size;
   const pg = sv.p.createGraphics(width, height);
-  const cDiameter = height * cDiamMult;
+  const cDiameter = height * cDiamMult * scaleAmount;
   pg.pixelDensity(3);
   pg.fill(0);
-  pg.strokeWeight(3);
-  pg.stroke(255, 0, 0);
   pg.noStroke();
 
-  const borderOff = 0;
-  // Draw quad
+  const borderOffset = 0.0;
+
+  pg.push();
+  pg.scale(scaleAmount); // Scale down all elements
+  // Draw quad with padding
   pg.beginShape();
-  pg.vertex(borderOff, borderOff * 2);
-  pg.vertex(width * 0.5 - borderOff * 0.5, borderOff * 2);
-  pg.vertex(width * 0.5 - borderOff * 0.5, height - borderOff * 0.5);
-  pg.vertex(borderOff, height - borderOff * 0.5);
+  pg.vertex(borderOffset, borderOffset);
+  pg.vertex(width * 0.5 - borderOffset, borderOffset);
+  pg.vertex(width * 0.5 - borderOffset, height - borderOffset);
+  pg.vertex(borderOffset, height - borderOffset);
   pg.endShape(sv.p.CLOSE);
 
-  // Draw two circular cutouts
+  // Draw two circular cutouts, centered vertically with padding adjustments
   pg.erase();
-  pg.circle(0.0, height * 0.5, cDiameter); // Left circle
-  pg.circle(width * 0.5, height * 0.5, cDiameter); // Right circle
+  pg.circle(borderOffset, height * 0.5, cDiameter - 2 * borderOffset); // Left circle
+  pg.circle(
+    width * 0.5 - borderOffset,
+    height * 0.5,
+    cDiameter - 2 * borderOffset
+  ); // Right circle
   pg.noErase();
-  pg.noFill();
+  pg.pop();
 
   return pg;
 }

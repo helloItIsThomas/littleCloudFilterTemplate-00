@@ -32,8 +32,8 @@ void main() {
         vec4 testLerp = mix(bTexColor, bTexColor2, abs(sin(time)));
         brightness = testLerp.r;
     }
-    brightness = 0.0;
-    brightness = bTexColor.r;
+    brightness = bTexColor.r + time;
+    // brightness = time;
 
     // Apply offsets to the UV coordinates
     vec2 hgUV = vUV / vec2(hgAR, 1.0);
@@ -46,12 +46,50 @@ void main() {
     //  if brightness > 0.6, hgUV.x should stay at 0.5
     // map brightness from 0.25 => 0.4 to rcUV.x 0.0 => 0.25
     // map brightness from 0.6 => 1.0 to rcUV.x 0.25 => 1.0
+    float lcUV_x;
+    float hgUV_x;
+    float rcUV_x;
 
-    float timeOrBrightness = brightness;
+    // Map brightness to lcUV.x (0.0 to 0.25 for brightness 0.0 to 0.25)
+    if(brightness <= 0.25) {
+        lcUV_x = brightness / 0.25 * 0.25;
+    } else {
+        lcUV_x = 0.25;
+    }
 
-    hgUV.x = clamp(hgUV.x + timeOrBrightness, 0.0, 1.0);
-    lcUV.x = clamp(lcUV.x + 0.125 + timeOrBrightness, 0.0, 1.0);
-    rcUV.x = clamp(rcUV.x - 0.125 + timeOrBrightness, 0.0, 1.0);
+    // Map brightness to hgUV.x (0.0 to 0.5 for brightness 0.25 to 0.6)
+    if(brightness > 0.25 && brightness <= 0.6) {
+        hgUV_x = (brightness - 0.25) / (0.6 - 0.25) * 0.5;
+    } else if(brightness > 0.6) {
+        hgUV_x = 0.5;
+    } else {
+        hgUV_x = 0.0;
+    }
+
+// Map brightness to rcUV.x
+    if(brightness > 0.25 && brightness <= 0.4) {
+    // Map 0.25 - 0.4 brightness to 0.0 - 0.25 rcUV.x
+        rcUV_x = (brightness - 0.25) / (0.4 - 0.25) * 0.25;
+    } else if(brightness > 0.4 && brightness <= 0.6) {
+    // Keep rcUV_x constant at 0.25 in the mid-range to prevent snapping
+        rcUV_x = 0.25;
+    } else if(brightness > 0.6) {
+    // Map 0.6 - 1.0 brightness to 0.25 - 1.0 rcUV.x
+        rcUV_x = 0.25 + (brightness - 0.6) / (1.0 - 0.6) * 0.75;
+    } else {
+        rcUV_x = 0.0;
+    }
+
+    float minClampVal = 0.0;
+    float maxClampVal = 0.7;
+    hgUV.x = clamp(hgUV.x + hgUV_x, minClampVal, maxClampVal);
+    lcUV.x = clamp(lcUV.x + 0.125 + lcUV_x, minClampVal, maxClampVal);
+    rcUV.x = clamp(rcUV.x - 0.125 + rcUV_x, minClampVal, maxClampVal);
+
+    // float timeOrBrightness = brightness;
+    // hgUV.x = clamp(hgUV.x + timeOrBrightness, 0.0, 1.0);
+    // lcUV.x = clamp(lcUV.x + 0.125 + timeOrBrightness, 0.0, 1.0);
+    // rcUV.x = clamp(rcUV.x - 0.125 + timeOrBrightness, 0.0, 1.0);
 
     // Sample each texture with its own offset
     vec4 hourglass = texture2D(hourglassTex, hgUV);
@@ -60,6 +98,6 @@ void main() {
 
     // Output color
     // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-    // gl_FragColor = rightCircle + leftCircle;
-    gl_FragColor = hourglass + rightCircle + leftCircle;
+    // gl_FragColor = rightCircle + leftCircle + hourglass;
+    gl_FragColor = hourglass;
 }
