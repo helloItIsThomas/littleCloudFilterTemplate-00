@@ -87,7 +87,7 @@ void main() {
     // rcUV.x = clamp(rcUV.x - 0.125 + rcUV_x, minClampVal, maxClampVal);
 
     float minClampVal = 0.0;
-    float maxClampVal = 0.7;
+    float maxClampVal = 0.8;
     float interval1 = hgUV.x + hgUV_x;
     float interval2 = lcUV.x + 0.125 + lcUV_x;
     float interval3 = rcUV.x - 0.125 + rcUV_x;
@@ -104,10 +104,16 @@ void main() {
         shift = maxClampVal - maxValue;
     }
 
-// Apply the shift to each interval to bring the whole range within bounds
-    hgUV.x = interval1 + shift;
-    lcUV.x = interval2 + shift;
-    rcUV.x = interval3 + shift;
+// Apply shift or set to 0.0 if minValue reaches minClampVal
+    if(maxValue <= maxClampVal) {
+        hgUV.x = 1.0;
+        lcUV.x = 1.0;
+        rcUV.x = 1.0;
+    } else {
+        hgUV.x = interval1 + shift;
+        lcUV.x = interval2 + shift;
+        rcUV.x = interval3 + shift;
+    }
 
     // float timeOrBrightness = brightness;
     // hgUV.x = clamp(hgUV.x + timeOrBrightness, 0.0, 1.0);

@@ -66,7 +66,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "120",
+  gridResolution: "80",
   noiseOffset: 3.4,
 
   testSVG: null,
