@@ -66,7 +66,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "50",
+  gridResolution: "1",
   noiseOffset: 3.4,
 
   testSVG: null,
@@ -95,7 +95,7 @@ recordingController.onChange((value) => {
 });
 screenshotController.onChange((value) => {
   if (value) {
-    sv.p.save();
+    // sv.p.save();
     screenshotController.setValue(false);
   }
 });

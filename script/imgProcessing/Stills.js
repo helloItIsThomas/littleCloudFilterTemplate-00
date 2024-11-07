@@ -37,7 +37,6 @@ export class Still {
       }
     }
     tempCanv.updatePixels();
-    tempCanv.save();
     this.brightnessTex = tempCanv;
   }
 }

@@ -1,0 +1,5 @@
+
+
+••• TO DO:
+• PRIORITY 1
+Fix the bug that happens when changing from 2 images to 1 image at runtime.
