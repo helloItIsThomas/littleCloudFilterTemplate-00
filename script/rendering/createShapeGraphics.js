@@ -20,7 +20,7 @@ export function createLeftCircle(size) {
   pg.background(0, 255, 0);
   pg.clear();
   pg.ellipseMode(sv.p.CENTER);
-  const circleDiameter = h * 0.5; // Adjust the scale as needed
+  const circleDiameter = h * 0.4; // Adjust the scale as needed
   pg.translate(circleDiameter * 0.5, h / 2);
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
   return pg;
@@ -37,7 +37,7 @@ export function createRightCircle(size) {
   pg.background(0, 255, 0);
   pg.clear();
   pg.ellipseMode(sv.p.CENTER);
-  const circleDiameter = h * 0.5; // Adjust the scale as needed
+  const circleDiameter = h * 0.4; // Adjust the scale as needed
   pg.translate(w - circleDiameter * 0.5, h / 2);
   pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
   return pg;

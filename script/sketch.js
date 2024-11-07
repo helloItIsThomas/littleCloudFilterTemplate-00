@@ -57,8 +57,8 @@ async function loadImagesWithP5(p) {
     });
   };
 
-  const sourceImgPaths = ["/assets/debug/star.png", "/assets/debug/circle.png"];
-  // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/star.png"];
+  // const sourceImgPaths = ["/assets/debug/456.png", "/assets/debug/654.png"];
+  const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/star.png"];
 
   await Promise.all(sourceImgPaths.map(loadImage));
 }
