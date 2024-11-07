@@ -8,7 +8,7 @@ export function createAllThreeGraphics() {
   if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
   sv.circleGraphicLeft = createLeftCircle(sv.cellW);
   sv.circleGraphicRight = createRightCircle(sv.cellW);
-  sv.customShapeGraphics = createShapeGraphic(sv.cellW / 2);
+  sv.customShapeGraphics = createShapeGraphic(sv.cellW);
   // sv.circleGraphicLeft.save();
   // sv.circleGraphicRight.save();
 }
@@ -21,8 +21,7 @@ export function createLeftCircle(size) {
   pg.pixelDensity(3);
   pg.noStroke();
   pg.fill(0);
-  pg.strokeWeight(2);
-  pg.stroke(0, 255, 0);
+  // pg.stroke(255, 0, 0);
   pg.background(0, 255, 0);
   pg.clear();
   pg.ellipseMode(sv.p.CENTER);
@@ -40,8 +39,7 @@ export function createRightCircle(size) {
   pg.pixelDensity(3);
   pg.noStroke();
   pg.fill(0);
-  pg.strokeWeight(2);
-  pg.stroke(0, 255, 0);
+  // pg.stroke(255, 0, 0);
   pg.background(0, 255, 0);
   pg.clear();
   pg.ellipseMode(sv.p.CENTER);
@@ -59,9 +57,11 @@ export function createShapeGraphic(size) {
   const cDiameter = height * cDiamMult;
   pg.pixelDensity(3);
   pg.fill(0);
+  pg.strokeWeight(3);
+  pg.stroke(255, 0, 0);
   pg.noStroke();
 
-  const borderOff = 1;
+  const borderOff = 0;
   // Draw quad
   pg.beginShape();
   pg.vertex(borderOff, borderOff * 2);
@@ -76,9 +76,6 @@ export function createShapeGraphic(size) {
   pg.circle(width * 0.5, height * 0.5, cDiameter); // Right circle
   pg.noErase();
   pg.noFill();
-  // pg.stroke(0);
-  // pg.circle(width * 0.5, height * 0.5, cDiameter); // Right circle
-  // pg.circle(0.0, height * 0.5, cDiameter); // Left circle
 
   return pg;
 }

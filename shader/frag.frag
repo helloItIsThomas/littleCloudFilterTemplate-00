@@ -33,15 +33,12 @@ void main() {
         brightness = testLerp.r;
     }
     brightness = 0.0;
-
-    float hgOff = 0.0;
-    float lcOff = 0.0;
-    float rcOff = 0.0;
+    brightness = bTexColor.r;
 
     // Apply offsets to the UV coordinates
-    vec2 hgUV = vUV / vec2(hgAR, 1.0) + vec2(hgOff, 0.0);
-    vec2 lcUV = vUV / vec2(lcAR, 1.0) + vec2(lcOff, 0.0);
-    vec2 rcUV = vUV / vec2(rcAR, 1.0) + vec2(rcOff, 0.0);
+    vec2 hgUV = vUV / vec2(hgAR, 1.0);
+    vec2 lcUV = vUV / vec2(lcAR, 1.0);
+    vec2 rcUV = vUV / vec2(rcAR, 1.0);
 
     // map brightness from 0.0 => 0.25 to lcUV.x 0.0 => 0.25
     //  if brightness > 0.25, lcUV.x should stay at 0.25
@@ -50,30 +47,11 @@ void main() {
     // map brightness from 0.25 => 0.4 to rcUV.x 0.0 => 0.25
     // map brightness from 0.6 => 1.0 to rcUV.x 0.25 => 1.0
 
-    // float lVal = min(brightness / 0.25, 1.0);
-    float rVal = 0.0;
-    if(brightness <= 0.4) {
-        rVal = min((brightness - 0.25) / (0.4 - 0.25), 1.0) * 0.25;
-    } else if(brightness > 0.6) {
-        rVal = 0.25 + ((brightness - 0.6) / (1.0 - 0.6)) * 0.75;
-    }
-    float hgVal = 0.0;
-    if(brightness > 0.25 && brightness <= 0.6) {
-        hgVal = ((brightness - 0.25) / (0.6 - 0.25)) * 0.5;
-    } else if(brightness > 0.6) {
-        hgVal = 0.5;
-    }
+    float timeOrBrightness = brightness;
 
-    // vec2 debug = vUV;
-    // debug.x = fract(debug.x + time);
-    // debug.y = fract(debug.y);
-    // Wrap UV coordinates to stay within [0, 1] range
-    // hgUV.x = fract(hgUV.x + hgVal);
-    // lcUV.x = fract(lcUV.x + 0.125 + time);
-    // rcUV.x = fract(rcUV.x - 0.125);
-    hgUV.x = clamp(hgUV.x + hgVal + time, 0.0, 1.0);
-    lcUV.x = clamp(lcUV.x + 0.125 + time, 0.0, 1.0);
-    rcUV.x = clamp(rcUV.x - 0.125 + time, 0.0, 1.0);
+    hgUV.x = clamp(hgUV.x + timeOrBrightness, 0.0, 1.0);
+    lcUV.x = clamp(lcUV.x + 0.125 + timeOrBrightness, 0.0, 1.0);
+    rcUV.x = clamp(rcUV.x - 0.125 + timeOrBrightness, 0.0, 1.0);
 
     // Sample each texture with its own offset
     vec4 hourglass = texture2D(hourglassTex, hgUV);
@@ -83,5 +61,5 @@ void main() {
     // Output color
     // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     // gl_FragColor = rightCircle + leftCircle;
-    gl_FragColor = hourglass;
+    gl_FragColor = hourglass + rightCircle + leftCircle;
 }
