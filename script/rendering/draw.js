@@ -26,10 +26,10 @@ function createStatsGUI() {
 }
 
 export function draw() {
-  sv.frameCount = sv.ticker.lastTime * 0.05;
+  sv.frameCount = sv.ticker.lastTime * 0.02;
   sv.clock = sv.frameCount * sv.speed;
 
-  const newClock = updateClockEase(performance.now() / 1000, 0.8);
+  const newClock = updateClockEase(performance.now() / 2000, 0.5);
   // const newClock = sv.clock % 1.0;
 
   const data = sv.instancePositionBuffer.data;

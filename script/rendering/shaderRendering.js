@@ -86,6 +86,23 @@ export function shaderRendering() {
     indexBuffer: [0, 1, 2, 0, 2, 3],
   });
 
+  //// WIP WIP WIP WIP WIP WIP
+  const noiseCanvas = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
+  let n = 0;
+  for (let y = 0; y < sv.rowCount; y++) {
+    for (let x = 0; x < sv.colCount; x++) {
+      const noisyValue = sv.p.noise(n * 0.5);
+      noiseCanvas.set(
+        x,
+        y,
+        sv.p.color(noisyValue * 255, noisyValue * 255, noisyValue * 255)
+      );
+      n++;
+    }
+  }
+  noiseCanvas.updatePixels();
+  //// WIP WIP WIP WIP WIP WIP END END END END
+
   const gl = { vertex, fragment };
 
   let src1 = new ImageSource({ resource: sv.customShapeGraphics.canvas });
@@ -94,6 +111,8 @@ export function shaderRendering() {
   let tex2 = new Texture({ source: src2 });
   let src3 = new ImageSource({ resource: sv.circleGraphicRight.canvas });
   let tex3 = new Texture({ source: src3 });
+  let noiseSrc = new ImageSource({ resource: noiseCanvas.canvas });
+  let noiseTex = new Texture({ source: noiseSrc });
 
   let bTexes = [];
   bTexes = sv.stills.map((still) => {
@@ -112,6 +131,7 @@ export function shaderRendering() {
     hourglassTex: tex1.source,
     leftCircleTex: tex2.source,
     rightCircleTex: tex3.source,
+    noiseTex: noiseTex.source,
     waveUniforms: {
       time: { value: 1, type: "f32" },
       gridResolution: { value: sv.gridResolution, type: "f32" },

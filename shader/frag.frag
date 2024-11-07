@@ -4,6 +4,7 @@ in float vIndex;
 uniform sampler2D hourglassTex;
 uniform sampler2D leftCircleTex;
 uniform sampler2D rightCircleTex;
+uniform sampler2D noiseTex;
 uniform sampler2D bTex1;
 uniform sampler2D bTex2;
 
@@ -27,13 +28,16 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, vec2(x, y));
     float brightness = bTexColor.r;
 
-    if(numBTexes == 2) {
-        vec4 bTexColor2 = texture2D(bTex2, vec2(x, y));
-        vec4 testLerp = mix(bTexColor, bTexColor2, abs(sin(time)));
-        brightness = testLerp.r;
-    }
+    vec4 noise = texture2D(noiseTex, vec2(x, y));
+
+    // if(numBTexes == 2) {
+        // vec4 bTexColor2 = texture2D(bTex2, vec2(x, y));
+        // vec4 testLerp = mix(bTexColor, bTexColor2, abs(sin(time)));
+        // brightness = testLerp.r;
+    // }
+
+    // brightness = bTexColor.r + (time + (noise.r * 0.3));
     brightness = bTexColor.r + time;
-    // brightness = 0.0;
 
     // Apply offsets to the UV coordinates
     vec2 hgUV = vUV / vec2(hgAR, 1.0);
@@ -86,9 +90,12 @@ void main() {
 
     float minClampVal = 0.0;
     float maxClampVal = 1.0;
-    hgUV.x = clamp(hgUV.x + hgUV_x, minClampVal, maxClampVal);
-    lcUV.x = clamp(lcUV.x + 0.125 + lcUV_x, minClampVal, maxClampVal);
-    rcUV.x = clamp(rcUV.x - 0.125 + rcUV_x, minClampVal, maxClampVal);
+    // hgUV.x = clamp(hgUV.x + hgUV_x, minClampVal, maxClampVal);
+    // lcUV.x = clamp(lcUV.x + 0.125 + lcUV_x, minClampVal, maxClampVal);
+    // rcUV.x = clamp(rcUV.x - 0.125 + rcUV_x, minClampVal, maxClampVal);
+    hgUV.x = hgUV.x + hgUV_x;
+    lcUV.x = lcUV.x + 0.125 + lcUV_x;
+    rcUV.x = rcUV.x - 0.125 + rcUV_x;
 
     // float timeOrBrightness = brightness;
     // hgUV.x = clamp(hgUV.x + timeOrBrightness, 0.0, 1.0);
