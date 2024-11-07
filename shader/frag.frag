@@ -80,11 +80,34 @@ void main() {
         rcUV_x = 0.0;
     }
 
+    // float minClampVal = 0.0;
+    // float maxClampVal = 0.7;
+    // hgUV.x = clamp(hgUV.x + hgUV_x, minClampVal, maxClampVal);
+    // lcUV.x = clamp(lcUV.x + 0.125 + lcUV_x, minClampVal, maxClampVal);
+    // rcUV.x = clamp(rcUV.x - 0.125 + rcUV_x, minClampVal, maxClampVal);
+
     float minClampVal = 0.0;
     float maxClampVal = 0.7;
-    hgUV.x = clamp(hgUV.x + hgUV_x, minClampVal, maxClampVal);
-    lcUV.x = clamp(lcUV.x + 0.125 + lcUV_x, minClampVal, maxClampVal);
-    rcUV.x = clamp(rcUV.x - 0.125 + rcUV_x, minClampVal, maxClampVal);
+    float interval1 = hgUV.x + hgUV_x;
+    float interval2 = lcUV.x + 0.125 + lcUV_x;
+    float interval3 = rcUV.x - 0.125 + rcUV_x;
+
+// Find minimum and maximum of the intervals to check range
+    float minValue = min(min(interval1, interval2), interval3);
+    float maxValue = max(max(interval1, interval2), interval3);
+
+// Calculate the necessary shift to fit within minClampVal and maxClampVal
+    float shift = 0.0;
+    if(minValue < minClampVal) {
+        shift = minClampVal - minValue;
+    } else if(maxValue > maxClampVal) {
+        shift = maxClampVal - maxValue;
+    }
+
+// Apply the shift to each interval to bring the whole range within bounds
+    hgUV.x = interval1 + shift;
+    lcUV.x = interval2 + shift;
+    rcUV.x = interval3 + shift;
 
     // float timeOrBrightness = brightness;
     // hgUV.x = clamp(hgUV.x + timeOrBrightness, 0.0, 1.0);
