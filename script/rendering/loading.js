@@ -6,21 +6,37 @@ import {
   Sprite,
   Loader,
   Texture,
+  Graphics,
   ImageSource,
   AnimatedSprite,
 } from "pixi.js";
 
 export function initGridLoadingScreen() {
   console.log("running initGridLoadingScreen");
-  let loadingScreenTex = sv.p.createGraphics(100, 100);
-  loadingScreenTex.background("#0000ff");
-  loadingScreenTex.fill("#ff0000");
-  loadingScreenTex.circle(50, 50, 50);
-  let src0 = new ImageSource({ resource: loadingScreenTex.canvas });
-  let tex0 = new Texture({ source: src0 });
-  const loadingSprite = new Sprite(tex0);
+
+  // Create a new Graphics object
+  const loadingScreenGraphics = new Graphics();
+
+  loadingScreenGraphics.circle(0, 0, 50);
+  loadingScreenGraphics.fill(0x00ff00);
+
+  // Create a texture from the graphics
+  const loadingScreenTex = sv.pApp.renderer.generateTexture(
+    loadingScreenGraphics
+  );
+
+  // Create a sprite from the texture
+  const loadingSprite = new Sprite(loadingScreenTex);
   loadingSprite.anchor.set(0.5);
   loadingSprite.x = sv.p.windowWidth / 2;
   loadingSprite.y = sv.p.windowHeight / 2;
   sv.loadingScreen = loadingSprite;
+  //   sv.pContainer.addChild(sv.loadingScreen);
+
+  // Add animation using Ticker
+  const ticker = new Ticker();
+  ticker.add(() => {
+    loadingSprite.rotation += 0.01; // Rotate the sprite
+  });
+  ticker.start();
 }

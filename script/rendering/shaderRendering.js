@@ -157,4 +157,6 @@ export function shaderRendering() {
   });
   sv.pApp.stage.removeChildren();
   sv.pApp.stage.addChild(sv.triangleMesh);
+  // sv.pContainer.addChild(sv.triangleMesh);
+  // sv.pContainer.addChild(sv.loadingScreen);
 }

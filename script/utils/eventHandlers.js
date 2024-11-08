@@ -2,6 +2,7 @@ import { sv } from "./variables.js";
 import { updateCellData } from "../imgProcessing/imageProcessing.js";
 import { Recorder } from "canvas-record";
 import { AVC, HEVC } from "media-codecs";
+import { initGridLoadingScreen } from "../rendering/loading.js";
 import { shaderRendering } from "../rendering/shaderRendering.js";
 import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
 import { scaleDims } from "./utils.js";
@@ -40,10 +41,12 @@ export function recalculateGrid() {
   sv.totalCells = sv.rowCount * sv.colCount;
   sv.cellW = sv.gridW / sv.colCount;
   sv.cellH = sv.gridH / sv.rowCount;
+  // initGridLoadingScreen();
 
-  updateCellData();
-  createAllThreeGraphics();
-  shaderRendering();
+  updateCellData().then(() => {
+    createAllThreeGraphics();
+    shaderRendering();
+  });
 }
 
 export function imageLoaded(p) {

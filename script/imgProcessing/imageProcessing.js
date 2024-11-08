@@ -2,7 +2,7 @@ import { sv } from "../utils/variables.js";
 import { fitImageToWindow } from "../utils/utils.js";
 import { Still } from "./Stills.js";
 
-export function updateCellData() {
+export async function updateCellData() {
   console.log("running updateCellData");
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs

@@ -8,9 +8,8 @@ import {
   Texture,
   ImageSource,
   AnimatedSprite,
+  Container,
 } from "pixi.js";
-
-import { initGridLoadingScreen } from "./rendering/loading.js";
 
 import { sv } from "./utils/variables.js";
 import { handleMultFiles, imageLoaded } from "./utils/eventHandlers.js";
@@ -23,6 +22,7 @@ import { createInput } from "./utils/input";
 sv.pApp = new Application();
 await sv.pApp.init({
   background: "#D30403",
+  // background: "#ffffff",
   clearBeforeRender: true,
   autoDensity: true,
   resolution: 2,
@@ -31,6 +31,8 @@ await sv.pApp.init({
   preference: "webgl",
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
+// sv.pContainer = new Container();
+// sv.pApp.stage.addChild(sv.pContainer);
 
 sv.ticker = new Ticker();
 sv.ticker.autoStart = false;
@@ -75,8 +77,6 @@ export default function (p) {
   async function mySetup() {
     console.log("running mySetup");
 
-    initGridLoadingScreen();
-
     await loadImagesWithP5(p);
     await loadImagesWithPixi();
     console.log("all images have loaded");
@@ -100,16 +100,16 @@ export default function (p) {
     sv.stats.begin();
     sv.constantClock += sv.speed;
 
-    if (sv.setupDone) {
-      if (sv.isRecording) {
-        sv.stepPromise = sv.stepPromise.then(async () => {
-          await sv.canvasRecorder.step();
-        });
-      }
-      draw();
-      if (sv.isRecording) drawIcon();
-    } else {
-    }
+    // if (sv.setupDone) {
+    // if (sv.isRecording) {
+    // sv.stepPromise = sv.stepPromise.then(async () => {
+    // await sv.canvasRecorder.step();
+    // });
+    // }
+    draw();
+    // if (sv.isRecording) drawIcon();
+    // } else {
+    // }
     sv.stats.end();
   });
 }

@@ -14,6 +14,7 @@ var customContainer = document
 
 export const sv = {
   pApp: null,
+  pContainer: null,
   ticker: null,
   frameCount: null,
   spinnyBG: null,

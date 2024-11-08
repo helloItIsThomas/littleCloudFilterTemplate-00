@@ -7,6 +7,8 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  /* background-color: #d30403; */
+  background-color: white;
 }
 
 .moveGUI {
