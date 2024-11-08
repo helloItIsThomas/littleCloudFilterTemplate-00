@@ -5,7 +5,7 @@ import { AVC, HEVC } from "media-codecs";
 import { shaderRendering } from "../rendering/shaderRendering.js";
 import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
 import { scaleDims } from "./utils.js";
-import { Application, Assets, Texture, Sprite } from "pixi.js";
+import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
 
 document.getElementById("closeGui").addEventListener("click", function () {
   const guiElement = document.querySelector(".moveGUI");
@@ -41,7 +41,9 @@ export function recalculateGrid() {
   sv.cellW = sv.gridW / sv.colCount;
   sv.cellH = sv.gridH / sv.rowCount;
 
+  updateCellData();
   createAllThreeGraphics();
+  shaderRendering();
 }
 
 export function imageLoaded(p) {
@@ -65,8 +67,6 @@ export function imageLoaded(p) {
     }
   });
 
-  imgs.map((img) => {});
-
   if (imgs.length > 1) {
     console.log("larger than 1");
     // imgs.forEach((img) => {
@@ -81,14 +81,6 @@ export function imageLoaded(p) {
   }
 
   recalculateGrid();
-  console.log(
-    "about to run updateCellData from eventHandlers.js (imageLoaded())"
-  );
-  updateCellData();
-
-  createAllThreeGraphics();
-
-  shaderRendering();
 
   const context = sv.p.drawingContext;
   context.imageSmoothingEnabled = true;

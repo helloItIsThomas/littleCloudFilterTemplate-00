@@ -54,6 +54,7 @@ export const sv = {
   circleGraphicRight: null,
   cTex: null,
   sTex: null,
+  loadingScreen: null,
   circles: [],
   shapes: [],
   shapes2: [],
@@ -115,8 +116,6 @@ gridResController.onChange((value) => {
   else sv.gridResolution = 140;
 
   recalculateGrid();
-  console.log("about to run updateCellData from variables.js");
-  updateCellData();
 });
 
 // Add the toggle parameter to control visibility

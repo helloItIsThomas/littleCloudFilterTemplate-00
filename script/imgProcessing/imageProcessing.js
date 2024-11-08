@@ -28,5 +28,7 @@ export function updateCellData() {
     return still;
   });
 
+  console.log(sv.stills[0]);
+
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
 }

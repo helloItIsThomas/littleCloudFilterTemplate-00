@@ -7,6 +7,18 @@ export class Still {
     this.brightnessTex = null;
     this.cells = [];
   }
+
+  // populateGrid does the following:
+  // create a canvas
+  // gets brightness values
+  // stores them in the canvas
+  // populates its cell array,
+  //    including with brightness values
+
+  // i want to pre-calculate one or more things,
+  // so that we don't have to run this x y loop on start.
+  //
+
   populateGrid(image, sv) {
     const tempCanv = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
     tempCanv.pixelDensity(1);
@@ -18,11 +30,12 @@ export class Still {
         const yPos = y * sv.cellH;
         const cellImage = image.get(xPos, yPos, sv.cellW, sv.cellH);
 
-        // Calculate brightness
-        const brightnessValues = calculateAverageBrightnessP5(sv.p, cellImage);
-        const brightness = brightnessValues;
+        const aveBrightnessOfCell = calculateAverageBrightnessP5(
+          sv.p,
+          cellImage
+        );
+        const brightness = aveBrightnessOfCell;
 
-        // Populate canvas with brightness value (for texture representation)
         tempCanv.set(x, y, sv.p.color(brightness, brightness, brightness));
 
         // Populate cells

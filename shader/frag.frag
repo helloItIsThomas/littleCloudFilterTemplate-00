@@ -50,12 +50,6 @@ void main() {
     vec2 lcUV = vUV / vec2(lcAR, 1.0);
     vec2 rcUV = vUV / vec2(rcAR, 1.0);
 
-    // map brightness from 0.0 => 0.25 to lcUV.x 0.0 => 0.25
-    //  if brightness > 0.25, lcUV.x should stay at 0.25
-    // map brightness from 0.25 => 0.6 to hgUV.x 0.0 => 0.5
-    //  if brightness > 0.6, hgUV.x should stay at 0.5
-    // map brightness from 0.25 => 0.4 to rcUV.x 0.0 => 0.25
-    // map brightness from 0.6 => 1.0 to rcUV.x 0.25 => 1.0
     float lcUV_x;
     float hgUV_x;
     float rcUV_x;
@@ -80,7 +74,7 @@ void main() {
         hgUV_x = 0.0;
     }
 
-// Map brightness to rcUV.x
+    // Map brightness to rcUV.x
     if(brightness > point1 && brightness <= point2) {
     // Map 0.25 - 0.4 brightness to 0.0 - 0.25 rcUV.x
         rcUV_x = (brightness - point1) / (point2 - point1) * point1;
@@ -94,27 +88,14 @@ void main() {
         rcUV_x = 0.0;
     }
 
-    float minClampVal = 0.0;
-    float maxClampVal = 1.0;
-    // hgUV.x = clamp(hgUV.x + hgUV_x, minClampVal, maxClampVal);
-    // lcUV.x = clamp(lcUV.x + 0.125 + lcUV_x, minClampVal, maxClampVal);
-    // rcUV.x = clamp(rcUV.x - 0.125 + rcUV_x, minClampVal, maxClampVal);
     hgUV.x = hgUV.x + hgUV_x;
     lcUV.x = lcUV.x + 0.125 + lcUV_x;
     rcUV.x = rcUV.x - 0.125 + rcUV_x;
-
-    // float timeOrBrightness = brightness;
-    // hgUV.x = clamp(hgUV.x + timeOrBrightness, 0.0, 1.0);
-    // lcUV.x = clamp(lcUV.x + 0.125 + timeOrBrightness, 0.0, 1.0);
-    // rcUV.x = clamp(rcUV.x - 0.125 + timeOrBrightness, 0.0, 1.0);
 
     // Sample each texture with its own offset
     vec4 hourglass = texture2D(hourglassTex, hgUV);
     vec4 leftCircle = texture2D(leftCircleTex, lcUV);
     vec4 rightCircle = texture2D(rightCircleTex, rcUV);
 
-    // Output color
-    // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     gl_FragColor = hourglass + rightCircle + leftCircle;
-    // gl_FragColor = rightCircle + leftCircle + hourglass;
 }

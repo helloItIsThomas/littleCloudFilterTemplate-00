@@ -6,8 +6,11 @@ import {
   Sprite,
   Loader,
   Texture,
+  ImageSource,
   AnimatedSprite,
 } from "pixi.js";
+
+import { initGridLoadingScreen } from "./rendering/loading.js";
 
 import { sv } from "./utils/variables.js";
 import { handleMultFiles, imageLoaded } from "./utils/eventHandlers.js";
@@ -70,8 +73,10 @@ export default function (p) {
   sv.stepPromise = Promise.resolve();
 
   async function mySetup() {
-    // console.log();
     console.log("running mySetup");
+
+    initGridLoadingScreen();
+
     await loadImagesWithP5(p);
     await loadImagesWithPixi();
     console.log("all images have loaded");

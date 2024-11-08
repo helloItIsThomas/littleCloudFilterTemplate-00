@@ -5,10 +5,17 @@
 Have an image already pre-calculated for default,
 instead of spending time calculating the same image on each load.
 
+{
+    to do this, i think i need to separate the image loading from the brightness calculation.
+    imageLoaded() -> recalculateGrid() -> updateCellData() -> createAllThreeGraphics() -> shaderRendering()
+    
+
+}
+
 Have a processing / loading screen, prefereably one that displays a grid
 and fills in each cell as they is being evaluated.
+This should trigger whenever recalculateGrid runs. 
 
 Fix the bug that happens when changing from 2 images to 1 image at runtime.
-
 
 Implement proper resizing

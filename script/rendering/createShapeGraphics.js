@@ -10,8 +10,6 @@ export function createAllThreeGraphics() {
   sv.circleGraphicLeft = createLeftCircle(sv.cellW);
   sv.circleGraphicRight = createRightCircle(sv.cellW);
   sv.customShapeGraphics = createShapeGraphic(sv.cellW);
-  // sv.circleGraphicLeft.save();
-  // sv.circleGraphicRight.save();
 }
 
 export function createLeftCircle(size) {
