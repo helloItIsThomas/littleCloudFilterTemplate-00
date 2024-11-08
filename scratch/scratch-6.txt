@@ -2,15 +2,13 @@
 
 ••• TO DO:
 • PRIORITY 1
-Fix the bug that happens when changing from 2 images to 1 image at runtime.
-Add noise offset.
-
-
-Implement proper resizing
-
 Have an image already pre-calculated for default,
 instead of spending time calculating the same image on each load.
 
 Have a processing / loading screen, prefereably one that displays a grid
 and fills in each cell as they is being evaluated.
 
+Fix the bug that happens when changing from 2 images to 1 image at runtime.
+
+
+Implement proper resizing

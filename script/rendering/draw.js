@@ -29,7 +29,7 @@ export function draw() {
   sv.frameCount = sv.ticker.lastTime * 0.02;
   sv.clock = sv.frameCount * sv.speed;
 
-  const newClock = updateClockEase(performance.now() / 2000, 0.5);
+  const newClock = updateClock(performance.now() / 2000, 0.5);
   // const newClock = sv.clock % 1.0;
 
   const data = sv.instancePositionBuffer.data;

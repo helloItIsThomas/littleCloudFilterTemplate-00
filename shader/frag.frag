@@ -15,6 +15,12 @@ uniform float lcAR;
 uniform float rcAR;
 uniform int numBTexes;
 
+float ease(float t, float easeFactor) {
+    // Ensure easeFactor is between 0.5 and 2 for reasonable curve control
+    easeFactor = mix(0.2, 3.0, easeFactor);
+    return pow(t, easeFactor) / (pow(t, easeFactor) + pow(1.0 - t, easeFactor));
+}
+
 void main() {
     // Convert normalized vIndex to an absolute index
     float totalCells = gridResolution * gridResolution;
@@ -37,7 +43,7 @@ void main() {
     // }
 
     // brightness = bTexColor.r + (time + (noise.r * 0.3));
-    brightness = bTexColor.r + time;
+    brightness = bTexColor.r + ease(time, noise.r);
 
     // Apply offsets to the UV coordinates
     vec2 hgUV = vUV / vec2(hgAR, 1.0);

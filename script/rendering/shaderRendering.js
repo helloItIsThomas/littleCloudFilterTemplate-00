@@ -91,12 +91,8 @@ export function shaderRendering() {
   let n = 0;
   for (let y = 0; y < sv.rowCount; y++) {
     for (let x = 0; x < sv.colCount; x++) {
-      const noisyValue = sv.p.noise(n * 0.5);
-      noiseCanvas.set(
-        x,
-        y,
-        sv.p.color(noisyValue * 255, noisyValue * 255, noisyValue * 255)
-      );
+      const noisyValue = sv.p.noise(n);
+      noiseCanvas.set(x, y, sv.p.color(noisyValue * 255));
       n++;
     }
   }
