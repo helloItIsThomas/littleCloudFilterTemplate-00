@@ -3,7 +3,7 @@ import { fitImageToWindow } from "../utils/utils.js";
 import { Still } from "./Stills.js";
 
 export async function updateCellData() {
-  console.log("running updateCellData");
+  // console.log("running updateCellData");
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs
     : [sv.animUnderImgs]; // Ensure _imgs is always an array
@@ -16,19 +16,15 @@ export async function updateCellData() {
     return processed;
   });
 
-  console.log(processedImages.length);
-
   sv.stills = [];
 
-  sv.stills = processedImages.map((image, i) => {
+  for (const [i, image] of processedImages.entries()) {
     const still = new Still();
     still.processedImage = image;
-    still.populateGrid(image, sv);
+    await still.populateGrid(image, sv);
     still.currentImageIndex = i;
-    return still;
-  });
-
-  console.log(sv.stills[0]);
+    sv.stills.push(still);
+  }
 
   sv.pApp.renderer.resize(sv.gridW, sv.gridH);
 }

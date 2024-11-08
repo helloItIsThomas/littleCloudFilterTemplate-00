@@ -17,7 +17,6 @@ let fragment;
 
 const vertexLoader = import.meta.glob("../../shader/vert.vert", { as: "raw" });
 vertexLoader["../../shader/vert.vert"]().then((vertexLoader) => {
-  console.log(typeof vertexLoader); // shader code as string
   vertex = vertexLoader;
 });
 const fragmentLoader = import.meta.glob("../../shader/frag.frag", {
@@ -28,7 +27,7 @@ fragmentLoader["../../shader/frag.frag"]().then((fragmentLoader) => {
 });
 
 export function shaderRendering() {
-  console.log("°·°‡€ﬁﬂrunning shader rendering·°‡ﬁﬂ");
+  // console.log("°·°‡€ﬁﬂrunning shader rendering·°‡ﬁﬂ");
   sv.totalTriangles = sv.totalCells;
 
   sv.instancePositionBuffer = new Buffer({
@@ -140,7 +139,6 @@ export function shaderRendering() {
   resources.waveUniforms.numBTexes = { value: bTexes.length, type: "i32" };
 
   bTexes.forEach((tex, index) => {
-    console.log("index: ", index + 1);
     resources[`bTex${index + 1}`] = tex.source;
   });
 
@@ -157,6 +155,14 @@ export function shaderRendering() {
   });
   sv.pApp.stage.removeChildren();
   sv.pApp.stage.addChild(sv.triangleMesh);
+
+  const data = sv.instancePositionBuffer.data;
+  let count = 0;
+  for (let i = 0; i < sv.totalTriangles; i++) {
+    const triangle = sv.triangles[i];
+    data[count++] = triangle.x;
+    data[count++] = triangle.y;
+  }
   // sv.pContainer.addChild(sv.triangleMesh);
   // sv.pContainer.addChild(sv.loadingScreen);
 }

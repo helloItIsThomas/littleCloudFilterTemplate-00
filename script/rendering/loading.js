@@ -12,7 +12,7 @@ import {
 } from "pixi.js";
 
 export function initGridLoadingScreen() {
-  console.log("running initGridLoadingScreen");
+  // console.log("running initGridLoadingScreen");
 
   // Create a new Graphics object
   const loadingScreenGraphics = new Graphics();

@@ -13,7 +13,7 @@ export function createAllThreeGraphics() {
 }
 
 export function createLeftCircle(size) {
-  console.log("running createLeftCircle");
+  // console.log("running createLeftCircle");
   const w = size * 2;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
@@ -35,7 +35,7 @@ export function createLeftCircle(size) {
 }
 
 export function createRightCircle(size) {
-  console.log("running createRightCircle");
+  // console.log("running createRightCircle");
   const w = size * 2;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
@@ -59,7 +59,7 @@ export function createRightCircle(size) {
 
 export function createShapeGraphic(size) {
   // const scaleAmount = 0.95;
-  console.log("running createShapeGraphic");
+  // console.log("running createShapeGraphic");
 
   // Define quad dimensions
   const width = size * 2;

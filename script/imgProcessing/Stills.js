@@ -19,7 +19,7 @@ export class Still {
   // so that we don't have to run this x y loop on start.
   //
 
-  populateGrid(image, sv) {
+  async populateGrid(image, sv) {
     const tempCanv = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
     tempCanv.pixelDensity(1);
     tempCanv.clear();
@@ -50,6 +50,7 @@ export class Still {
       }
     }
     tempCanv.updatePixels();
+    console.log("done populating grid");
     this.brightnessTex = tempCanv;
   }
 }

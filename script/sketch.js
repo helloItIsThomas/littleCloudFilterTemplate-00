@@ -1,20 +1,10 @@
 import "p5.js-svg";
-import {
-  Application,
-  Ticker,
-  Assets,
-  Sprite,
-  Loader,
-  Texture,
-  ImageSource,
-  AnimatedSprite,
-  Container,
-} from "pixi.js";
+import { Application, Ticker } from "pixi.js";
 
 import { sv } from "./utils/variables.js";
-import { handleMultFiles, imageLoaded } from "./utils/eventHandlers.js";
+import { imageLoaded } from "./utils/eventHandlers.js";
+import { loadImagesWithP5 } from "./utils/loadImages";
 import { draw } from "./rendering/draw.js";
-// import { loadShaderFiles } from "./utils/loadShaderFiles.js";
 
 import { drawIcon } from "./utils/recordingIcon.js";
 import { createInput } from "./utils/input";
@@ -31,42 +21,10 @@ await sv.pApp.init({
   preference: "webgl",
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
-// sv.pContainer = new Container();
-// sv.pApp.stage.addChild(sv.pContainer);
 
 sv.ticker = new Ticker();
 sv.ticker.autoStart = false;
 sv.ticker.stop();
-
-async function loadImagesWithPixi() {
-  // Load the background image asynchronously
-  console.log("Image loaded and sprite added to stage");
-}
-
-async function loadImagesWithP5(p) {
-  console.log("running loadImagesWithP5");
-
-  const loadImage = (path) => {
-    return new Promise((resolve, reject) => {
-      p.loadImage(
-        path,
-        (img) => {
-          sv.animUnderImgs.push(img);
-          resolve(img);
-        },
-        (err) => {
-          console.log("Error: " + err);
-          reject(err);
-        }
-      );
-    });
-  };
-
-  // const sourceImgPaths = ["/assets/debug/456.png", "/assets/debug/654.png"];
-  const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/star.png"];
-
-  await Promise.all(sourceImgPaths.map(loadImage));
-}
 
 export default function (p) {
   console.log("running main sketch");
@@ -77,19 +35,21 @@ export default function (p) {
   async function mySetup() {
     console.log("running mySetup");
 
-    await loadImagesWithP5(p);
-    await loadImagesWithPixi();
-    console.log("all images have loaded");
-
     sv.imgDiv = p.createDiv();
     sv.imgDiv.id("image-container");
     p.createCanvas(p.windowWidth, p.windowHeight).parent(sv.imgDiv);
-
-    imageLoaded(p);
-
     createInput();
 
     sv.ticker.start();
+
+    await loadImagesWithP5();
+
+    await imageLoaded();
+
+    // imageLoaded().then(() => {
+    // sv.setupDone = true;
+    // });
+    // sv.setupDone = true;
   }
 
   p.setup = function () {
@@ -100,13 +60,41 @@ export default function (p) {
     sv.stats.begin();
     sv.constantClock += sv.speed;
 
+    // Create and animate circle if it doesn't exist yet
+    if (!sv.animatedCircle) {
+      sv.animatedCircle = document.createElement("div");
+      sv.animatedCircle.style.position = "absolute";
+      sv.animatedCircle.style.width = "20px";
+      sv.animatedCircle.style.height = "20px";
+      sv.animatedCircle.style.backgroundColor = "white";
+      sv.animatedCircle.style.borderRadius = "50%";
+      document.body.appendChild(sv.animatedCircle);
+    }
+
+    // Calculate circle position
+    const radius = 100;
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const x = centerX + Math.cos(sv.constantClock) * radius;
+    const y = centerY + Math.sin(sv.constantClock) * radius;
+
+    // Update circle position
+    sv.animatedCircle.style.left = `${x}px`;
+    sv.animatedCircle.style.top = `${y}px`;
+
+    if (sv.setupDone) {
+      console.log("DRAWING");
+      draw();
+    } else {
+      console.log("SETTING UP");
+    }
+
     // if (sv.setupDone) {
     // if (sv.isRecording) {
     // sv.stepPromise = sv.stepPromise.then(async () => {
     // await sv.canvasRecorder.step();
     // });
     // }
-    draw();
     // if (sv.isRecording) drawIcon();
     // } else {
     // }

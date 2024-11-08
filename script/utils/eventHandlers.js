@@ -16,14 +16,14 @@ document.getElementById("closeGui").addEventListener("click", function () {
 });
 
 export function handleMultFiles(p, totalUploadNum) {
-  console.log("• Running handleMultFiles() •");
+  // console.log("• Running handleMultFiles() •");
   sv.animUnderImgs = [];
 
   sv.tempUploadFiles.forEach((_file) => {
     if (_file.type === "image") {
       p.loadImage(_file.data, function (img) {
         sv.animUnderImgs.push(img);
-        if (sv.animUnderImgs.length === totalUploadNum) imageLoaded(p);
+        if (sv.animUnderImgs.length === totalUploadNum) imageLoaded();
       });
     } else {
       document.getElementById("badFile").style.opacity = 1;
@@ -34,8 +34,9 @@ export function handleMultFiles(p, totalUploadNum) {
   });
 }
 
-export function recalculateGrid() {
-  console.log("• Running recalculateGrid() •");
+export async function recalculateGrid() {
+  // console.log("• Running recalculateGrid() •");
+
   sv.colCount = sv.gridResolution;
   sv.rowCount = Math.floor((sv.gridH / sv.gridW) * sv.gridResolution);
   sv.totalCells = sv.rowCount * sv.colCount;
@@ -43,14 +44,15 @@ export function recalculateGrid() {
   sv.cellH = sv.gridH / sv.rowCount;
   // initGridLoadingScreen();
 
-  updateCellData().then(() => {
-    createAllThreeGraphics();
-    shaderRendering();
-  });
+  await updateCellData();
+  createAllThreeGraphics();
+  shaderRendering();
 }
 
-export function imageLoaded(p) {
-  console.log("• Running imageLoaded() •");
+export async function imageLoaded() {
+  // console.log("• Running imageLoaded() •");
+
+  // return new Promise(async (resolve) => {
   const recordingScaleText = document.createElement("div");
   recordingScaleText.style.position = "absolute";
   recordingScaleText.style.bottom = "30px";
@@ -71,19 +73,17 @@ export function imageLoaded(p) {
   });
 
   if (imgs.length > 1) {
-    console.log("larger than 1");
     // imgs.forEach((img) => {
     // img = scaleDims(img);
     // });
     sv.gridW = imgs[0].width;
     sv.gridH = imgs[0].height;
   } else {
-    console.log("smaller than 1");
     sv.gridW = imgs[0].width;
     sv.gridH = imgs[0].height;
   }
 
-  recalculateGrid();
+  await recalculateGrid();
 
   const context = sv.p.drawingContext;
   context.imageSmoothingEnabled = true;
@@ -95,7 +95,10 @@ export function imageLoaded(p) {
       // bitrate: 2500000,
     },
   });
-  sv.setupDone = true;
+  // sv.setupDone = true;
 
   document.body.appendChild(recordingScaleText);
+
+  // resolve();
+  // });
 }

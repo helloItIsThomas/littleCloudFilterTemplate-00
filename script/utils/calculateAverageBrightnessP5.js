@@ -1,5 +1,5 @@
 export function calculateAverageBrightnessP5(p, imgSection) {
-  console.log("running calculateAverageBrightnessP5");
+  // console.log("running calculateAverageBrightnessP5");
   imgSection.loadPixels();
   let sumBrightness = 0;
   for (let i = 0; i < imgSection.pixels.length; i += 4) {
