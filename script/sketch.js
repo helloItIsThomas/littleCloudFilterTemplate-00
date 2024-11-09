@@ -43,13 +43,12 @@ export default function (p) {
     sv.ticker.start();
 
     await loadImagesWithP5();
-
-    await imageLoaded();
+    imageLoaded();
 
     // imageLoaded().then(() => {
     // sv.setupDone = true;
     // });
-    // sv.setupDone = true;
+    sv.setupDone = true;
   }
 
   p.setup = function () {
@@ -84,7 +83,7 @@ export default function (p) {
 
     if (sv.setupDone) {
       console.log("DRAWING");
-      draw();
+      // draw();
     } else {
       console.log("SETTING UP");
     }

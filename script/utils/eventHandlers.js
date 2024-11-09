@@ -34,7 +34,7 @@ export function handleMultFiles(p, totalUploadNum) {
   });
 }
 
-export async function recalculateGrid() {
+export function recalculateGrid() {
   // console.log("• Running recalculateGrid() •");
 
   sv.colCount = sv.gridResolution;
@@ -44,12 +44,12 @@ export async function recalculateGrid() {
   sv.cellH = sv.gridH / sv.rowCount;
   // initGridLoadingScreen();
 
-  await updateCellData();
+  updateCellData();
   createAllThreeGraphics();
   shaderRendering();
 }
 
-export async function imageLoaded() {
+export function imageLoaded() {
   // console.log("• Running imageLoaded() •");
 
   // return new Promise(async (resolve) => {
@@ -83,7 +83,7 @@ export async function imageLoaded() {
     sv.gridH = imgs[0].height;
   }
 
-  await recalculateGrid();
+  recalculateGrid();
 
   const context = sv.p.drawingContext;
   context.imageSmoothingEnabled = true;

@@ -2,7 +2,7 @@ import { sv } from "../utils/variables.js";
 import { fitImageToWindow } from "../utils/utils.js";
 import { Still } from "./Stills.js";
 
-export async function updateCellData() {
+export function updateCellData() {
   // console.log("running updateCellData");
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs
@@ -21,7 +21,7 @@ export async function updateCellData() {
   for (const [i, image] of processedImages.entries()) {
     const still = new Still();
     still.processedImage = image;
-    await still.populateGrid(image, sv);
+    still.populateGrid(image, sv);
     still.currentImageIndex = i;
     sv.stills.push(still);
   }
