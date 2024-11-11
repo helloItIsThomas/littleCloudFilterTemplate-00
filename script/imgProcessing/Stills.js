@@ -9,25 +9,38 @@ export class Still {
     this.cells = [];
   }
 
-  // populateGrid does the following:
-  // create a canvas
-  // gets brightness values
-  // stores them in the canvas
-  // populates its cell array,
-  //    including with brightness values
-
-  // i want to pre-calculate one or more things,
-  // so that we don't have to run this x y loop on start.
-  //
-
   populateGridWithWorker(image) {
+    // Create a temporary canvas to resize the image
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.width = sv.gridResolution;
+    tempCanvas.height = sv.gridResolution;
+    const tempContext = tempCanvas.getContext("2d");
+    tempContext.drawImage(
+      image.canvas,
+      0,
+      0,
+      sv.gridResolution,
+      sv.gridResolution
+    );
+    // MY DOWNLOAD STUFF
+    // const dataURL = tempCanvas.toDataURL("image/png");
+    // const link = document.createElement("a");
+    // link.href = dataURL;
+    // link.download = "canvas-image.png"; // Specify the filename
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    // MY DOWNLOAD STUFF ABOVE
+
     return new Promise((resolve, reject) => {
       const worker = new Worker(
         new URL("/script/workers/populateWorker.js", import.meta.url),
         { type: "module" }
       );
 
-      const tempContext = image.canvas.getContext("2d");
+      // const tempContext = image.canvas.getContext("2d");
+      const tempContext = tempCanvas.getContext("2d");
+
       const imageData = tempContext.getImageData(
         0,
         0,
@@ -44,22 +57,25 @@ export class Still {
 
       worker.onmessage = (e) => {
         const result = e.data;
-        // Create a canvas element
-        const canvas = document.createElement("canvas");
-        canvas.width = result.brightnessTex.width;
-        canvas.height = result.brightnessTex.height;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(result.brightnessTex, 0, 0);
 
-        this.brightnessTex = canvas;
-        this.cells = result.cells;
-        this.cells.forEach((e) => {
-          // e.brightness = 10;
-          // console.log(e.brightness);
-        });
-        resolve();
+        if (result.brightnessTex) {
+          const canvas = document.createElement("canvas");
+          canvas.width = result.brightnessTex.width;
+          canvas.height = result.brightnessTex.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(result.brightnessTex, 0, 0);
+
+          this.brightnessTex = canvas;
+          this.cells = result.cells;
+          resolve();
+        } else {
+          console.error("Failed to receive brightness texture from worker.");
+        }
       };
-      worker.onerror = (e) => console.error("Worker error:", e.message, e);
+      worker.onerror = (e) => {
+        reject();
+        console.error("Worker error:", e.message, e);
+      };
     });
   }
 
@@ -95,6 +111,7 @@ export class Still {
       }
     }
     tempCanv.updatePixels();
+    // tempCanv.save();
     this.brightnessTex = tempCanv;
   }
 }

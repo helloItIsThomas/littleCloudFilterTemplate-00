@@ -1,4 +1,3 @@
-// populateGridWorker.js
 onmessage = function (e) {
   const { imageData, rowCount, colCount, cellW, cellH } = e.data;
 
@@ -38,12 +37,15 @@ onmessage = function (e) {
     }
   }
 
+  const brightnessTex = tempCanv.transferToImageBitmap();
+
   const result = {
     cells,
-    brightnessTex: tempCanv.transferToImageBitmap(),
+    brightnessTex,
   };
 
-  postMessage(result);
+  // postMessage(result);
+  postMessage(result, [brightnessTex]);
 };
 
 function calcAverageBrightness(imageData, xPos, yPos, cellW, cellH) {

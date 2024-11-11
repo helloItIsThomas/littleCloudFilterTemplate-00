@@ -24,13 +24,16 @@ export async function updateCellData() {
     const still = new Still();
     still.processedImage = image;
 
-    // still.populateGrid(image, sv);
-    promises.push(
-      still.populateGridWithWorker(image).then(() => {
-        still.currentImageIndex = i;
-        sv.stills.push(still);
-      })
-    );
+    // promises.push(
+    // still.populateGridWithWorker(image).then(() => {
+    // still.currentImageIndex = i;
+    // sv.stills.push(still);
+    // })
+    // );
+
+    still.populateGrid(image, sv);
+    still.currentImageIndex = i;
+    sv.stills.push(still);
   }
   await Promise.all(promises).then(() => {
     createAllThreeGraphics();
