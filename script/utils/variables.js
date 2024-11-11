@@ -13,6 +13,7 @@ var customContainer = document
   .appendChild(gui.domElement);
 
 export const sv = {
+  workerDone: false,
   pApp: null,
   pContainer: null,
   ticker: null,

@@ -1,9 +1,11 @@
 import { sv } from "../utils/variables.js";
 import { fitImageToWindow } from "../utils/utils.js";
 import { Still } from "./Stills.js";
+import { shaderRendering } from "../rendering/shaderRendering.js";
+import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
 
-export function updateCellData() {
-  // console.log("running updateCellData");
+export async function updateCellData() {
+  const promises = [];
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs
     : [sv.animUnderImgs]; // Ensure _imgs is always an array
@@ -21,10 +23,20 @@ export function updateCellData() {
   for (const [i, image] of processedImages.entries()) {
     const still = new Still();
     still.processedImage = image;
-    still.populateGrid(image, sv);
-    still.currentImageIndex = i;
-    sv.stills.push(still);
-  }
 
-  sv.pApp.renderer.resize(sv.gridW, sv.gridH);
+    // still.populateGrid(image, sv);
+    promises.push(
+      still.populateGridWithWorker(image).then(() => {
+        still.currentImageIndex = i;
+        sv.stills.push(still);
+      })
+    );
+  }
+  await Promise.all(promises).then(() => {
+    createAllThreeGraphics();
+    shaderRendering();
+    sv.pApp.renderer.resize(sv.gridW, sv.gridH);
+    sv.workerDone = true;
+    console.log("sv.workerDone: ", sv.workerDone);
+  });
 }

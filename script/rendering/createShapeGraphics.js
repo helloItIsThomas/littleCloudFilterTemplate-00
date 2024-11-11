@@ -4,12 +4,14 @@ const cDiamMult = 0.5;
 const scaleAmount = 0.9;
 
 export function createAllThreeGraphics() {
+  console.log("running createAllThreeGraphics");
   if (sv.circleGraphicLeft) sv.circleGraphicLeft.remove();
   if (sv.circleGraphicRight) sv.circleGraphicRight.remove();
   if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
   sv.circleGraphicLeft = createLeftCircle(sv.cellW);
   sv.circleGraphicRight = createRightCircle(sv.cellW);
   sv.customShapeGraphics = createShapeGraphic(sv.cellW);
+  console.log("FINISHED createAllThreeGraphics");
 }
 
 export function createLeftCircle(size) {

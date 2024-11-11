@@ -34,7 +34,7 @@ export function handleMultFiles(p, totalUploadNum) {
   });
 }
 
-export function recalculateGrid() {
+export async function recalculateGrid() {
   // console.log("• Running recalculateGrid() •");
 
   sv.colCount = sv.gridResolution;
@@ -44,9 +44,7 @@ export function recalculateGrid() {
   sv.cellH = sv.gridH / sv.rowCount;
   // initGridLoadingScreen();
 
-  updateCellData();
-  createAllThreeGraphics();
-  shaderRendering();
+  await updateCellData();
 }
 
 export function imageLoaded() {
@@ -85,19 +83,19 @@ export function imageLoaded() {
 
   recalculateGrid();
 
-  const context = sv.p.drawingContext;
-  context.imageSmoothingEnabled = true;
-  sv.canvasRecorder = new Recorder(context, {
-    name: "canvas-record-example",
-    duration: Infinity,
-    encoderOptions: {
-      // framerate: sv.frameRate,
-      // bitrate: 2500000,
-    },
-  });
+  // const context = sv.p.drawingContext;
+  // context.imageSmoothingEnabled = true;
+  // sv.canvasRecorder = new Recorder(context, {
+  // name: "canvas-record-example",
+  // duration: Infinity,
+  // encoderOptions: {
+  // framerate: sv.frameRate,
+  // bitrate: 2500000,
+  // },
+  // });
   // sv.setupDone = true;
 
-  document.body.appendChild(recordingScaleText);
+  // document.body.appendChild(recordingScaleText);
 
   // resolve();
   // });

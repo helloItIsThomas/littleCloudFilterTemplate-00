@@ -27,6 +27,7 @@ fragmentLoader["../../shader/frag.frag"]().then((fragmentLoader) => {
 });
 
 export function shaderRendering() {
+  console.log(" running shaderRendering() ");
   // console.log("°·°‡€ﬁﬂrunning shader rendering·°‡ﬁﬂ");
   sv.totalTriangles = sv.totalCells;
 
@@ -39,6 +40,7 @@ export function shaderRendering() {
 
   for (let i = 0; i < sv.totalTriangles; i++) {
     // assuming the grid of both images is the same...
+
     const cell = sv.stills[0].cells[i];
     sv.triangles[i] = {
       x: cell.x,
@@ -111,7 +113,7 @@ export function shaderRendering() {
 
   let bTexes = [];
   bTexes = sv.stills.map((still) => {
-    let src = new ImageSource({ resource: still.brightnessTex.canvas });
+    let src = new ImageSource({ resource: still.brightnessTex });
     let tex = new Texture({ source: src });
     return tex;
   });
@@ -163,6 +165,10 @@ export function shaderRendering() {
     data[count++] = triangle.x;
     data[count++] = triangle.y;
   }
+
+  // the below stuff is not needed until we sort the web workers stuff
   // sv.pContainer.addChild(sv.triangleMesh);
   // sv.pContainer.addChild(sv.loadingScreen);
+  // the above stuff is not needed until we sort the web workers stuff
+  console.log("finished shaderRendering");
 }

@@ -82,10 +82,10 @@ export default function (p) {
     sv.animatedCircle.style.top = `${y}px`;
 
     if (sv.setupDone) {
-      console.log("DRAWING");
-      // draw();
+      // console.log("DRAWING");
+      draw();
     } else {
-      console.log("SETTING UP");
+      // console.log("SETTING UP");
     }
 
     // if (sv.setupDone) {

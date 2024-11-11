@@ -1,40 +1,70 @@
-// TOP
-
 // populateGridWorker.js
 onmessage = function (e) {
-  const { imageData, sv } = e.data;
-  // Perform intensive work here
+  const { imageData, rowCount, colCount, cellW, cellH } = e.data;
 
-  const tempCanv = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
-  tempCanv.pixelDensity(1);
-  tempCanv.clear();
+  // Adjust canvas size based on the grid dimensions
+  const tempCanv = new OffscreenCanvas(colCount, rowCount);
+  const tempCanvContext = tempCanv.getContext("2d");
 
-  for (let y = 0; y < sv.rowCount; y++) {
-    for (let x = 0; x < sv.colCount; x++) {
-      const xPos = x * sv.cellW;
-      const yPos = y * sv.cellH;
-      const cellImage = imageData.get(xPos, yPos, sv.cellW, sv.cellH);
+  const cells = [];
 
-      const aveBrightnessOfCell = calculateAverageBrightnessP5(sv.p, cellImage);
-      const brightness = aveBrightnessOfCell;
+  for (let y = 0; y < rowCount; y++) {
+    for (let x = 0; x < colCount; x++) {
+      const xPos = x * cellW;
+      const yPos = y * cellH;
 
-      tempCanv.set(x, y, sv.p.color(brightness, brightness, brightness));
+      // Calculate average brightness directly
+      const brightness = calcAverageBrightness(
+        imageData,
+        xPos,
+        yPos,
+        cellW,
+        cellH
+      );
 
-      // Populate cells
-      this.cells.push({
-        gridIndex: y * sv.colCount + x,
+      // Set the pixel color in tempCanv
+      tempCanvContext.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
+      tempCanvContext.fillRect(x, y, 1, 1);
+
+      // Populate cell object
+      cells.push({
+        gridIndex: y * colCount + x,
         brightness: brightness,
         x: xPos,
         y: yPos,
-        width: sv.cellW,
-        height: sv.cellH,
+        width: cellW,
+        height: cellH,
       });
     }
   }
-  tempCanv.updatePixels();
-  console.log("done populating grid");
-  this.brightnessTex = tempCanv;
 
-  const result = populateGridWork(imageData, sv);
-  postMessage(result); // Send back the result to main thread
+  const result = {
+    cells,
+    brightnessTex: tempCanv.transferToImageBitmap(),
+  };
+
+  postMessage(result);
 };
+
+function calcAverageBrightness(imageData, xPos, yPos, cellW, cellH) {
+  const { width, height, data } = imageData;
+  let totalBrightness = 0;
+  let pixelCount = 0;
+
+  // Boundary checks
+  const maxX = Math.min(xPos + cellW, width);
+  const maxY = Math.min(yPos + cellH, height);
+
+  for (let row = yPos; row < maxY; row++) {
+    for (let col = xPos; col < maxX; col++) {
+      const index = (row * width + col) * 4;
+      const r = data[index];
+      const g = data[index + 1];
+      const b = data[index + 2];
+      totalBrightness += (r + g + b) / 3;
+      pixelCount++;
+    }
+  }
+
+  return totalBrightness / pixelCount;
+}
