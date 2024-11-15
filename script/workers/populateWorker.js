@@ -1,9 +1,12 @@
 onmessage = function (e) {
+  console.log("¶ acting on initial worker.postMessage from main thread ¶");
+
   const { imageData, rowCount, colCount, cellW, cellH } = e.data;
 
   // Adjust canvas size based on the grid dimensions
-  const tempCanv = new OffscreenCanvas(colCount, rowCount);
-  const tempCanvContext = tempCanv.getContext("2d");
+  // const brightnessMap = new OffscreenCanvas(colCount, rowCount);
+  const brightnessMap = new OffscreenCanvas(colCount, rowCount);
+  const brightnessMapContext = brightnessMap.getContext("2d");
 
   const cells = [];
 
@@ -21,14 +24,14 @@ onmessage = function (e) {
         cellH
       );
 
-      // Set the pixel color in tempCanv
-      tempCanvContext.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
-      tempCanvContext.fillRect(x, y, 1, 1);
+      // Set the pixel color in brightnessMap
+      brightnessMapContext.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
+      brightnessMapContext.fillRect(x, y, 1, 1);
 
       // Populate cell object
       cells.push({
         gridIndex: y * colCount + x,
-        brightness: brightness,
+        // brightness: brightness,
         x: xPos,
         y: yPos,
         width: cellW,
@@ -37,13 +40,15 @@ onmessage = function (e) {
     }
   }
 
-  const brightnessTex = tempCanv.transferToImageBitmap();
+  const brightnessTex = brightnessMap.transferToImageBitmap();
 
   const result = {
     cells,
+    imageData,
     brightnessTex,
   };
 
+  console.log("ª finishing stuff on worker thread ª");
   // postMessage(result);
   postMessage(result, [brightnessTex]);
 };

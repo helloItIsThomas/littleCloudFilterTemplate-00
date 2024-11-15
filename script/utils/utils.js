@@ -91,3 +91,13 @@ export function updateClockEase(time, pauseDuration) {
     return 0.0;
   }
 }
+
+export function downloadCanvas(_canvas, name = "canvas.png") {
+  const dataURL = _canvas.toDataURL("image/png");
+  const link = document.createElement("a");
+  link.href = dataURL;
+  link.download = name;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}

@@ -113,7 +113,9 @@ export function shaderRendering() {
 
   let bTexes = [];
   bTexes = sv.stills.map((still) => {
-    let src = new ImageSource({ resource: still.brightnessTex.canvas });
+    // let src = new ImageSource({ resource: still.brightnessTex.canvas });
+    // removing the canvas append here because now both functions return canvases
+    let src = new ImageSource({ resource: still.brightnessTex });
     let tex = new Texture({ source: src });
     return tex;
   });

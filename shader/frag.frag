@@ -45,7 +45,7 @@ void main() {
     // brightness = bTexColor.r + (time + (noise.r * 0.3));
     // brightness = bTexColor.r + ease(time, noise.r);
     // brightness = bTexColor.r;
-    brightness = bTexColor.r + time;
+    brightness = bTexColor.r;
 
     // Apply offsets to the UV coordinates
     vec2 hgUV = vUV / vec2(hgAR, 1.0);

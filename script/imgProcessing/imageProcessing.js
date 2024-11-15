@@ -24,22 +24,22 @@ export async function updateCellData() {
     const still = new Still();
     still.processedImage = image;
 
-    // promises.push(
-    // still.populateGridWithWorker(image).then(() => {
+    promises.push(
+      still.populateGridWithWorker(image).then(() => {
+        still.currentImageIndex = i;
+        sv.stills.push(still);
+      })
+    );
+
+    // still.populateGrid(image, sv);
     // still.currentImageIndex = i;
     // sv.stills.push(still);
-    // })
-    // );
-
-    still.populateGrid(image, sv);
-    still.currentImageIndex = i;
-    sv.stills.push(still);
   }
   await Promise.all(promises).then(() => {
     createAllThreeGraphics();
     shaderRendering();
-    sv.pApp.renderer.resize(sv.gridW, sv.gridH);
     sv.workerDone = true;
+    sv.pApp.renderer.resize(sv.gridW, sv.gridH);
     console.log("sv.workerDone: ", sv.workerDone);
   });
 }
