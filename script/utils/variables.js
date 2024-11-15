@@ -70,8 +70,9 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "100",
-  noiseOffset: 3.4,
+  gridResolution: "160",
+  // noiseOffset: 3.4,
+  noiseOffset: 0.0,
 
   testSVG: null,
   testImages: null,

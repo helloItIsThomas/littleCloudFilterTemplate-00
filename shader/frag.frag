@@ -14,6 +14,9 @@ uniform float hgAR;
 uniform float lcAR;
 uniform float rcAR;
 uniform int numBTexes;
+uniform float tlThresh1;
+uniform float tlThresh2;
+uniform float tlThresh3;
 
 float ease(float t, float easeFactor) {
     // Ensure easeFactor is between 0.5 and 2 for reasonable curve control
@@ -36,16 +39,18 @@ void main() {
 
     vec4 noise = texture2D(noiseTex, vec2(x, y));
 
-    // if(numBTexes == 2) {
-        // vec4 bTexColor2 = texture2D(bTex2, vec2(x, y));
+    if(numBTexes == 2) {
+        vec4 bTexColor2 = texture2D(bTex2, vec2(x, y));
         // vec4 testLerp = mix(bTexColor, bTexColor2, abs(sin(time)));
-        // brightness = testLerp.r;
-    // }
+        vec4 testLerp = mix(bTexColor, bTexColor2, time);
+        brightness = testLerp.r;
+    }
 
     // brightness = bTexColor.r + (time + (noise.r * 0.3));
     // brightness = bTexColor.r + ease(time, noise.r);
     // brightness = bTexColor.r;
-    brightness = bTexColor.r;
+    // brightness = bTexColor.r + time;
+    // brightness = bTexColor.r + abs(sin(time));
 
     // Apply offsets to the UV coordinates
     vec2 hgUV = vUV / vec2(hgAR, 1.0);
@@ -56,9 +61,9 @@ void main() {
     float hgUV_x;
     float rcUV_x;
 
-    float point1 = 0.2;
-    float point2 = 0.4;
-    float point3 = 0.8;
+    float point1 = tlThresh1; //0.2;
+    float point2 = tlThresh2; //0.4;
+    float point3 = tlThresh3; //0.8;
 
     // Map brightness to lcUV.x (0.0 to 0.25 for brightness 0.0 to 0.25)
     if(brightness <= point1) {

@@ -1,7 +1,7 @@
 import { sv } from "../utils/variables.js";
 
 const cDiamMult = 0.5;
-const scaleAmount = 0.9;
+const scaleAmount = 1;
 
 export function createAllThreeGraphics() {
   console.log("running createAllThreeGraphics");

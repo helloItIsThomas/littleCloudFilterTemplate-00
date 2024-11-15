@@ -113,8 +113,6 @@ export function shaderRendering() {
 
   let bTexes = [];
   bTexes = sv.stills.map((still) => {
-    // let src = new ImageSource({ resource: still.brightnessTex.canvas });
-    // removing the canvas append here because now both functions return canvases
     let src = new ImageSource({ resource: still.brightnessTex });
     let tex = new Texture({ source: src });
     return tex;
@@ -122,6 +120,9 @@ export function shaderRendering() {
   const art1 = sv.p.int(tex1.source.width / tex1.source.height);
   const art2 = sv.p.int(tex2.source.width / tex2.source.height);
   const art3 = sv.p.int(tex3.source.width / tex3.source.height);
+  const tlThresh1 = 0.15;
+  const tlThresh2 = 0.25;
+  const tlThresh3 = 0.5;
 
   let resources = {};
 
@@ -137,6 +138,10 @@ export function shaderRendering() {
       hgAR: { value: art1, type: "f32" },
       lcAR: { value: art2, type: "f32" },
       rcAR: { value: art3, type: "f32" },
+
+      tlThresh1: { value: tlThresh1, type: "f32" },
+      tlThresh2: { value: tlThresh2, type: "f32" },
+      tlThresh3: { value: tlThresh3, type: "f32" },
     },
   };
 

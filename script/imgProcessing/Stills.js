@@ -1,5 +1,4 @@
 import { sv } from "../utils/variables.js";
-import { calculateAverageBrightnessP5 } from "../utils/calculateAverageBrightnessP5";
 import { populateGridNoWebWorker } from "./populateGridNoWebWorker.js";
 import { downloadCanvas } from "../utils/utils.js";
 
@@ -23,8 +22,6 @@ export class Still {
     const tempContext = tempCanvas.getContext("2d");
     tempContext.drawImage(image.canvas, 0, 0, originalW, originalH);
 
-    downloadCanvas(tempCanvas, "beforeWorker");
-
     return new Promise((resolve, reject) => {
       const worker = new Worker(
         new URL("/script/workers/populateWorker.js", import.meta.url),
@@ -45,25 +42,16 @@ export class Still {
           "¶ acting on response from worker's internal postMessage ¶"
         );
         const result = e.data;
-
-        if (result.brightnessTex) {
-          const canvas = document.createElement("canvas");
-          canvas.width = result.brightnessTex.width;
-          canvas.height = result.brightnessTex.height;
-          canvas.width = originalW;
-          canvas.height = originalH;
-          const ctx = canvas.getContext("2d");
-          // ctx.drawImage(result.brightnessTex, 0, 0);
-          ctx.putImageData(imageData, 0, 0);
-
-          downloadCanvas(canvas, "afterWorker");
-
-          this.brightnessTex = canvas;
-          this.cells = result.cells;
-          resolve();
-        } else {
-          console.error("Failed to receive brightness texture from worker.");
-        }
+        const canvas = document.createElement("canvas");
+        canvas.width = originalW;
+        canvas.height = originalH;
+        canvas.width = originalW;
+        canvas.height = originalH;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(tempCanvas, 0, 0);
+        this.brightnessTex = canvas;
+        this.cells = result.cells;
+        resolve();
       };
       worker.onerror = (e) => {
         reject();
