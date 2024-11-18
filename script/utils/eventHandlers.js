@@ -85,17 +85,17 @@ export function imageLoaded() {
 
   recalculateGrid();
 
-  // const context = sv.p.drawingContext;
-  // context.imageSmoothingEnabled = true;
-  // sv.canvasRecorder = new Recorder(context, {
-  // name: "canvas-record-example",
-  // duration: Infinity,
-  // encoderOptions: {
-  // framerate: sv.frameRate,
-  // bitrate: 2500000,
-  // },
-  // });
-  // sv.setupDone = true;
+  const context = sv.p.drawingContext;
+  context.imageSmoothingEnabled = true;
+  sv.canvasRecorder = new Recorder(context, {
+    name: "canvas-record-example",
+    duration: Infinity,
+    encoderOptions: {
+      framerate: sv.frameRate,
+      bitrate: 2500000,
+    },
+  });
+  sv.setupDone = true;
 
   // document.body.appendChild(recordingScaleText);
 

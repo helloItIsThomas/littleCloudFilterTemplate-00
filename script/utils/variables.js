@@ -98,12 +98,12 @@ const screenshotController = recording
 const recordingController = recording.add(sv, "isRecording").name("Recording");
 
 recordingController.onChange((value) => {
-  // if (sv.isRecording) startRecording();
-  // else if (!sv.isRecording) stopRecording();
+  if (sv.isRecording) startRecording();
+  else if (!sv.isRecording) stopRecording();
 });
 screenshotController.onChange((value) => {
   if (value) {
-    // sv.p.save();
+    sv.p.save();
     screenshotController.setValue(false);
   }
 });

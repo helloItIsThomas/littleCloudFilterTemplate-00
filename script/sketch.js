@@ -67,15 +67,15 @@ export default function (p) {
       // console.log("SETTING UP");
     }
 
-    // if (sv.setupDone) {
-    // if (sv.isRecording) {
-    // sv.stepPromise = sv.stepPromise.then(async () => {
-    // await sv.canvasRecorder.step();
-    // });
-    // }
-    // if (sv.isRecording) drawIcon();
-    // } else {
-    // }
+    if (sv.setupDone) {
+      if (sv.isRecording) {
+        console.log("recording");
+        sv.stepPromise = sv.stepPromise.then(async () => {
+          await sv.canvasRecorder.step();
+        });
+      }
+      // if (sv.isRecording) drawIcon();
+    }
     sv.stats.end();
   });
 }

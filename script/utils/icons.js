@@ -71,10 +71,7 @@ export function showLoadIcon() {
 export function hideLoadIcon() {
   console.log("running hide icon");
   sv.loadIconDiv.style.display = "none";
-  hideTimeline.restart().then(() => {
-    // Hide after animation
-  });
-
+  hideTimeline.restart();
   cancelAnimationFrame(sv.animationFrameId);
 }
 
