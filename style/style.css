@@ -59,14 +59,15 @@ body {
 
 .dg.main {
   /* Display none here for debugging filer yo */
-  display: none !important;
+  /* display: none !important; */
 
-  width: 95% !important;
+  width: 100% !important;
   text-shadow: none !important;
   text-decoration: none !important;
   color: blue;
   box-sizing: border-box !important;
   background-color: white !important;
+  padding: 10px !important;
 }
 
 .dg.main ul li {
