@@ -13,11 +13,11 @@ export function draw() {
 
   if (sv.triangleMesh) {
     if (sv.workerDone) {
-      console.log("stuff is happening");
+      // console.log("stuff is happening");
       sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = newClock;
       sv.instancePositionBuffer.update();
     } else {
-      console.log("stuff is not happening");
+      // console.log("stuff is not happening");
     }
   }
 }

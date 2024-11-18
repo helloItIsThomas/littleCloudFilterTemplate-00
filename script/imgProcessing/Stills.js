@@ -38,9 +38,9 @@ export class Still {
       worker.postMessage({ imageData, rowCount, colCount, cellW, cellH });
 
       worker.onmessage = (e) => {
-        console.log(
-          "¶ acting on response from worker's internal postMessage ¶"
-        );
+        // console.log(
+        // "¶ acting on response from worker's internal postMessage ¶"
+        // );
         const result = e.data;
         const canvas = document.createElement("canvas");
         canvas.width = originalW;
@@ -61,7 +61,7 @@ export class Still {
   }
 
   populateGrid(image) {
-    console.log("˘˛¯Â·%^ RUNNING OLD WAY ﬁﬂ");
+    // console.log("˘˛¯Â·%^ RUNNING OLD WAY ﬁﬂ");
     populateGridNoWebWorker(this, image);
   }
 }

@@ -40,6 +40,6 @@ export async function updateCellData() {
     shaderRendering();
     sv.workerDone = true;
     sv.pApp.renderer.resize(sv.gridW, sv.gridH);
-    console.log("sv.workerDone: ", sv.workerDone);
+    // console.log("sv.workerDone: ", sv.workerDone);
   });
 }

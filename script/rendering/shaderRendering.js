@@ -27,7 +27,6 @@ fragmentLoader["../../shader/frag.frag"]().then((fragmentLoader) => {
 });
 
 export function shaderRendering() {
-  console.log(" running shaderRendering() ");
   // console.log("°·°‡€ﬁﬂrunning shader rendering·°‡ﬁﬂ");
   sv.totalTriangles = sv.totalCells;
 
@@ -177,5 +176,5 @@ export function shaderRendering() {
   // sv.pContainer.addChild(sv.triangleMesh);
   // sv.pContainer.addChild(sv.loadingScreen);
   // the above stuff is not needed until we sort the web workers stuff
-  console.log("finished shaderRendering");
+  // console.log("finished shaderRendering");
 }

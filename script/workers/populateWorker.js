@@ -1,5 +1,5 @@
 onmessage = function (e) {
-  console.log("¶ acting on initial worker.postMessage from main thread ¶");
+  // console.log("¶ acting on initial worker.postMessage from main thread ¶");
 
   const { imageData, rowCount, colCount, cellW, cellH } = e.data;
 
@@ -26,6 +26,6 @@ onmessage = function (e) {
     imageData,
   };
 
-  console.log("ª finishing stuff on worker thread ª");
+  // console.log("ª finishing stuff on worker thread ª");
   postMessage(result);
 };

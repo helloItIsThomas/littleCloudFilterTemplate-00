@@ -59,7 +59,7 @@ body {
 
 .dg.main {
   /* Display none here for debugging filer yo */
-  /* display: none !important; */
+  display: none !important;
 
   width: 100% !important;
   text-shadow: none !important;

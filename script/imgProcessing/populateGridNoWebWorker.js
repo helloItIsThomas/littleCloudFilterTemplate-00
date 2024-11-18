@@ -2,7 +2,7 @@ import { sv } from "../utils/variables.js";
 import { calculateAverageBrightnessP5 } from "../utils/calculateAverageBrightnessP5";
 
 export function populateGridNoWebWorker(thisStill, image) {
-  console.log("•• • RUN POPULATE GRID • ••");
+  // console.log("•• • RUN POPULATE GRID • ••");
   const tempCanv = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
   tempCanv.pixelDensity(1);
   tempCanv.clear();
