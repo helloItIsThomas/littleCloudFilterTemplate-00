@@ -70,7 +70,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "160",
+  gridResolution: "50",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 
@@ -115,8 +115,8 @@ general.add(sv, "speed", 0.0, 0.1).name("Speed");
 general.add(sv, "noiseOffset", 0, 10, 0.1).name("Noise Offset");
 
 gridResController.onChange((value) => {
-  if (value < 140) sv.gridResolution = value;
-  else sv.gridResolution = 140;
+  if (value < 200) sv.gridResolution = value;
+  else sv.gridResolution = 200;
 
   recalculateGrid();
 });
