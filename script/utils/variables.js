@@ -13,9 +13,16 @@ var customContainer = document
   .appendChild(gui.domElement);
 
 export const sv = {
+  workerDone: false,
   pApp: null,
+  pContainer: null,
   ticker: null,
   frameCount: null,
+  spinnyBG: null,
+  triangleMesh: null,
+  instancePositionBuffer: null,
+  totalTriangles: null,
+  triangles: null,
   spritesheet: null,
   sSheetTextures: [],
   sheets: [],
@@ -31,7 +38,7 @@ export const sv = {
   endLoop: 1.99,
   stateStartTime: null,
   clearImage: null,
-  cells: [],
+  stills: [],
   animUnderImgs: [],
   debugImgToggle: 0,
   slidingPieceImgs: [],
@@ -45,12 +52,15 @@ export const sv = {
     startInvisible: false,
   },
   customShapeGraphics: null,
-  circleGraphics: null,
+  circleGraphicLeft: null,
+  circleGraphicRight: null,
   cTex: null,
   sTex: null,
+  loadingScreen: null,
   circles: [],
   shapes: [],
   shapes2: [],
+  noiseTex: null,
 
   rowCount: null,
   colCount: null,
@@ -60,8 +70,9 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolution: "120",
-  noiseOffset: 3.4,
+  gridResolution: "160",
+  // noiseOffset: 3.4,
+  noiseOffset: 0.0,
 
   testSVG: null,
   testImages: null,
@@ -84,12 +95,12 @@ const screenshotController = recording
 const recordingController = recording.add(sv, "isRecording").name("Recording");
 
 recordingController.onChange((value) => {
-  if (sv.isRecording) startRecording();
-  else if (!sv.isRecording) stopRecording();
+  // if (sv.isRecording) startRecording();
+  // else if (!sv.isRecording) stopRecording();
 });
 screenshotController.onChange((value) => {
   if (value) {
-    sv.p.save();
+    // sv.p.save();
     screenshotController.setValue(false);
   }
 });
@@ -108,7 +119,6 @@ gridResController.onChange((value) => {
   else sv.gridResolution = 140;
 
   recalculateGrid();
-  updateCellData(sv.animUnderImgs);
 });
 
 // Add the toggle parameter to control visibility
@@ -127,7 +137,7 @@ let contrastController,
 
 // Function to add advanced parameters
 function addAdvancedParameters() {
-  console.log(" • running addAdvancedParameters • ");
+  // console.log(" • running addAdvancedParameters • ");
   contrastController = gui.add(sv.params, "contrast", 0, 10).name("Contrast");
 
   clipController = gui.add(sv.params, "clipOutliers").name("Clip Outliers");
@@ -143,7 +153,7 @@ function addAdvancedParameters() {
 
 // Function to remove advanced parameters
 function removeAdvancedParameters() {
-  console.log(" • running removeAdvancedParameters • ");
+  // console.log(" • running removeAdvancedParameters • ");
   if (contrastController) gui.remove(contrastController);
   if (clipController) gui.remove(clipController);
   if (scaleDynamicController) gui.remove(scaleDynamicController);
@@ -156,7 +166,7 @@ function removeAdvancedParameters() {
 
 // Function to dynamically update the visibility of parameters
 function updateVisibility() {
-  console.log(" • running updateVisibility • ");
+  // console.log(" • running updateVisibility • ");
   createInput();
   removeAdvancedParameters(); // Always remove first to avoid duplicates
   if (sv.params.showSingleImgMode) {

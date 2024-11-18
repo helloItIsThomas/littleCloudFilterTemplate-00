@@ -1,66 +1,100 @@
 import { sv } from "../utils/variables.js";
 
-export function createCircleGraphics(size) {
-  console.log("running createCircleGraphics");
-  const pg = sv.p.createGraphics(size, size);
+const cDiamMult = 0.5;
+const scaleAmount = 1;
 
+export function createAllThreeGraphics() {
+  console.log("running createAllThreeGraphics");
+  if (sv.circleGraphicLeft) sv.circleGraphicLeft.remove();
+  if (sv.circleGraphicRight) sv.circleGraphicRight.remove();
+  if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
+  sv.circleGraphicLeft = createLeftCircle(sv.cellW);
+  sv.circleGraphicRight = createRightCircle(sv.cellW);
+  sv.customShapeGraphics = createShapeGraphic(sv.cellW);
+  console.log("FINISHED createAllThreeGraphics");
+}
+
+export function createLeftCircle(size) {
+  // console.log("running createLeftCircle");
+  const w = size * 2;
+  const h = size;
+  const pg = sv.p.createGraphics(w, h);
+  pg.pixelDensity(3);
   pg.noStroke();
   pg.fill(0);
-
+  // pg.stroke(255, 0, 0);
+  pg.background(0, 255, 0);
   pg.clear();
-
   pg.ellipseMode(sv.p.CENTER);
-  pg.translate(size / 2, size / 2);
-
-  const circleDiameter = size * 0.45; // Adjust the scale as needed
-
-  pg.ellipse(-size * 0.25, -size * 0.25, circleDiameter, circleDiameter);
-
+  const circleDiameter = h * cDiamMult;
+  pg.push();
+  pg.translate(0.0, h * 0.5 - circleDiameter * scaleAmount);
+  pg.scale(scaleAmount); // Scale down all elements
+  pg.translate(circleDiameter * 0.5, h / 2);
+  pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
+  pg.pop();
   return pg;
 }
 
-export function createCustomShapeGraphics(size) {
-  console.log("running createCustomShapeGraphics");
-  const pg = sv.p.createGraphics(size, size);
-
+export function createRightCircle(size) {
+  // console.log("running createRightCircle");
+  const w = size * 2;
+  const h = size;
+  const pg = sv.p.createGraphics(w, h);
+  pg.pixelDensity(3);
   pg.noStroke();
   pg.fill(0);
-
+  // pg.stroke(255, 0, 0);
+  pg.background(0, 255, 0);
   pg.clear();
-
-  // Compute scaling factor based on the original shape size (65.83)
-  const scaleFactor = size / 65.83;
+  pg.ellipseMode(sv.p.CENTER);
+  const circleDiameter = h * cDiamMult; // Adjust the scale as needed
 
   pg.push();
-  pg.translate(size / 2, size / 2);
-  pg.scale(scaleFactor);
-  pg.translate(-65.83 / 2, -65.83 / 2);
+  pg.translate(0.0, h * 0.5 - circleDiameter * scaleAmount);
+  pg.scale(scaleAmount); // Scale down all elements
+  pg.translate(w * 0.5 - circleDiameter * 0.5, h / 2);
+  pg.ellipse(0.0, 0.0, circleDiameter, circleDiameter);
+  pg.pop();
+  return pg;
+}
 
-  let r = (51.11 - 14.71) / 2; // Radius of the half circles
-  let h = (4 * r) / 3; // Control point offset for a perfect half circle
+export function createShapeGraphic(size) {
+  // const scaleAmount = 0.95;
+  // console.log("running createShapeGraphic");
 
+  // Define quad dimensions
+  const width = size * 2;
+  const height = size;
+  const pg = sv.p.createGraphics(width, height);
+  // const cDiameter = height * cDiamMult * scaleAmount;
+  const cDiameter = height * cDiamMult;
+  pg.pixelDensity(3);
+  pg.fill(0);
+  pg.noStroke();
+
+  const borderOffset = 0.0;
+
+  pg.push();
+  pg.translate(0.0, height * 0.5 - cDiameter * scaleAmount);
+  pg.scale(scaleAmount); // Scale down all elements
+  // Draw quad with padding
   pg.beginShape();
-
-  // Right side half circle
-  pg.vertex(65.83, 51.11);
-  pg.bezierVertex(65.83 - h, 51.11, 65.83 - h, 14.71, 65.83, 14.71);
-
-  // Top edge
-  pg.vertex(65.83, 0);
-  pg.vertex(0, 0);
-
-  // Left side half circle
-  pg.vertex(0, 14.71);
-  pg.bezierVertex(0 + h, 14.71, 0 + h, 51.11, 0, 51.11);
-
-  // Bottom edge
-  pg.vertex(0, 65.83);
-  pg.vertex(65.83, 65.83);
-
-  // Closing the shape
-  pg.vertex(65.83, 51.11);
+  pg.vertex(borderOffset, borderOffset);
+  pg.vertex(width * 0.5 - borderOffset, borderOffset);
+  pg.vertex(width * 0.5 - borderOffset, height - borderOffset);
+  pg.vertex(borderOffset, height - borderOffset);
   pg.endShape(sv.p.CLOSE);
 
+  // Draw two circular cutouts, centered vertically with padding adjustments
+  pg.erase();
+  pg.circle(borderOffset, height * 0.5, cDiameter - 2 * borderOffset); // Left circle
+  pg.circle(
+    width * 0.5 - borderOffset,
+    height * 0.5,
+    cDiameter - 2 * borderOffset
+  ); // Right circle
+  pg.noErase();
   pg.pop();
 
   return pg;

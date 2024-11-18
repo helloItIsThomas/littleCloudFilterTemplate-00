@@ -1,38 +1,23 @@
 import { sv } from "../utils/variables.js";
-import { redrawSlidingTiles } from "./redrawSlidingTiles.js";
-import { updateGraphicsPositions } from "./updateGraphicsPositions.js";
-import Stats from "stats.js";
-
-sv.stats;
+import { updateClock, updateClockEase } from "../utils/utils";
+import { createStatsGUI } from "../utils/stats.js";
 
 createStatsGUI();
 
-function createStatsGUI() {
-  console.log("creating stats gui");
-  //Create new Graphs (FPS, MS, MB)
-  sv.stats = new Stats();
-  sv.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-
-  var thisParent = document.getElementById("modal_4-content");
-  thisParent.appendChild(sv.stats.domElement);
-
-  var statsALL = document
-    .getElementById("modal_4-content")
-    .querySelectorAll("canvas");
-
-  for (var i = 0; i < statsALL.length; i++) {
-    statsALL[i].style.width = "100%";
-    statsALL[i].style.height = "160px";
-  }
-}
-
 export function draw() {
-  sv.frameCount = sv.ticker.lastTime * 0.05;
+  sv.frameCount = sv.ticker.lastTime * 0.02;
   sv.clock = sv.frameCount * sv.speed;
 
-  // redrawSlidingTiles();
-  // if (!sv.params.showSingleImgMode) {
-  // redrawSlidingTiles();
-  // } else redrawThisImage();
-  updateGraphicsPositions();
+  const newClock = updateClock(performance.now() / 2000, 0.5);
+  // const newClock = sv.clock % 1.0;
+
+  if (sv.triangleMesh) {
+    if (sv.workerDone) {
+      console.log("stuff is happening");
+      sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = newClock;
+      sv.instancePositionBuffer.update();
+    } else {
+      console.log("stuff is not happening");
+    }
+  }
 }
