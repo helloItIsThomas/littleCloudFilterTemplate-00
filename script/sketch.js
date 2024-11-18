@@ -34,11 +34,11 @@ export default function (p) {
   async function mySetup() {
     // console.log("running mySetup");
 
+    initializeLoadIcon();
     sv.imgDiv = p.createDiv();
     sv.imgDiv.id("image-container");
     p.createCanvas(p.windowWidth, p.windowHeight).parent(sv.imgDiv);
     createInput();
-    initializeLoadIcon();
     showLoadIcon();
 
     sv.ticker.start();

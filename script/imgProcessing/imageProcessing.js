@@ -39,7 +39,6 @@ export async function updateCellData() {
   await Promise.all(promises).then(() => {
     createAllThreeGraphics();
     shaderRendering();
-    console.log("running hide");
     setTimeout(() => {
       sv.workerDone = true;
       hideLoadIcon();

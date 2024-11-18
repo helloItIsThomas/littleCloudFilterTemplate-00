@@ -1,4 +1,5 @@
 import { sv } from "./variables";
+import { gsap } from "gsap";
 
 // Initialize constants and DOM elements
 const loadIconSize = 100;
@@ -6,6 +7,8 @@ const loadStroke = 10;
 const radius = loadIconSize / 2 - loadStroke * 2;
 const centerX = radius + loadStroke * 2;
 const centerY = radius + loadStroke * 2;
+const showTimeline = gsap.timeline({ paused: true });
+const hideTimeline = gsap.timeline({ paused: true });
 
 export function initializeLoadIcon() {
   console.log("running initializeLoadIcon");
@@ -18,7 +21,7 @@ export function initializeLoadIcon() {
     sv.loadIconDiv.style.position = "fixed";
     sv.loadIconDiv.style.top = "0";
     sv.loadIconDiv.style.left = "0";
-    sv.loadIconDiv.style.display = "none"; // Hide initially
+    // sv.loadIconDiv.style.display = "none"; // Hide initially
     document.body.appendChild(sv.loadIconDiv);
 
     sv.arcCont = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -45,15 +48,33 @@ export function initializeLoadIcon() {
 
     sv.constantClock = 0; // Initialize constantClock
   }
+
+  const element = document.querySelector("#loadIconDiv");
+  showTimeline
+    .to(element, { backgroundColor: "rgba(255, 255, 255, 0.8)", duration: 1 })
+    .to(element, { backdropFilter: "blur(15px", duration: 1 });
+  hideTimeline
+    .to(element, {
+      backgroundColor: "rgba(255, 255, 255, 0)",
+      duration: 1,
+    })
+    .to(element, { backdropFilter: "blur(0px", duration: 1 });
 }
 
 export function showLoadIcon() {
+  console.log("running show icon");
   sv.loadIconDiv.style.display = "block";
+  showTimeline.restart();
   startLoadIconAnimation();
 }
 
 export function hideLoadIcon() {
+  console.log("running hide icon");
   sv.loadIconDiv.style.display = "none";
+  hideTimeline.restart().then(() => {
+    // Hide after animation
+  });
+
   cancelAnimationFrame(sv.animationFrameId);
 }
 
