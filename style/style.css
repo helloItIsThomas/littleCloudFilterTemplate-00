@@ -1,3 +1,5 @@
+/* BLUE COLOR = #73C9FD */
+
 html,
 body {
   margin: 0;
@@ -59,12 +61,12 @@ body {
 
 .dg.main {
   /* Display none here for debugging filer yo */
-  display: none !important;
+  /* display: none !important; */
 
   width: 100% !important;
   text-shadow: none !important;
   text-decoration: none !important;
-  color: blue;
+  color: black;
   box-sizing: border-box !important;
   background-color: white !important;
   padding: 10px !important;
@@ -95,22 +97,22 @@ body {
 .folder .dg .title {
   font-weight: bold;
 
-  color: red;
+  color: #73c9fd;
   border: none !important;
 }
 
 .folder .dg .cr.number.cr.number.has-slider .slider {
-  border: 1px solid blue !important;
+  border: 1px solid black !important;
   border-radius: 10px !important;
 }
 
 .cr.string .c * {
   width: 15% !important;
   background-color: white !important;
-  color: blue !important;
+  color: black !important;
   box-sizing: border-box !important;
   padding-left: 3px !important;
-  border: 1px solid blue !important;
+  border: 1px solid black !important;
 }
 
 .cr.number .c div input {
@@ -118,15 +120,15 @@ body {
   box-sizing: border-box !important;
   padding-left: 3px !important;
   background-color: white !important;
-  color: blue !important;
-  border: 1px solid blue !important;
+  color: black !important;
+  border: 1px solid black !important;
 }
 
 .folder .dg * {
   margin: 0px;
   text-shadow: none !important;
   text-decoration: none !important;
-  color: blue;
+  color: black;
   padding: 0 !important;
   margin: 0 !important;
   border: none !important;
@@ -139,21 +141,21 @@ body {
   background-color: white !important;
   box-sizing: border-box;
   margin-left: 5px !important;
-  border: 1px solid blue;
+  border: 1px solid black;
   border-radius: 10px !important;
 }
 .dg .c .slider-fg {
   /* border-radius: 10px; */
   border-radius: 10px !important;
-  background-color: blue !important;
+  background-color: #73c9fd !important;
 }
 
 .close-bottom {
   display: none;
   box-sizing: border-box !important;
   background: lightgray !important;
-  border: 1px solid blue !important;
-  color: blue;
+  border: 1px solid black !important;
+  color: black;
 }
 
 #closeGui {
@@ -162,12 +164,12 @@ body {
   position: absolute;
   box-sizing: border-box !important;
   background: lightgray !important;
-  border: 1px solid blue !important;
-  color: blue;
+  border: 1px solid black !important;
+  color: black;
 }
 
 .dg.main ul .folder {
-  border-top: 1px solid blue !important;
+  border-top: 1px solid black !important;
 }
 
 .dg.main ul .cr.boolean {
@@ -179,7 +181,26 @@ body {
 }
 
 .title-class {
-  border-top: 2px solid blue !important;
-  color: red !important;
+  border-top: 2px solid black !important;
+  color: #73c9fd !important;
   font-weight: bold;
+}
+
+#loadIconDiv {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(15px);
+  display: none;
+}
+
+#arcCont {
+  position: absolute;
+  background-color: red;
+}
+
+#animatedArc {
+  fill: none;
+  stroke: black;
 }

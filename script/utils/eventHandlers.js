@@ -7,6 +7,7 @@ import { shaderRendering } from "../rendering/shaderRendering.js";
 import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
 import { scaleDims } from "./utils.js";
 import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
+import { showLoadIcon } from "./icons.js";
 
 document.getElementById("closeGui").addEventListener("click", function () {
   const guiElement = document.querySelector(".moveGUI");
@@ -35,14 +36,15 @@ export function handleMultFiles(p, totalUploadNum) {
 }
 
 export async function recalculateGrid() {
-  // console.log("• Running recalculateGrid() •");
+  sv.workerDone = false;
+  showLoadIcon();
+  console.log("• Running recalculateGrid() •");
 
   sv.colCount = sv.gridResolution;
   sv.rowCount = Math.floor((sv.gridH / sv.gridW) * sv.gridResolution);
   sv.totalCells = sv.rowCount * sv.colCount;
   sv.cellW = sv.gridW / sv.colCount;
   sv.cellH = sv.gridH / sv.rowCount;
-  // initGridLoadingScreen();
 
   await updateCellData();
 }

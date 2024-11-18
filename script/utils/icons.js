@@ -1,72 +1,80 @@
 import { sv } from "./variables";
 
-export function drawIcon() {
-  // console.log("• running drawIcon •");
-  const p = sv.p;
-  const x = p.windowWidth * 0.5;
-  const y = p.windowHeight * 0.5;
-  const baseRadius = 30;
-  const pulseRadius = baseRadius + 5 * Math.sin(p.millis() / 300);
+// Initialize constants and DOM elements
+const loadIconSize = 100;
+const loadStroke = 10;
+const radius = loadIconSize / 2 - loadStroke * 2;
+const centerX = radius + loadStroke * 2;
+const centerY = radius + loadStroke * 2;
 
-  // Background flashing effect
-  p.noStroke();
-  p.fill(255, 0, 0, 50 + 50 * Math.sin(p.millis() / 200));
-  p.circle(x, y, pulseRadius + 20);
-
-  // Central solid red circle
-  p.fill("#ff0000");
-  p.circle(x, y, baseRadius);
-
-  // Animated white outer ring
-  p.noFill();
-  p.stroke(255);
-  p.strokeWeight(3);
-  p.ellipse(x, y, pulseRadius * 2, pulseRadius * 2);
-}
-
-export function drawLoadIcon() {
-  let clockSpeed = 1;
-  const loadIconSize = 100;
-  const loadStroke = 10;
-
+export function initializeLoadIcon() {
+  console.log("running initializeLoadIcon");
+  // Create and append DOM elements only once
   if (!sv.arcCont && !sv.animatedArc) {
+    sv.loadIconDiv = document.createElement("div");
+    sv.loadIconDiv.id = "loadIconDiv";
+    sv.loadIconDiv.style.width = window.innerWidth + "px";
+    sv.loadIconDiv.style.height = window.innerHeight + "px";
+    sv.loadIconDiv.style.position = "fixed";
+    sv.loadIconDiv.style.top = "0";
+    sv.loadIconDiv.style.left = "0";
+    sv.loadIconDiv.style.display = "none"; // Hide initially
+    document.body.appendChild(sv.loadIconDiv);
+
     sv.arcCont = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    sv.arcCont.style.position = "absolute";
+    sv.arcCont.id = "arcCont";
+    sv.arcCont.setAttribute("viewBox", `0 0 ${loadIconSize} ${loadIconSize}`);
     sv.arcCont.style.width = loadIconSize + "px";
     sv.arcCont.style.height = loadIconSize + "px";
-    sv.arcCont.style.left = `${window.innerWidth / 2 - loadIconSize / 2}px`;
-    sv.arcCont.style.top = `${window.innerHeight / 2 - loadIconSize / 2}px`;
-    sv.arcCont.style.overflow = "visible";
+    sv.arcCont.style.position = "absolute";
+    sv.arcCont.style.left = "50%";
+    sv.arcCont.style.top = "50%";
+    sv.arcCont.style.transform = "translate(-50%, -50%)";
 
     sv.animatedArc = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "path"
     );
-    sv.animatedArc.setAttribute("fill", "none");
-    sv.animatedArc.setAttribute("stroke", "white");
     sv.animatedArc.setAttribute("stroke-width", loadStroke);
+    sv.animatedArc.setAttribute("fill", "none");
+    sv.animatedArc.setAttribute("stroke", "#000"); // Set stroke color
+    sv.animatedArc.style.strokeLinecap = "round";
+
     sv.arcCont.appendChild(sv.animatedArc);
-    document.body.appendChild(sv.arcCont);
+    sv.loadIconDiv.appendChild(sv.arcCont);
+
+    sv.constantClock = 0; // Initialize constantClock
   }
+}
 
-  const radius = loadIconSize / 2 - loadStroke * 2;
-  const centerX = radius + loadStroke * 2;
-  const centerY = radius + loadStroke * 2;
+export function showLoadIcon() {
+  sv.loadIconDiv.style.display = "block";
+  startLoadIconAnimation();
+}
 
-  // Calculate arc percentage and rotation
-  const progress = (Math.sin(sv.constantClock) + 1) / 2; // Oscillates between 0 and 1
-  if (progress > 0.5) {
-    console.log("FAST");
-    clockSpeed = 2; // Double speed after halfway
-  } else {
-    console.log("SLOW");
-    clockSpeed = 0; // Normal speed before halfway
-  }
-  sv.constantClock = (sv.constantClock || 0) + 0.01 * clockSpeed; // Update clock
-  const arcPercentage = 0.8 * progress + 0.1; // Variable percentage of circumference
-  const startAngle = sv.constantClock * 0.1; // Rotate the whole arc
+export function hideLoadIcon() {
+  sv.loadIconDiv.style.display = "none";
+  cancelAnimationFrame(sv.animationFrameId);
+}
 
-  // Calculate start and end points of the arc
+export function startLoadIconAnimation() {
+  // Update sv.constantClock
+  sv.constantClock += 0.05;
+
+  // Calculate progress oscillating between 0 and 1
+  const progress = (Math.sin(sv.constantClock) + 1) / 2;
+
+  // Adjust clock speed based on progress
+  let clockSpeed = progress > 0.5 ? 2 : 1;
+
+  // Modify sv.constantClock to adjust speed
+  sv.constantClock += 0.05 * (clockSpeed - 1);
+
+  // Calculate arc percentage and start angle
+  const arcPercentage = 0.8 * progress + 0.1; // Ranges between 0.1 and 0.9
+  const startAngle = sv.constantClock * 10; // Rotate the arc
+
+  // Function to convert angle to point coordinates
   const angleToPoint = (angle) => {
     const radians = (angle * Math.PI) / 180;
     return {
@@ -75,17 +83,27 @@ export function drawLoadIcon() {
     };
   };
 
+  // Calculate start and end points of the arc
   const start = angleToPoint(startAngle);
   const end = angleToPoint(startAngle + 360 * arcPercentage);
   const largeArcFlag = arcPercentage > 0.5 ? 1 : 0;
 
+  // Define the arc path using SVG path data
   const pathData = `
     M ${start.x} ${start.y}
     A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x} ${end.y}
   `;
 
+  // Update the 'd' attribute of the path to redraw the arc
   sv.animatedArc.setAttribute("d", pathData);
+
+  // Rotate the entire arc container
   sv.arcCont.style.transform = `translate(-50%, -50%) rotate(${
-    sv.constantClock * 100
+    sv.constantClock * 10
   }deg)`;
+
+  // Continue the animation if the loading icon is visible
+  if (sv.loadIconDiv.style.display !== "none") {
+    sv.animationFrameId = requestAnimationFrame(startLoadIconAnimation);
+  }
 }

@@ -72,6 +72,7 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
+  gridResolutionBuffer: "10",
   gridResolution: "10",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
@@ -110,17 +111,28 @@ screenshotController.onChange((value) => {
 const general = gui.addFolder("General");
 general.open();
 const gridResController = general
-  .add(sv, "gridResolution")
+  .add(sv, "gridResolutionBuffer")
   .name("Grid Resolution");
 general.add(sv, "manualScale", 0.1, 1.0).name("Manual Scale");
 general.add(sv, "speed", 0.0, 0.1).name("Speed");
 general.add(sv, "noiseOffset", 0, 10, 0.1).name("Noise Offset");
 
-gridResController.onChange((value) => {
-  if (value < 200) sv.gridResolution = value;
-  else sv.gridResolution = 200;
+gridResController.onChange((value) => {});
 
-  recalculateGrid();
+const inputField = gridResController.domElement.querySelector("input");
+
+inputField.addEventListener("keydown", (event) => {
+  const value = parseInt(inputField.value, 10);
+  if (value !== sv.gridResolution) {
+    if (event.key === "Enter") {
+      if (sv.workerDone) {
+        if (value < 400) sv.gridResolution = value;
+        else sv.gridResolution = 400;
+        if (value == 0) sv.gridResolution = 1;
+        recalculateGrid();
+      }
+    }
+  }
 });
 
 // Add the toggle parameter to control visibility

@@ -3,6 +3,7 @@ import { fitImageToWindow } from "../utils/utils.js";
 import { Still } from "./Stills.js";
 import { shaderRendering } from "../rendering/shaderRendering.js";
 import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
+import { hideLoadIcon } from "../utils/icons.js";
 
 export async function updateCellData() {
   const promises = [];
@@ -38,8 +39,11 @@ export async function updateCellData() {
   await Promise.all(promises).then(() => {
     createAllThreeGraphics();
     shaderRendering();
-    sv.workerDone = true;
+    console.log("running hide");
+    setTimeout(() => {
+      sv.workerDone = true;
+      hideLoadIcon();
+    }, 1000);
     sv.pApp.renderer.resize(sv.gridW, sv.gridH);
-    // console.log("sv.workerDone: ", sv.workerDone);
   });
 }

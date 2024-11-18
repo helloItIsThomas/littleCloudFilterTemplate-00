@@ -5,14 +5,13 @@ import { sv } from "./utils/variables.js";
 import { imageLoaded } from "./utils/eventHandlers.js";
 import { loadImagesWithP5 } from "./utils/loadImages";
 import { draw } from "./rendering/draw.js";
-
-import { drawIcon, drawLoadIcon } from "./utils/icons.js";
 import { createInput } from "./utils/input";
+import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
 
 sv.pApp = new Application();
 await sv.pApp.init({
-  background: "#D30403",
-  // background: "#ffffff",
+  // background: "#D30403",
+  background: "#ffffff",
   clearBeforeRender: true,
   autoDensity: true,
   resolution: 2,
@@ -39,6 +38,8 @@ export default function (p) {
     sv.imgDiv.id("image-container");
     p.createCanvas(p.windowWidth, p.windowHeight).parent(sv.imgDiv);
     createInput();
+    initializeLoadIcon();
+    showLoadIcon();
 
     sv.ticker.start();
 
@@ -58,8 +59,6 @@ export default function (p) {
   sv.ticker.add((deltaTime) => {
     sv.stats.begin();
     sv.constantClock += sv.speed;
-
-    drawLoadIcon();
 
     if (sv.setupDone) {
       // console.log("DRAWING");
