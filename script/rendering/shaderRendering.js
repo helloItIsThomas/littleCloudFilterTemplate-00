@@ -124,6 +124,15 @@ export function shaderRendering() {
   const tlThresh3 = 0.5;
 
   let resources = {};
+  if (resources) {
+    Object.keys(resources).forEach((key) => {
+      const resource = resources[key];
+      if (resource instanceof WebGLBuffer) gl.deleteBuffer(resource);
+      else if (resource instanceof HTMLElement) resource.remove();
+      // Add other resource types if needed.
+    });
+  }
+  resources = {}; // Clears the object reference.
 
   // Prepare resources dynamically
   resources = {
@@ -144,11 +153,22 @@ export function shaderRendering() {
     },
   };
 
+  console.log(bTexes.length);
   resources.waveUniforms.numBTexes = { value: bTexes.length, type: "i32" };
 
-  bTexes.forEach((tex, index) => {
-    resources[`bTex${index + 1}`] = tex.source;
-  });
+  if (bTexes.length == 1) {
+    resources["bTex1"] = bTexes[0].source;
+    resources["bTex2"] = bTexes[0].source;
+  } else if (bTexes.length == 2) {
+    resources["bTex1"] = bTexes[0].source;
+    resources["bTex2"] = bTexes[1].source;
+  } else if (bTexes.length > 2) {
+    console.error(" > 2 Images Not Supported ");
+  } else console.log(" Currently " + bTexes.length + "Number of Images ");
+
+  // bTexes.forEach((tex, index) => {
+  // resources[`bTex${index + 1}`] = tex.source;
+  // });
 
   const shader = Shader.from({
     gl,
