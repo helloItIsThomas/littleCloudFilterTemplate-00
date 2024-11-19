@@ -41,9 +41,9 @@ void main() {
 
     if(numBTexes == 2) {
         vec4 bTexColor2 = texture2D(bTex2, vec2(x, y));
-        // vec4 testLerp = mix(bTexColor, bTexColor2, abs(sin(time)));
-        vec4 testLerp = mix(bTexColor, bTexColor2, time);
-        brightness = testLerp.r;
+        // vec4 testLerp = mix(bTexColor, bTexColor2, time);
+        // brightness = testLerp.r;
+        gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
     }
 
     // brightness = bTexColor.r + (time + (noise.r * 0.3));
@@ -104,5 +104,6 @@ void main() {
     vec4 leftCircle = texture2D(leftCircleTex, lcUV);
     vec4 rightCircle = texture2D(rightCircleTex, rcUV);
 
-    gl_FragColor = hourglass + rightCircle + leftCircle;
+    // gl_FragColor = hourglass + rightCircle + leftCircle;
+    // gl_FragColor = rightCircle;
 }

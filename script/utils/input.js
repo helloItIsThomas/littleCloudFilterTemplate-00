@@ -7,14 +7,13 @@ export function createInput() {
   let canUploadMultiple = false;
   if (!sv.params.showSingleImgMode) canUploadMultiple = true;
   sv.inputElement = sv.p.createFileInput(function (_file) {
-    // console.log(" • running sv.p.createFileInput • ");
     const totalUploadNum = sv.inputElement.elt.files.length;
     sv.tempUploadFiles.push(_file);
     if (sv.tempUploadFiles.length === totalUploadNum) {
+      console.log("running handleMultFiles from createInput");
       handleMultFiles(sv.p, totalUploadNum);
       sv.tempUploadFiles = [];
     }
   }, canUploadMultiple);
   sv.inputElement.id("image-input");
-  // console.log(canUploadMultiple);
 }

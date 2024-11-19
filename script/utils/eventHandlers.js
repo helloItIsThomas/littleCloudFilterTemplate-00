@@ -52,7 +52,6 @@ export async function recalculateGrid() {
 export function imageLoaded() {
   // console.log("• Running imageLoaded() •");
 
-  // return new Promise(async (resolve) => {
   const recordingScaleText = document.createElement("div");
   recordingScaleText.style.position = "absolute";
   recordingScaleText.style.bottom = "30px";
@@ -71,11 +70,20 @@ export function imageLoaded() {
       img.height = window.innerWidth / aspectRatio;
     }
   });
+  if (imgs.length > 1) {
+    const firstImgWidth = imgs[0].width;
+    const firstImgHeight = imgs[0].height;
+    for (let i = 1; i < imgs.length; i++) {
+      if (
+        imgs[i].width !== firstImgWidth ||
+        imgs[i].height !== firstImgHeight
+      ) {
+        throw new Error("All images must be the same aspect ratio.");
+      }
+    }
+  }
 
   if (imgs.length > 1) {
-    // imgs.forEach((img) => {
-    // img = scaleDims(img);
-    // });
     sv.gridW = imgs[0].width;
     sv.gridH = imgs[0].height;
   } else {
@@ -96,9 +104,4 @@ export function imageLoaded() {
     },
   });
   sv.setupDone = true;
-
-  // document.body.appendChild(recordingScaleText);
-
-  // resolve();
-  // });
 }

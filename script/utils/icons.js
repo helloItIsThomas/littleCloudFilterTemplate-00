@@ -11,8 +11,6 @@ const showTimeline = gsap.timeline({ paused: true });
 const hideTimeline = gsap.timeline({ paused: true });
 
 export function initializeLoadIcon() {
-  console.log("running initializeLoadIcon");
-  // Create and append DOM elements only once
   if (!sv.arcCont && !sv.animatedArc) {
     sv.loadIconDiv = document.createElement("div");
     sv.loadIconDiv.id = "loadIconDiv";
@@ -62,14 +60,12 @@ export function initializeLoadIcon() {
 }
 
 export function showLoadIcon() {
-  console.log("running show icon");
   sv.loadIconDiv.style.display = "block";
   showTimeline.restart();
   startLoadIconAnimation();
 }
 
 export function hideLoadIcon() {
-  console.log("running hide icon");
   sv.loadIconDiv.style.display = "none";
   hideTimeline.restart();
   cancelAnimationFrame(sv.animationFrameId);

@@ -1,5 +1,5 @@
 import { sv } from "../utils/variables.js";
-import { fitImageToWindow } from "../utils/utils.js";
+import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";
 import { Still } from "./Stills.js";
 import { shaderRendering } from "../rendering/shaderRendering.js";
 import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
@@ -37,6 +37,10 @@ export async function updateCellData() {
     // sv.stills.push(still);
   }
   await Promise.all(promises).then(() => {
+    console.log(sv.stills);
+    sv.stills.forEach((still) => {
+      // downloadCanvas(still.brightnessTex);
+    });
     createAllThreeGraphics();
     shaderRendering();
     setTimeout(() => {
