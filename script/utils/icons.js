@@ -12,10 +12,9 @@ const hideTimeline = gsap.timeline({ paused: true });
 
 export function initializeLoadIcon() {
   if (!sv.arcCont && !sv.animatedArc) {
+    console.log("la;ksdjfl;ks");
     sv.loadIconDiv = document.createElement("div");
     sv.loadIconDiv.id = "loadIconDiv";
-    sv.loadIconDiv.style.width = window.innerWidth + "px";
-    sv.loadIconDiv.style.height = window.innerHeight + "px";
     sv.loadIconDiv.style.position = "fixed";
     sv.loadIconDiv.style.top = "0";
     sv.loadIconDiv.style.left = "0";
@@ -46,17 +45,21 @@ export function initializeLoadIcon() {
 
     sv.constantClock = 0; // Initialize constantClock
   }
+  // get a reference to loadIconDiv
+  sv.loadIconDiv.style.width = window.innerWidth + "px";
+  sv.loadIconDiv.style.height = window.innerHeight + "px";
 
   const element = document.querySelector("#loadIconDiv");
-  showTimeline
-    .to(element, { backgroundColor: "rgba(255, 255, 255, 0.8)", duration: 1 })
-    .to(element, { backdropFilter: "blur(15px", duration: 1 });
-  hideTimeline
-    .to(element, {
-      backgroundColor: "rgba(255, 255, 255, 0)",
-      duration: 1,
-    })
-    .to(element, { backdropFilter: "blur(0px", duration: 1 });
+  showTimeline.to(element, {
+    backgroundColor: "rgba(255, 255, 255, 1.0)",
+    duration: 0.1,
+  });
+  // .to(element, { backdropFilter: "blur(15px", duration: 1 });
+  hideTimeline.to(element, {
+    backgroundColor: "rgba(255, 255, 255, 0)",
+    duration: 0.1,
+  });
+  // .to(element, { backdropFilter: "blur(0px", duration: 1 });
 }
 
 export function showLoadIcon() {
@@ -66,6 +69,7 @@ export function showLoadIcon() {
 }
 
 export function hideLoadIcon() {
+  gsap.to("#pixiApp", { opacity: 1, duration: 0.1 });
   sv.loadIconDiv.style.display = "none";
   hideTimeline.restart();
   cancelAnimationFrame(sv.animationFrameId);

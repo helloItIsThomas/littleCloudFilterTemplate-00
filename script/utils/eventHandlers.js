@@ -7,7 +7,8 @@ import { shaderRendering } from "../rendering/shaderRendering.js";
 import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
 import { scaleDims } from "./utils.js";
 import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
-import { showLoadIcon } from "./icons.js";
+import { showLoadIcon, initializeLoadIcon } from "./icons.js";
+import { gsap } from "gsap";
 
 document.getElementById("closeGui").addEventListener("click", function () {
   const guiElement = document.querySelector(".moveGUI");
@@ -51,12 +52,6 @@ export async function recalculateGrid() {
 
 export function imageLoaded() {
   // console.log("• Running imageLoaded() •");
-
-  const recordingScaleText = document.createElement("div");
-  recordingScaleText.style.position = "absolute";
-  recordingScaleText.style.bottom = "30px";
-  recordingScaleText.style.zIndex = "10";
-  recordingScaleText.style.left = "300px";
 
   const imgs = sv.animUnderImgs;
 
@@ -105,3 +100,25 @@ export function imageLoaded() {
   });
   sv.setupDone = true;
 }
+
+let resizeTimeout;
+let resizingStarted = false;
+
+window.addEventListener("resize", () => {
+  console.log("Resizing...");
+  clearTimeout(resizeTimeout);
+
+  if (!resizingStarted) {
+    console.log("Resizing started");
+    resizingStarted = true;
+    gsap.to("#pixiApp", { opacity: 0, duration: 0.1 });
+  }
+
+  resizeTimeout = setTimeout(() => {
+    console.log("User finished resizing");
+    initializeLoadIcon();
+    imageLoaded();
+
+    resizingStarted = false; // Reset for next resize
+  }, 500); // Adjust timeout as needed
+});

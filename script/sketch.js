@@ -10,8 +10,7 @@ import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
 
 sv.pApp = new Application();
 await sv.pApp.init({
-  // background: "#D30403",
-  background: "#ffffff",
+  background: "#ff0000",
   clearBeforeRender: true,
   autoDensity: true,
   resolution: 2,

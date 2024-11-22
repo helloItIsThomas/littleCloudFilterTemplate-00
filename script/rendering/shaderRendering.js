@@ -27,7 +27,7 @@ fragmentLoader["../../shader/frag.frag"]().then((fragmentLoader) => {
 });
 
 export function shaderRendering() {
-  // console.log("°·°‡€ﬁﬂrunning shader rendering·°‡ﬁﬂ");
+  console.log("°·°‡€ﬁﬂrunning shader rendering·°‡ﬁﬂ");
   sv.totalTriangles = sv.totalCells;
 
   sv.instancePositionBuffer = new Buffer({
