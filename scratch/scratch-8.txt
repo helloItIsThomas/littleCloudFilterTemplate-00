@@ -13,7 +13,7 @@ we need to do the following:
         • implement support for 1 or 2 images
             • single image mode
                 ~~~~support image with any aspect ratio~~~~
-                • contrast
+                ~~~~contrast~~~~
                 • start invisible
                 • scale dynamically
                 • clip outliers
@@ -22,7 +22,7 @@ we need to do the following:
         • speed
         • noise offset
         • color
-        • the new thing, the 3 start point (shader) uniforms
+        ~~~~the new thing, the 3 start point (shader) uniforms~~~~
     ~~~~re-implement resizing~~~~
     ~~~~a stable, centered viewport for the sketch~~~~
 Nice to haves:

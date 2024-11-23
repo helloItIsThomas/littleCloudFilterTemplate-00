@@ -21,9 +21,9 @@ export async function loadImagesWithP5() {
 
   // const sourceImgPaths = ["/assets/debug/456.png", "/assets/debug/654.png"];
   // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/star.png"];
-  // const sourceImgPaths = ["/assets/debug/satan.png"];
   // const sourceImgPaths = ["/assets/notSquare.png"];
-  const sourceImgPaths = ["/assets/studio.png"];
+  const sourceImgPaths = ["/assets/debug/satan.png"];
+  // const sourceImgPaths = ["/assets/studio.png"];
 
   await Promise.all(sourceImgPaths.map(loadImage));
 }

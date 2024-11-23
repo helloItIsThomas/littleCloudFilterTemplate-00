@@ -68,7 +68,7 @@ body {
 
 .dg.main {
   /* Display none here for debugging filer yo */
-  /* display: none !important; */
+  display: none !important;
   /* position: absolute !important; */
 
   width: 100% !important;

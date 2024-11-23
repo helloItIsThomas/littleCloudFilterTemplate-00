@@ -17,7 +17,7 @@ export function draw() {
   // Update your main code to use the new functions
   if (sv.triangleMesh) {
     if (sv.workerDone) {
-      sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = newClock;
+      sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = sv.clock;
       sv.instancePositionBuffer.update();
     }
   }

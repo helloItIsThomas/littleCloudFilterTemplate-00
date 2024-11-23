@@ -55,6 +55,7 @@ void main() {
     // bTexUV = adjustUV(bTexUV, bTex1AR);
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
+    float noise = texture2D(noiseTex, bTexUV).r;
 
     // If using bTex2
     if(numBTexes == 2) {
@@ -122,6 +123,13 @@ void main() {
     vec4 hourglass = texture2D(hourglassTex, hgUV);
     vec4 leftCircle = texture2D(leftCircleTex, lcUV);
     vec4 rightCircle = texture2D(rightCircleTex, rcUV);
+
+// resizing animation for 2 image mode, not super nice.
+    // float scaleFactor = mod(clamp(time, 0.1, 1.0), 1.0);
+    // float scaleFactor = mod(time - brightness, 1.0);
+    // vec2 center = vec2(0.5, 0.5); // Center of the square area
+    // vec2 scaledRCUV = (rcUV - center) * scaleFactor + center;
+    // vec4 rightCircle = texture2D(rightCircleTex, scaledRCUV);
 
     gl_FragColor = hourglass + rightCircle + leftCircle;
     // gl_FragColor = rightCircle;
