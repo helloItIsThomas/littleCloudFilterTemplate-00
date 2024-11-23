@@ -1,5 +1,4 @@
 import { sv } from "../utils/variables.js";
-import { populateGridNoWebWorker } from "./populateGridNoWebWorker.js";
 import { downloadCanvas } from "../utils/utils.js";
 
 export class Still {
@@ -58,10 +57,5 @@ export class Still {
         console.error("Worker error:", e.message, e);
       };
     });
-  }
-
-  populateGrid(image) {
-    // console.log("˘˛¯Â·%^ RUNNING OLD WAY ﬁﬂ");
-    populateGridNoWebWorker(this, image);
   }
 }

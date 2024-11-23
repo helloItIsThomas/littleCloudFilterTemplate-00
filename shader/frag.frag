@@ -10,9 +10,14 @@ uniform sampler2D bTex2;
 
 uniform float time;
 uniform float gridResolution;
+uniform float rowCount;
+uniform float colCount;
 uniform float hgAR;
 uniform float lcAR;
 uniform float rcAR;
+uniform float bTex1AR;
+uniform float bTex2AR;
+
 uniform int numBTexes;
 uniform float tlThresh1;
 uniform float tlThresh2;
@@ -24,26 +29,40 @@ float ease(float t, float easeFactor) {
     return pow(t, easeFactor) / (pow(t, easeFactor) + pow(1.0 - t, easeFactor));
 }
 
+vec2 adjustUV(vec2 uv, float aspectRatio) {
+    if(aspectRatio >= 1.0) {
+        uv.x = uv.x * aspectRatio;
+    } else {
+        uv.y = uv.y * (1.0 / aspectRatio);
+    }
+    return uv;
+}
+
 void main() {
     // Convert normalized vIndex to an absolute index
-    float totalCells = gridResolution * gridResolution;
+    // float totalCells = gridResolution * gridResolution;
+    float totalCells = rowCount * colCount;
     float indexFloat = vIndex * totalCells; // Scale normalized index to total cells
 
     // Calculate x and y based on indexFloat
-    float x = mod(indexFloat, gridResolution) / gridResolution;
-    float y = floor(indexFloat / gridResolution) / gridResolution;
+    // float x = mod(indexFloat, gridResolution) / gridResolution;
+    // float y = floor(indexFloat / gridResolution) / gridResolution;
+    float x = mod(indexFloat, colCount) / colCount;
+    float y = floor(indexFloat / colCount) / rowCount;
 
-    // Sample bTex at the calculated normalized coordinates
-    vec4 bTexColor = texture2D(bTex1, vec2(x, y));
+    // Adjust UV coordinates for bTex1
+    vec2 bTexUV = vec2(x, y);
+    // bTexUV = adjustUV(bTexUV, bTex1AR);
+    vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 
-    vec4 noise = texture2D(noiseTex, vec2(x, y));
-
+    // If using bTex2
     if(numBTexes == 2) {
-        vec4 bTexColor2 = texture2D(bTex2, vec2(x, y));
+        vec2 bTexUV2 = vec2(x, y);
+        bTexUV2 = adjustUV(bTexUV2, bTex2AR);
+        vec4 bTexColor2 = texture2D(bTex2, bTexUV2);
         vec4 testLerp = mix(bTexColor, bTexColor2, time);
-        brightness = testLerp.r;
-        // gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+        // brightness = testLerp.r;
     }
 
     // brightness = bTexColor.r + (time + (noise.r * 0.3));
@@ -106,4 +125,6 @@ void main() {
 
     gl_FragColor = hourglass + rightCircle + leftCircle;
     // gl_FragColor = rightCircle;
+    // gl_FragColor = vec4(0.0, bTex1AR, 0.0, 1.0);
+    // gl_FragColor = vec4(brightness, brightness, brightness, 1.0);
 }

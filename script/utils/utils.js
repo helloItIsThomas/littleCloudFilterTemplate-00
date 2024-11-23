@@ -23,6 +23,19 @@ export function scaleDims(_img) {
   return _img;
 }
 
+export function getAspectRatio(img) {
+  if (!img || !img.width || !img.height) {
+    throw new Error("Invalid image object");
+  }
+
+  const width = img.width;
+  const height = img.height;
+
+  // Normalize the aspect ratio to always be <= 1
+  // return width > height ? height / width : width / height;
+  return width / height;
+}
+
 export function fitImageToWindow(img) {
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;

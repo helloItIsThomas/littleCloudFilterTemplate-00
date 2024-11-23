@@ -31,10 +31,6 @@ export async function updateCellData() {
         sv.stills.push(still);
       })
     );
-
-    // still.populateGrid(image, sv);
-    // still.currentImageIndex = i;
-    // sv.stills.push(still);
   }
   await Promise.all(promises).then(() => {
     console.log(sv.stills);

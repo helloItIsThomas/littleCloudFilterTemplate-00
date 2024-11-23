@@ -9,7 +9,10 @@ export function draw() {
 
   sv.clock = sv.frameCount * sv.speed;
 
-  const newClock = updateClock(performance.now() / 2000, 0.5);
+  const newClock = updateClock(
+    performance.now() / sv.transitionSpeed,
+    sv.transitionDelay
+  );
 
   // Update your main code to use the new functions
   if (sv.triangleMesh) {

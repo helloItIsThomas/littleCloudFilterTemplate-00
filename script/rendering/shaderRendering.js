@@ -1,4 +1,5 @@
 import { sv } from "../utils/variables.js";
+import { getAspectRatio } from "../utils/utils.js";
 
 import {
   Assets,
@@ -44,7 +45,7 @@ export function shaderRendering() {
     sv.triangles[i] = {
       x: cell.x,
       y: cell.y,
-      speed: 1,
+      speed: 1.0,
     };
   }
 
@@ -116,6 +117,7 @@ export function shaderRendering() {
     let tex = new Texture({ source: src });
     return tex;
   });
+
   const art1 = sv.p.int(tex1.source.width / tex1.source.height);
   const art2 = sv.p.int(tex2.source.width / tex2.source.height);
   const art3 = sv.p.int(tex3.source.width / tex3.source.height);
@@ -140,9 +142,12 @@ export function shaderRendering() {
     leftCircleTex: tex2.source,
     rightCircleTex: tex3.source,
     noiseTex: noiseTex.source,
+
     waveUniforms: {
-      time: { value: 1, type: "f32" },
+      time: { value: 1.0, type: "f32" },
       gridResolution: { value: sv.gridResolution, type: "f32" },
+      rowCount: { value: sv.rowCount, type: "f32" },
+      colCount: { value: sv.colCount, type: "f32" },
       hgAR: { value: art1, type: "f32" },
       lcAR: { value: art2, type: "f32" },
       rcAR: { value: art3, type: "f32" },
@@ -153,29 +158,41 @@ export function shaderRendering() {
     },
   };
 
-  console.log(bTexes.length);
   resources.waveUniforms.numBTexes = { value: bTexes.length, type: "i32" };
 
   if (bTexes.length == 1) {
     resources["bTex1"] = bTexes[0].source;
     resources["bTex2"] = bTexes[0].source;
+
+    resources.waveUniforms.bTex1AR = {
+      value: getAspectRatio(bTexes[0].source),
+      type: "f32",
+    };
+    resources.waveUniforms.bTex2AR = {
+      value: getAspectRatio(bTexes[0].source),
+      type: "f32",
+    };
   } else if (bTexes.length == 2) {
     resources["bTex1"] = bTexes[0].source;
     resources["bTex2"] = bTexes[1].source;
+
+    resources.waveUniforms.bTex1AR = {
+      value: getAspectRatio(bTexes[0].source),
+      type: "f32",
+    };
+    resources.waveUniforms.bTex2AR = {
+      value: getAspectRatio(bTexes[1].source),
+      type: "f32",
+    };
   } else if (bTexes.length > 2) {
     console.error(" > 2 Images Not Supported ");
   } else console.log(" Currently " + bTexes.length + "Number of Images ");
-
-  // bTexes.forEach((tex, index) => {
-  // resources[`bTex${index + 1}`] = tex.source;
-  // });
 
   const shader = Shader.from({
     gl,
     resources,
   });
 
-  //   let s = sv.shader;
   sv.triangleMesh = new Mesh({
     geometry,
     shader,
@@ -191,10 +208,4 @@ export function shaderRendering() {
     data[count++] = triangle.x;
     data[count++] = triangle.y;
   }
-
-  // the below stuff is not needed until we sort the web workers stuff
-  // sv.pContainer.addChild(sv.triangleMesh);
-  // sv.pContainer.addChild(sv.loadingScreen);
-  // the above stuff is not needed until we sort the web workers stuff
-  // console.log("finished shaderRendering");
 }

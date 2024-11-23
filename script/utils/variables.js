@@ -45,6 +45,8 @@ export const sv = {
   debugImgToggle: 0,
   slidingPieceImgs: [],
   manualScale: 1.0,
+  transitionSpeed: 3000.0,
+  transitionDelay: 0.5,
   speed: 0.02,
   params: {
     showSingleImgMode: false,
@@ -73,7 +75,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "80",
+  gridResolution: "200",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 

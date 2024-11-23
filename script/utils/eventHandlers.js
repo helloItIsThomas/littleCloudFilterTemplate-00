@@ -43,6 +43,8 @@ export async function recalculateGrid() {
 
   sv.colCount = sv.gridResolution;
   sv.rowCount = Math.floor((sv.gridH / sv.gridW) * sv.gridResolution);
+  console.log("rowCount: ", sv.rowCount);
+  console.log("colCount: ", sv.colCount);
   sv.totalCells = sv.rowCount * sv.colCount;
   sv.cellW = sv.gridW / sv.colCount;
   sv.cellH = sv.gridH / sv.rowCount;

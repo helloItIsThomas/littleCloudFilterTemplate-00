@@ -12,6 +12,7 @@ we need to do the following:
         ~~~~manual scale~~~~
         • implement support for 1 or 2 images
             • single image mode
+                • support image with any aspect ratio
                 • contrast
                 • start invisible
                 • scale dynamically
@@ -22,7 +23,7 @@ we need to do the following:
         • noise offset
         • color
         • the new thing, the 3 start point (shader) uniforms
-    • re-implement resizing
-    • a stable, centered viewport for the sketch
+    ~~~~re-implement resizing~~~~
+    ~~~~a stable, centered viewport for the sketch~~~~
 Nice to haves:
     • make sure the cells have clean lines at 100% and 0% brightness
