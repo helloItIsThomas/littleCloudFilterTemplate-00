@@ -15,8 +15,8 @@ console.log(sv.bodyRightDivWidth);
 
 sv.pApp = new Application();
 await sv.pApp.init({
-  // background: "#ff0000",
-  background: "00ff00",
+  background: "#fff",
+  // background: "00ff00",
   clearBeforeRender: true,
   autoDensity: true,
   resolution: 2,

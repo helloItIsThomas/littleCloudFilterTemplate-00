@@ -44,6 +44,7 @@ body {
   flex-grow: 1 !important;
   min-width: 50px;
   min-height: 50px;
+
   background-color: #73c9fd;
   /* display: flex; */
   /* justify-content: center; */
@@ -135,6 +136,13 @@ body {
   box-sizing: border-box;
   /* margin: 10px; */
   object-fit: contain;
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+#activeImages::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 #activeImages canvas {

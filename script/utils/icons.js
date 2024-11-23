@@ -69,6 +69,8 @@ export function showLoadIcon() {
 
 export function hideLoadIcon() {
   gsap.to("#pixiApp", { opacity: 1, duration: 0.1 });
+  gsap.to("#bodyLeft", { opacity: 1, duration: 0.1 });
+  gsap.to("#bodyRight", { opacity: 1, duration: 0.1 });
   sv.loadIconDiv.style.display = "none";
   hideTimeline.restart();
   cancelAnimationFrame(sv.animationFrameId);

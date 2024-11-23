@@ -3,6 +3,8 @@ import { recalculateGrid, imageLoaded } from "./eventHandlers";
 import { startRecording, stopRecording } from "./recording";
 import { updateCellData } from "../imgProcessing/imageProcessing";
 import { createInput } from "./input";
+import { downloadBlob } from "canvas-record";
+import { downloadCanvas } from "./utils";
 
 export const gui = new dat.GUI({
   autoPlace: false,
@@ -19,7 +21,10 @@ export const sv = {
   pApp: null,
   bodyRightDiv: null,
   bodyRightDivWidth: null,
+  bodyRightDivHeight: null,
   pContainer: null,
+  sceneContainer: null,
+  sceneContainerFrame: null,
   ticker: null,
   frameCount: null,
   spinnyBG: null,
@@ -114,7 +119,14 @@ recordingController.onChange((value) => {
 });
 screenshotController.onChange((value) => {
   if (value) {
-    sv.p.save();
+    sv.pApp.renderer.extract.image(sv.pApp.stage).then((image) => {
+      // Add the extracted image to the DOM
+      const imgElement = document.createElement("img");
+      imgElement.src = image.src; // Use the extracted image's source
+      imgElement.style.width = "255px";
+      imgElement.style.height = "255px";
+      document.body.appendChild(imgElement); // Append the image to the body (or another container)
+    });
     screenshotController.setValue(false);
   }
 });
@@ -215,6 +227,5 @@ function updateVisibility() {
 
 // Update visibility when the boolean changes
 showSingleImgModeController.onChange(updateVisibility);
-
 // Initial state update
 // updateVisibility();

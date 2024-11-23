@@ -138,6 +138,8 @@ window.addEventListener("resize", () => {
     console.log("Resizing started");
     resizingStarted = true;
     gsap.to("#pixiApp", { opacity: 0, duration: 0.1 });
+    gsap.to("#bodyLeft", { opacity: 0, duration: 0.1 });
+    gsap.to("#bodyRight", { opacity: 0, duration: 0.1 });
   }
 
   resizeTimeout = setTimeout(() => {

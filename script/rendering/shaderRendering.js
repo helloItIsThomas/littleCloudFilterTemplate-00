@@ -11,6 +11,7 @@ import {
   Texture,
   ImageSource,
   GlProgram,
+  Container,
 } from "pixi.js";
 
 let vertex;
@@ -198,7 +199,10 @@ export function shaderRendering() {
     drawMode: "triangle-list",
   });
   sv.pApp.stage.removeChildren();
-  sv.pApp.stage.addChild(sv.triangleMesh);
+  sv.sceneContainer = new Container();
+  sv.sceneContainerFrame = new Container();
+  sv.sceneContainerFrame.addChild(sv.sceneContainer);
+  sv.pApp.stage.addChild(sv.sceneContainerFrame);
 
   const data = sv.instancePositionBuffer.data;
   let count = 0;
@@ -207,4 +211,12 @@ export function shaderRendering() {
     data[count++] = triangle.x;
     data[count++] = triangle.y;
   }
+
+  console.log("running shader rendering");
+  sv.sceneContainer.addChild(sv.triangleMesh);
+  console.log("width: " + sv.sceneContainer.width);
+  // sv.sceneContainerFrame.x = sv.bodyRightDivWidth / 2;
+  // sv.sceneContainerFrame.y = sv.bodyRightDivHeight / 2;
+  // sv.sceneContainer.pivot.x = 200;
+  // sv.sceneContainer.pivot.y = 200; //sv.sceneContainer.height / 2;
 }
