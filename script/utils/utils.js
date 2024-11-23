@@ -37,8 +37,8 @@ export function getAspectRatio(img) {
 }
 
 export function fitImageToWindow(img) {
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
+  const windowWidth = sv.bodyRightDivWidth;
+  const windowHeight = sv.bodyRightDivHeight;
 
   // Calculate aspect ratios
   const imgAspect = img.width / img.height;

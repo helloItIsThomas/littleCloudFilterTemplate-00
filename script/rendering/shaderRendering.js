@@ -157,6 +157,8 @@ export function shaderRendering() {
 
   resources.waveUniforms.numBTexes = { value: bTexes.length, type: "i32" };
 
+  // resources.waveUniforms.bodyRightAR = { value: bTexes.length, type: "i32" };
+
   if (bTexes.length == 1) {
     resources["bTex1"] = bTexes[0].source;
     resources["bTex2"] = bTexes[0].source;

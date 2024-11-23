@@ -8,15 +8,20 @@ import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
 
+const bodyRightDiv = document.getElementById("bodyRight");
+sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
+sv.bodyRightDivHeight = document.getElementById("bodyRight").offsetHeight;
+console.log(sv.bodyRightDivWidth);
+
 sv.pApp = new Application();
 await sv.pApp.init({
   // background: "#ff0000",
-  background: "#fff",
+  background: "00ff00",
   clearBeforeRender: true,
   autoDensity: true,
   resolution: 2,
   antialias: true,
-  resizeTo: window,
+  // resizeTo: bodyRightDiv,
   preference: "webgl",
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
@@ -35,9 +40,11 @@ export default function (p) {
     // console.log("running mySetup");
 
     initializeLoadIcon();
-    sv.imgDiv = p.createDiv();
-    sv.imgDiv.id("image-container");
-    p.createCanvas(p.windowWidth, p.windowHeight).parent(sv.imgDiv);
+    // sv.imgDiv = p.createDiv();
+    // sv.imgDiv.id("image-container");
+    // p.createCanvas(sv.bodyRightDivWidth, sv.bodyRightDivHeight).parent(
+    // sv.imgDiv
+    // );
     createInput();
     showLoadIcon();
 

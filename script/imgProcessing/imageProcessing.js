@@ -34,15 +34,14 @@ export async function updateCellData() {
   }
   await Promise.all(promises).then(() => {
     console.log(sv.stills);
-    sv.stills.forEach((still) => {
-      // downloadCanvas(still.brightnessTex);
-    });
+
     createAllThreeGraphics();
     shaderRendering();
     setTimeout(() => {
       sv.workerDone = true;
       hideLoadIcon();
     }, 1000);
+    console.log("sv.gridW, sv.gridH", sv.gridW, sv.gridH);
     sv.pApp.renderer.resize(sv.gridW, sv.gridH);
   });
 }

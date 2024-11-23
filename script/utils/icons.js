@@ -12,7 +12,6 @@ const hideTimeline = gsap.timeline({ paused: true });
 
 export function initializeLoadIcon() {
   if (!sv.arcCont && !sv.animatedArc) {
-    console.log("la;ksdjfl;ks");
     sv.loadIconDiv = document.createElement("div");
     sv.loadIconDiv.id = "loadIconDiv";
     sv.loadIconDiv.style.position = "fixed";

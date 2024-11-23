@@ -17,6 +17,8 @@ export const sv = {
   animatedArc: null,
   workerDone: false,
   pApp: null,
+  bodyRightDiv: null,
+  bodyRightDivWidth: null,
   pContainer: null,
   ticker: null,
   frameCount: null,

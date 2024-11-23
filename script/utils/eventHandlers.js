@@ -10,13 +10,6 @@ import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
 import { showLoadIcon, initializeLoadIcon } from "./icons.js";
 import { gsap } from "gsap";
 
-document.getElementById("closeGui").addEventListener("click", function () {
-  const guiElement = document.querySelector(".moveGUI");
-  guiElement.style.display =
-    guiElement.style.display === "none" ? "flex" : "none";
-  this.textContent = this.textContent === "Close" ? "Open" : "Close";
-});
-
 export function handleMultFiles(p, totalUploadNum) {
   // console.log("• Running handleMultFiles() •");
   sv.animUnderImgs = [];
@@ -56,15 +49,46 @@ export function imageLoaded() {
   // console.log("• Running imageLoaded() •");
 
   const imgs = sv.animUnderImgs;
+  const previewBar = document.getElementById("activeImages");
+  while (previewBar.firstChild) {
+    previewBar.removeChild(previewBar.firstChild);
+  }
 
   imgs.forEach((img) => {
+    // make a copy of each image for the activeImages div here //
+    const previewImg = sv.p.createImage(img.width, img.height);
+    previewImg.copy(
+      img,
+      0,
+      0,
+      img.width,
+      img.height,
+      0,
+      0,
+      img.width,
+      img.height
+    );
+    const previewCanvas = Object.assign(document.createElement("canvas"), {
+      width: previewImg.width,
+      height: previewImg.height,
+    });
+    previewCanvas.getContext("2d").drawImage(previewImg.canvas, 0, 0);
+    previewBar.appendChild(previewCanvas);
+
+    // make a copy of each image for the activeImages div above //
+
+    // changing this so the image is resized to the width and height of the div not the window.
+
+    const widthForImageResize = window.innerWidth;
+    const heightForImageResize = window.innerHeight;
+
     const aspectRatio = img.width / img.height;
-    if (window.innerWidth / window.innerHeight > aspectRatio) {
-      img.width = window.innerHeight * aspectRatio;
-      img.height = window.innerHeight;
+    if (widthForImageResize / heightForImageResize > aspectRatio) {
+      img.width = heightForImageResize * aspectRatio;
+      img.height = heightForImageResize;
     } else {
-      img.width = window.innerWidth;
-      img.height = window.innerWidth / aspectRatio;
+      img.width = widthForImageResize;
+      img.height = widthForImageResize / aspectRatio;
     }
   });
   if (imgs.length > 1) {
@@ -118,6 +142,10 @@ window.addEventListener("resize", () => {
 
   resizeTimeout = setTimeout(() => {
     console.log("User finished resizing");
+    console.log(sv.bodyRightDivWidth);
+    sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
+    sv.bodyRightDivHeight = document.getElementById("bodyRight").offsetHeight;
+    console.log(sv.bodyRightDivWidth);
     initializeLoadIcon();
     imageLoaded();
 

@@ -4,17 +4,22 @@ import { sv } from "./variables.js";
 export function createStatsGUI() {
   //   console.log("creating stats gui");
   sv.stats = new Stats();
-  sv.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+  sv.stats.showPanel(0);
 
-  var thisParent = document.getElementById("modal_4-content");
+  sv.stats.dom.style.padding = "0px";
+
+  var thisParent = document.getElementById("statsDisplay");
   thisParent.appendChild(sv.stats.domElement);
 
+  // thisParent.style.position = "absolute";
+
   var statsALL = document
-    .getElementById("modal_4-content")
+    .getElementById("statsDisplay")
     .querySelectorAll("canvas");
 
   for (var i = 0; i < statsALL.length; i++) {
-    statsALL[i].style.width = "100%";
-    statsALL[i].style.height = "160px";
+    // statsALL[i].style.position = "relative";
+    // statsALL[i].style.width = "100%";
+    // statsALL[i].style.height = "160px";
   }
 }

@@ -28,10 +28,10 @@ export function initGridLoadingScreen() {
   // Create a sprite from the texture
   const loadingSprite = new Sprite(loadingScreenTex);
   loadingSprite.anchor.set(0.5);
-  loadingSprite.x = sv.p.windowWidth / 2;
-  loadingSprite.y = sv.p.windowHeight / 2;
+  loadingSprite.x = sv.bodyRightDivWidth / 2;
+  loadingSprite.y = sv.bodyRightDivHeight / 2;
   sv.loadingScreen = loadingSprite;
-  //   sv.pContainer.addChild(sv.loadingScreen);
+  sv.pContainer.addChild(sv.loadingScreen);
 
   // Add animation using Ticker
   const ticker = new Ticker();

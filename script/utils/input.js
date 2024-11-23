@@ -16,4 +16,6 @@ export function createInput() {
     }
   }, canUploadMultiple);
   sv.inputElement.id("image-input");
+  const guiBottom = document.getElementById("guiBottom");
+  sv.inputElement.parent(guiBottom);
 }

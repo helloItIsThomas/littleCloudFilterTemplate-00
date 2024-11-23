@@ -1,33 +1,92 @@
 /* BLUE COLOR = #73C9FD */
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 html,
 body {
   box-sizing: border-box;
   margin: 0;
-  padding: 28px;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  /* align-items: flex-end; */
-  justify-content: center;
-  align-items: center;
-  /* background-color: #d30403; */
+  padding: 0;
   background-color: white;
 }
 body {
-  background-color: pink;
-  /* overflow: hidden; */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  /* background-color: pink; */
+  overflow: hidden;
+}
+
+#bodyLeft {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+
+  padding: 20px;
+  margin: 0;
+  width: 500px !important;
+  min-width: 500px !important;
+  height: 100%;
+  /* background-color: purple; */
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+#bodyRight {
+  box-sizing: border-box;
+  flex-grow: 1 !important;
+  min-width: 50px;
+  min-height: 50px;
+  background-color: #73c9fd;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.appTitle {
+  font-size: 25px;
+  text-align: left;
+  font-family: monospace;
+  font-weight: bold;
+}
+.appFooter {
+  text-align: left;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+#defaultCanvas0 {
+  display: none;
+}
+
+#guiWrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0;
+  padding-top: 20px;
+  margin: 0;
+  /* background-color: green; */
 }
 
 .moveGUI {
-  position: absolute;
-  margin-bottom: 50px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
+  position: relative;
+}
+#guiBottom {
+  /* width: 100%; */
+  /* height: 100%; */
+  /* position: relative; */
+  /* display: flex; */
+  /* flex-direction: column-reverse; */
 }
 
 #image-container {
@@ -39,29 +98,47 @@ body {
 }
 
 #image-input {
-  position: absolute;
-  box-sizing: border-box;
-  left: 60px;
-  bottom: 15px;
-  margin: 0;
-  padding: 5px;
-
-  overflow: 0;
+  padding-top: 10px;
+  /* display: none; */
 }
 
 #badFile {
-  opacity: 0;
-  position: absolute;
+  /* display: none; */
+  /* opacity: 0; */
+  /* position: absolute; */
   color: white;
-  padding: 10px;
+  /* padding: 10px; */
   width: 100%;
   box-sizing: border-box;
   text-align: center;
-  background-color: red;
+  /* background-color: purple; */
   font-family: monospace;
   font-size: large;
-  z-index: 1;
+  /* z-index: 1; */
   transition: all 0.2s ease-in-out;
+}
+
+#activeImages {
+  flex-grow: 1;
+  position: relative;
+  /* width: 100%; */
+  height: 100px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  /* justify-content: left; */
+  /* align-items: center; */
+  /* overflow: auto; */
+  box-sizing: border-box;
+  /* margin: 10px; */
+  object-fit: contain;
+}
+
+#activeImages canvas {
+  object-fit: contain;
 }
 
 /* ********* */
@@ -77,7 +154,7 @@ body {
   color: black;
   box-sizing: border-box !important;
   background-color: white !important;
-  padding: 10px !important;
+  /* padding: 10px !important; */
 }
 
 .dg.main ul li {
@@ -159,7 +236,7 @@ body {
 }
 
 .close-bottom {
-  display: none;
+  /* display: none; */
   box-sizing: border-box !important;
   background: lightgray !important;
   border: 1px solid black !important;
@@ -167,19 +244,35 @@ body {
 }
 
 #closeGui {
-  left: 15px;
-  bottom: 21px;
-  position: absolute;
-  z-index: 1;
-  box-sizing: border-box !important;
-  background: lightgray !important;
-  border: 1px solid black !important;
-  color: black;
+  margin-top: 10px;
+  width: 100%;
+  /* display: none; */
+  /* left: 15px; */
+  /* bottom: 21px; */
+  /* position: absolute; */
+  /* z-index: 1; */
+  /* box-sizing: border-box !important; */
+  border: 1px solid #73c9fd;
+  padding: 2px;
+  border-radius: 10px;
+  background: white !important;
+  /* border: 1px solid black !important; */
+  /* color: black; */
 }
 
-#modal_4-content {
-  position: absolute;
-  z-index: 1;
+#closeGui:hover {
+  background: #73c9fd !important;
+  color: white !important;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+#statsDisplay {
+  display: none;
+  /* position: relative !important; */
+
+  /* z-index: 2; */
+  /* top: 0; */
 }
 
 .dg.main ul .folder {
@@ -202,6 +295,8 @@ body {
 
 #loadIconDiv {
   position: absolute;
+  /* display: none; */
+  z-index: 10;
   left: 0;
   top: 0;
   background-color: rgba(255, 255, 255, 1);
@@ -210,7 +305,6 @@ body {
 
 #arcCont {
   position: absolute;
-  /* background-color: red; */
 }
 
 #animatedArc {
