@@ -1,5 +1,5 @@
 import * as dat from "dat.gui";
-import { recalculateGrid } from "./eventHandlers";
+import { recalculateGrid, imageLoaded } from "./eventHandlers";
 import { startRecording, stopRecording } from "./recording";
 import { updateCellData } from "../imgProcessing/imageProcessing";
 import { createInput } from "./input";
@@ -79,6 +79,13 @@ export const sv = {
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 
+  tlThresh1: 0.15,
+  tlThresh1BUFFER: 0.01,
+  tlThresh2: 0.25,
+  tlThresh2BUFFER: 0.01,
+  tlThresh3: 0.5,
+  tlThresh3BUFFER: 0.01,
+
   testSVG: null,
   testImages: null,
 
@@ -119,10 +126,24 @@ general.add(sv, "manualScale", 0.1, 1.0).name("Manual Scale");
 general.add(sv, "speed", 0.0, 0.1).name("Speed");
 general.add(sv, "noiseOffset", 0, 10, 0.1).name("Noise Offset");
 
-gridResController.onChange((value) => {});
+const threshController1 = general.add(sv, "tlThresh1").name("tlThresh1");
+const threshController2 = general.add(sv, "tlThresh2").name("tlThresh2");
+const threshController3 = general.add(sv, "tlThresh3").name("tlThresh3");
+
+threshController1.onChange((value) => {
+  sv.tlThresh1 = value % 1.0;
+  imageLoaded();
+});
+threshController2.onChange((value) => {
+  sv.tlThresh2 = value % 1.0;
+  imageLoaded();
+});
+threshController3.onChange((value) => {
+  sv.tlThresh3 = value % 1.0;
+  imageLoaded();
+});
 
 const inputField = gridResController.domElement.querySelector("input");
-
 inputField.addEventListener("keydown", (event) => {
   const value = parseInt(inputField.value, 10);
   if (value !== sv.gridResolution) {

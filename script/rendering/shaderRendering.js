@@ -121,9 +121,6 @@ export function shaderRendering() {
   const art1 = sv.p.int(tex1.source.width / tex1.source.height);
   const art2 = sv.p.int(tex2.source.width / tex2.source.height);
   const art3 = sv.p.int(tex3.source.width / tex3.source.height);
-  const tlThresh1 = 0.15;
-  const tlThresh2 = 0.25;
-  const tlThresh3 = 0.5;
 
   let resources = {};
   if (resources) {
@@ -152,9 +149,9 @@ export function shaderRendering() {
       lcAR: { value: art2, type: "f32" },
       rcAR: { value: art3, type: "f32" },
 
-      tlThresh1: { value: tlThresh1, type: "f32" },
-      tlThresh2: { value: tlThresh2, type: "f32" },
-      tlThresh3: { value: tlThresh3, type: "f32" },
+      tlThresh1: { value: sv.tlThresh1, type: "f32" },
+      tlThresh2: { value: sv.tlThresh2, type: "f32" },
+      tlThresh3: { value: sv.tlThresh3, type: "f32" },
     },
   };
 
