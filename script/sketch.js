@@ -2,11 +2,12 @@ import "p5.js-svg";
 import { Application, Ticker } from "pixi.js";
 
 import { sv } from "./utils/variables.js";
-import { imageLoaded } from "./utils/eventHandlers.js";
+import { recalculateGrid } from "./utils/eventHandlers.js";
 import { loadSetupImages } from "./utils/loadImages";
 import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
+import { Recorder } from "canvas-record";
 import { takeScreenshot } from "./utils/utils.js";
 
 const bodyRightDiv = document.getElementById("bodyRight");
@@ -38,21 +39,25 @@ export default function (p) {
   sv.stepPromise = Promise.resolve();
 
   async function mySetup() {
-    // console.log("running mySetup");
-
     initializeLoadIcon();
-    // sv.imgDiv = p.createDiv();
-    // sv.imgDiv.id("image-container");
-    // p.createCanvas(sv.bodyRightDivWidth, sv.bodyRightDivHeight).parent(
-    // sv.imgDiv
-    // );
     createInput();
     showLoadIcon();
 
     sv.ticker.start();
 
     await loadSetupImages();
-    imageLoaded();
+    recalculateGrid();
+
+    const context = sv.p.drawingContext;
+    context.imageSmoothingEnabled = true;
+    sv.canvasRecorder = new Recorder(context, {
+      name: "canvas-record-example",
+      duration: Infinity,
+      encoderOptions: {
+        framerate: sv.frameRate,
+        bitrate: 2500000,
+      },
+    });
 
     sv.setupDone = true;
   }

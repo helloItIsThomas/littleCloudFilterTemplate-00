@@ -46,6 +46,5 @@ export async function updateCellData() {
       sv.workerDone = true;
       hideLoadIcon();
     }, 1000);
-    // sv.pApp.renderer.resize(sv.gridW, sv.gridH);
   });
 }

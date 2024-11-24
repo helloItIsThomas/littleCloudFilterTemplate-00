@@ -1,5 +1,5 @@
 import * as dat from "dat.gui";
-import { recalculateGrid, imageLoaded } from "./eventHandlers";
+import { recalculateGrid } from "./eventHandlers";
 import { startRecording, stopRecording } from "./recording";
 import { updateCellData } from "../imgProcessing/imageProcessing";
 import { createInput } from "./input";
@@ -172,15 +172,15 @@ const threshController3 = general.add(sv, "tlThresh3").name("tlThresh3");
 
 threshController1.onChange((value) => {
   sv.tlThresh1 = value % 1.0;
-  imageLoaded();
+  recalculateGrid();
 });
 threshController2.onChange((value) => {
   sv.tlThresh2 = value % 1.0;
-  imageLoaded();
+  recalculateGrid();
 });
 threshController3.onChange((value) => {
   sv.tlThresh3 = value % 1.0;
-  imageLoaded();
+  recalculateGrid();
 });
 
 const inputField = gridResController.domElement.querySelector("input");

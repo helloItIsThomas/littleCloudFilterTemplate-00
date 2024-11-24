@@ -1,4 +1,6 @@
+import { updateActiveImgBar } from "./eventHandlers.js";
 import { sv } from "./variables.js";
+
 export async function loadSetupImages() {
   const loadASetupImage = (path) => {
     sv.animUnderImgs = [];
@@ -58,4 +60,6 @@ export async function loadSetupImages() {
 
   await Promise.all(sourceImgPaths.map(loadASetupImage));
   await Promise.all(singleImgIconPaths.map(loadASetupIcon));
+
+  updateActiveImgBar();
 }
