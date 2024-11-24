@@ -21,6 +21,7 @@ const vertexLoader = import.meta.glob("../../shader/vert.vert", { as: "raw" });
 vertexLoader["../../shader/vert.vert"]().then((vertexLoader) => {
   vertex = vertexLoader;
 });
+
 const fragmentLoader = import.meta.glob("../../shader/frag.frag", {
   as: "raw",
 });

@@ -129,20 +129,18 @@ body {
   flex-direction: row;
   gap: 10px;
   padding: 10px;
-  border: 1px solid black;
   /* justify-content: left; */
   /* align-items: center; */
   /* overflow: auto; */
   box-sizing: border-box;
-  /* margin: 10px; */
   object-fit: contain;
   overflow-x: scroll;
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
+  background-color: #f7f7f7;
+  /* border: 1px solid black; */
 }
 
-#activeImages::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+#activeImages * {
+  border: 2px solid black;
 }
 
 #activeImages canvas {

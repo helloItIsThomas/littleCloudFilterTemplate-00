@@ -18,6 +18,7 @@ we need to do the following:
                 • scale dynamically
                 • clip outliers
         • screenshot
+                                                    https://pixijs.com/8.x/examples/advanced/screen-shot?_highlight=scre
         • screen recording
         • speed
         • noise offset

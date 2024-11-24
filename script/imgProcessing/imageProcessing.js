@@ -33,10 +33,11 @@ export async function updateCellData() {
     );
   }
   await Promise.all(promises).then(() => {
-    console.log(sv.stills);
-
     createAllThreeGraphics();
     shaderRendering();
+    // if (sv.currentlyMoreThanOneImage) shaderRenderingMult();
+    // else shaderRenderingSingle();
+
     setTimeout(() => {
       sv.workerDone = true;
       hideLoadIcon();

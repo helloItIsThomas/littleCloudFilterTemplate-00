@@ -143,8 +143,8 @@ export async function takeScreenshot() {
     document.body.append(sv.pixiScreenshot);
 
     sv.pixiScreenshot.style.position = "fixed";
-    sv.pixiScreenshot.style.top = "20px";
-    sv.pixiScreenshot.style.right = "20px";
+    sv.pixiScreenshot.style.bottom = "0px";
+    sv.pixiScreenshot.style.left = "20px";
     sv.pixiScreenshot.download = "screenshot";
     sv.pixiScreenshot.href = url;
 

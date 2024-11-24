@@ -3,22 +3,20 @@ import { updateCellData } from "../imgProcessing/imageProcessing.js";
 import { Recorder } from "canvas-record";
 import { AVC, HEVC } from "media-codecs";
 import { initGridLoadingScreen } from "../rendering/loading.js";
-import { shaderRendering } from "../rendering/shaderRendering.js";
 import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
 import { scaleDims } from "./utils.js";
 import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
 import { showLoadIcon, initializeLoadIcon } from "./icons.js";
 import { gsap } from "gsap";
 
-export function handleMultFiles(p, totalUploadNum) {
-  // console.log("• Running handleMultFiles() •");
+export function handleMultFiles(p) {
   sv.animUnderImgs = [];
 
   sv.tempUploadFiles.forEach((_file) => {
     if (_file.type === "image") {
       p.loadImage(_file.data, function (img) {
         sv.animUnderImgs.push(img);
-        if (sv.animUnderImgs.length === totalUploadNum) imageLoaded();
+        if (sv.animUnderImgs.length === sv.totalUploadNum) imageLoaded();
       });
     } else {
       document.getElementById("badFile").style.opacity = 1;

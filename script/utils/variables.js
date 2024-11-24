@@ -17,6 +17,7 @@ var customContainer = document
 export const sv = {
   pixiScreenshot: undefined,
 
+  currentlyMoreThanOneImage: null,
   arcCont: null,
   animatedArc: null,
   workerDone: false,
@@ -58,12 +59,13 @@ export const sv = {
   transitionDelay: 0.5,
   speed: 0.02,
   params: {
-    showSingleImgMode: false,
     contrast: 5.0,
     clipOutliers: false,
     scaleDynamically: true,
     startInvisible: false,
   },
+  totalUploadNum: null,
+  advanced: null,
   customShapeGraphics: null,
   circleGraphicLeft: null,
   circleGraphicRight: null,
@@ -84,7 +86,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "200",
+  gridResolution: "100",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 
@@ -175,12 +177,12 @@ inputField.addEventListener("keydown", (event) => {
 });
 
 // Add the toggle parameter to control visibility
-const showSingleImgModeController = gui
-  .add(sv.params, "showSingleImgMode")
-  .name("Single Image Mode");
+// const showSingleImgModeController = gui
+// .add(sv.params, "showSingleImgMode")
+// .name("Single Image Mode");
 
-const outerDiv = showSingleImgModeController.domElement.parentElement;
-outerDiv.classList.add("title-class");
+// const outerDiv = showSingleImgModeController.domElement.parentElement;
+// outerDiv.classList.add("title-class");
 
 // References for dynamically added controllers
 let contrastController,
@@ -189,45 +191,52 @@ let contrastController,
   startInvisibleController;
 
 // Function to add advanced parameters
+sv.advanced = gui.addFolder("Advanced");
+sv.advanced.open();
+sv.advanced.hide();
 function addAdvancedParameters() {
   // console.log(" • running addAdvancedParameters • ");
-  contrastController = gui.add(sv.params, "contrast", 0, 10).name("Contrast");
+  contrastController = sv.advanced
+    .add(sv.params, "contrast", 0, 10)
+    .name("Contrast");
 
-  clipController = gui.add(sv.params, "clipOutliers").name("Clip Outliers");
+  clipController = sv.advanced
+    .add(sv.params, "clipOutliers")
+    .name("Clip Outliers");
 
-  scaleDynamicController = gui
+  scaleDynamicController = sv.advanced
     .add(sv.params, "scaleDynamically")
     .name("Scale Dynamically");
 
-  startInvisibleController = gui
+  startInvisibleController = sv.advanced
     .add(sv.params, "startInvisible")
     .name("Start Invisible");
 }
+addAdvancedParameters();
 
 // Function to remove advanced parameters
-function removeAdvancedParameters() {
-  // console.log(" • running removeAdvancedParameters • ");
-  if (contrastController) gui.remove(contrastController);
-  if (clipController) gui.remove(clipController);
-  if (scaleDynamicController) gui.remove(scaleDynamicController);
-  if (startInvisibleController) gui.remove(startInvisibleController);
-  contrastController = null;
-  clipController = null;
-  scaleDynamicController = null;
-  startInvisibleController = null;
-}
+// function removeAdvancedParameters() {
+// console.log(" • running removeAdvancedParameters • ");
+// if (contrastController) gui.remove(contrastController);
+// if (clipController) gui.remove(clipController);
+// if (scaleDynamicController) gui.remove(scaleDynamicController);
+// if (startInvisibleController) gui.remove(startInvisibleController);
+// contrastController = null;
+// clipController = null;
+// scaleDynamicController = null;
+// startInvisibleController = null;
+// }
 
 // Function to dynamically update the visibility of parameters
-function updateVisibility() {
-  // console.log(" • running updateVisibility • ");
-  createInput();
-  removeAdvancedParameters(); // Always remove first to avoid duplicates
-  if (sv.params.showSingleImgMode) {
-    addAdvancedParameters(); // Add when the toggle is true
-  }
-}
+// function updateVisibility() {
+// console.log(" • running updateVisibility • ");
+// createInput();
+//removeAdvancedParameters(); // Always remove first to avoid duplicates
+// addAdvancedParameters(); // Add when the toggle is true
+// if (sv.params.showSingleImgMode) {
+// }
+// }
 
 // Update visibility when the boolean changes
-showSingleImgModeController.onChange(updateVisibility);
 // Initial state update
 // updateVisibility();
