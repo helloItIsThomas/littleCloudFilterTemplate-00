@@ -38,7 +38,6 @@ export async function shaderRendering() {
   );
   const gl = { vertex, fragment };
 
-  console.log("°·°‡€ﬁﬂrunning shader rendering·°‡ﬁﬂ");
   sv.totalTriangles = sv.totalCells;
 
   sv.instancePositionBuffer = new Buffer({

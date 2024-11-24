@@ -1,8 +1,6 @@
 import { sv } from "./variables.js";
-export async function loadImagesWithP5() {
-  console.log("running loadImagesWithP5");
-
-  const loadImage = (path) => {
+export async function loadSetupImages() {
+  const loadASetupImage = (path) => {
     sv.animUnderImgs = [];
 
     return new Promise((resolve, reject) => {
@@ -20,7 +18,7 @@ export async function loadImagesWithP5() {
     });
   };
 
-  const loadIcon = (path) => {
+  const loadASetupIcon = (path) => {
     sv.singleImgIcons = [];
 
     return new Promise((resolve, reject) => {
@@ -40,13 +38,12 @@ export async function loadImagesWithP5() {
 
   const singleImgIconPaths = Array.from(
     { length: 20 },
-    // (_, i) => `/assets/brightnessSortedPNG/${i}.png`
     (_, i) => `/assets/brightnessSortedPNG/${i}.png`
   );
 
   // const sourceImgPaths = ["/assets/debug/456.png", "/assets/debug/654.png"];
-  // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/star.png"];
-  const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/satan.png"];
+  const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/star.png"];
+  // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/studio.png"];
   // const sourceImgPaths = ["/assets/debug/satan.png"];
   // const sourceImgPaths = ["/assets/notSquare.png"];
   // const sourceImgPaths = ["/assets/studio.png"];
@@ -59,6 +56,6 @@ export async function loadImagesWithP5() {
     sv.advanced.hide();
   }
 
-  await Promise.all(sourceImgPaths.map(loadImage));
-  await Promise.all(singleImgIconPaths.map(loadIcon));
+  await Promise.all(sourceImgPaths.map(loadASetupImage));
+  await Promise.all(singleImgIconPaths.map(loadASetupIcon));
 }

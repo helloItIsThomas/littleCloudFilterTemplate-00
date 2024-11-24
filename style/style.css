@@ -45,12 +45,8 @@ body {
   flex-grow: 1 !important;
   min-width: 50px;
   min-height: 50px;
-  outline: 2px solid blue;
-
+  /* outline: 2px solid blue; */
   background-color: orange;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
 }
 
 .appTitle {
