@@ -37,7 +37,7 @@ export async function updateCellData() {
   }
   await Promise.all(promises).then(() => {
     createAllThreeGraphics();
-    createAll20Graphics();
+    // createAll20Graphics();
     shaderRendering();
     // if (sv.currentlyMoreThanOneImage) shaderRenderingMult();
     // else shaderRenderingSingle();

@@ -11,6 +11,7 @@ export function createAll20Graphics() {
   for (let i = 0; i < 20; i++) {
     sv[`iconGraphic${i}`] = createSVGGraphic(i, sv.cellW);
   }
+  console.log("sv.cellW: ", sv.cellW);
 }
 
 function createSVGGraphic(_i, size) {
@@ -20,7 +21,7 @@ function createSVGGraphic(_i, size) {
   pg.pixelDensity(3);
   // pg.noStroke();
   pg.clear();
-  pg.image(sv.singleImgIcons[_i], 0.0, 0.0, w, h);
+  pg.image(sv.singleImgIcons[_i], 0.0, 0.0, sv.cellW, sv.cellH);
   return pg;
 }
 

@@ -227,12 +227,12 @@ function createResources(_multipleImages, noiseCanvas) {
   };
 
   const graphics = [
-    sv.iconGraphic0.canvas,
-    sv.iconGraphic1.canvas,
-    sv.iconGraphic2.canvas,
-    // sv.customShapeGraphics.canvas,
-    // sv.circleGraphicLeft.canvas,
-    // sv.circleGraphicRight.canvas,
+    // sv.iconGraphic0.canvas,
+    // sv.iconGraphic1.canvas,
+    // sv.iconGraphic2.canvas,
+    sv.customShapeGraphics.canvas,
+    sv.circleGraphicLeft.canvas,
+    sv.circleGraphicRight.canvas,
   ];
   const textures = graphics.map((canvas) => {
     const src = new ImageSource({ resource: canvas });
