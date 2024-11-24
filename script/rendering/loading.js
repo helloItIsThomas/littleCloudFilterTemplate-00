@@ -31,7 +31,7 @@ export function initGridLoadingScreen() {
   loadingSprite.x = sv.bodyRightDivWidth / 2;
   loadingSprite.y = sv.bodyRightDivHeight / 2;
   sv.loadingScreen = loadingSprite;
-  sv.pContainer.addChild(sv.loadingScreen);
+  // sv.pContainer.addChild(sv.loadingScreen);
 
   // Add animation using Ticker
   const ticker = new Ticker();

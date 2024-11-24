@@ -141,10 +141,16 @@ window.addEventListener("resize", () => {
 
   resizeTimeout = setTimeout(() => {
     console.log("User finished resizing");
-    console.log(sv.bodyRightDivWidth);
     sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
     sv.bodyRightDivHeight = document.getElementById("bodyRight").offsetHeight;
-    console.log(sv.bodyRightDivWidth);
+    // sv.pApp.renderer.resize(sv.bodyRightDivWidth, sv.bodyRightDivHeight);
+    // console.log(
+    // "sv.bodyRightDivWidth: ",
+    // sv.bodyRightDivWidth,
+    // "sv.bodyRightDivHeight: ",
+    // sv.bodyRightDivHeight
+    // );
+
     initializeLoadIcon();
     imageLoaded();
 

@@ -46,7 +46,6 @@ export async function updateCellData() {
       sv.workerDone = true;
       hideLoadIcon();
     }, 1000);
-    console.log("sv.gridW, sv.gridH", sv.gridW, sv.gridH);
-    sv.pApp.renderer.resize(sv.gridW, sv.gridH);
+    // sv.pApp.renderer.resize(sv.gridW, sv.gridH);
   });
 }

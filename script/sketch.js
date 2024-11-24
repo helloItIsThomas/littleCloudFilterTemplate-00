@@ -19,10 +19,11 @@ await sv.pApp.init({
   background: "#fff",
   // background: "00ff00",
   clearBeforeRender: true,
-  autoDensity: true,
-  resolution: 2,
+  // autoDensity: true,
+  // resolution: 2,
   antialias: true,
   resizeTo: bodyRightDiv,
+  // resizeTo: window,
   preference: "webgl",
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
@@ -54,9 +55,6 @@ export default function (p) {
     await loadImagesWithP5();
     imageLoaded();
 
-    // imageLoaded().then(() => {
-    // sv.setupDone = true;
-    // });
     sv.setupDone = true;
   }
 
