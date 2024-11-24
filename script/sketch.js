@@ -7,6 +7,7 @@ import { loadImagesWithP5 } from "./utils/loadImages";
 import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
+import { takeScreenshot } from "./utils/utils.js";
 
 const bodyRightDiv = document.getElementById("bodyRight");
 sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
@@ -21,7 +22,7 @@ await sv.pApp.init({
   autoDensity: true,
   resolution: 2,
   antialias: true,
-  // resizeTo: bodyRightDiv,
+  resizeTo: bodyRightDiv,
   preference: "webgl",
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
@@ -86,3 +87,7 @@ export default function (p) {
     sv.stats.end();
   });
 }
+
+sv.pApp.stage.eventMode = "static";
+sv.pApp.stage.hitArea = sv.pApp.screen;
+sv.pApp.stage.on("pointerdown", takeScreenshot);

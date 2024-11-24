@@ -1,4 +1,5 @@
 import { sv } from "./variables.js";
+import { autoDetectRenderer, RenderTexture, Sprite } from "pixi.js";
 
 export function scaleDims(_img) {
   // console.log("• running scaleDims •");
@@ -113,4 +114,47 @@ export function downloadCanvas(_canvas, name = "canvas.png") {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+export async function takeScreenshot() {
+  if (sv.pixiScreenshot !== undefined) {
+    sv.pixiScreenshot.remove();
+  }
+
+  console.log("Canvas size:", sv.pApp.canvas.width, sv.pApp.canvas.height);
+
+  sv.pApp.stop();
+
+  sv.pApp.renderer.render(sv.pApp.stage);
+  const renderTexture = RenderTexture.create({
+    width: sv.bodyRightDivWidth,
+    height: sv.bodyRightDivHeight,
+  });
+
+  // sv.pApp.renderer.render(sv.sceneContainerFrame, { renderTexture });
+  sv.pApp.renderer.render({
+    container: sv.sceneContainerFrame,
+    target: renderTexture,
+  });
+
+  sv.pApp.renderer.extract.base64(renderTexture).then((url) => {
+    sv.pixiScreenshot = document.createElement("a");
+
+    document.body.append(sv.pixiScreenshot);
+
+    sv.pixiScreenshot.style.position = "fixed";
+    sv.pixiScreenshot.style.top = "20px";
+    sv.pixiScreenshot.style.right = "20px";
+    sv.pixiScreenshot.download = "screenshot";
+    sv.pixiScreenshot.href = url;
+
+    const image = new Image();
+
+    image.width = sv.pApp.screen.width / 5;
+    image.src = url;
+
+    sv.pixiScreenshot.innerHTML = image.outerHTML;
+
+    sv.pApp.start();
+  });
 }

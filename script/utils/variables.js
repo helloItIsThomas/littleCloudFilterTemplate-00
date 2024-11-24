@@ -15,6 +15,8 @@ var customContainer = document
   .appendChild(gui.domElement);
 
 export const sv = {
+  pixiScreenshot: undefined,
+
   arcCont: null,
   animatedArc: null,
   workerDone: false,
@@ -82,7 +84,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "100",
+  gridResolution: "200",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 
