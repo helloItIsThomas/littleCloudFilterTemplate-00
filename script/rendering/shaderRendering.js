@@ -14,22 +14,30 @@ import {
   Container,
 } from "pixi.js";
 
-let vertex;
-let fragment;
+async function loadFragShader(_currentlyMoreThanOneImage) {
+  const vertexLoader = import.meta.glob("../../shader/vert.vert", {
+    as: "raw",
+  });
+  const fragmentLoader = _currentlyMoreThanOneImage
+    ? import.meta.glob("../../shader/frag.frag", { as: "raw" })
+    : import.meta.glob("../../shader/fragSingleImg.frag", { as: "raw" });
 
-const vertexLoader = import.meta.glob("../../shader/vert.vert", { as: "raw" });
-vertexLoader["../../shader/vert.vert"]().then((vertexLoader) => {
-  vertex = vertexLoader;
-});
+  const [vertex, fragment] = await Promise.all([
+    vertexLoader["../../shader/vert.vert"](),
+    _currentlyMoreThanOneImage
+      ? fragmentLoader["../../shader/frag.frag"]()
+      : fragmentLoader["../../shader/fragSingleImg.frag"](),
+  ]);
 
-const fragmentLoader = import.meta.glob("../../shader/frag.frag", {
-  as: "raw",
-});
-fragmentLoader["../../shader/frag.frag"]().then((fragmentLoader) => {
-  fragment = fragmentLoader;
-});
+  return { vertex, fragment };
+}
 
-export function shaderRendering() {
+export async function shaderRendering() {
+  const { vertex, fragment } = await loadFragShader(
+    sv.currentlyMoreThanOneImage
+  );
+  const gl = { vertex, fragment };
+
   console.log("°·°‡€ﬁﬂrunning shader rendering·°‡ﬁﬂ");
   sv.totalTriangles = sv.totalCells;
 
@@ -42,7 +50,6 @@ export function shaderRendering() {
 
   for (let i = 0; i < sv.totalTriangles; i++) {
     // assuming the grid of both images is the same...
-
     const cell = sv.stills[0].cells[i];
     sv.triangles[i] = {
       x: cell.x,
@@ -61,6 +68,7 @@ export function shaderRendering() {
     usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
   });
 
+  // this seems to be a good thing to use for manual scaling
   const sclr = 1.0;
   const geometry = new Geometry({
     topology: "triangle-strip",
@@ -102,16 +110,40 @@ export function shaderRendering() {
   noiseCanvas.updatePixels();
   //// WIP WIP WIP WIP WIP WIP END END END END
 
-  const gl = { vertex, fragment };
+  let resources = {};
+  if (resources) {
+    Object.keys(resources).forEach((key) => {
+      const resource = resources[key];
+      if (resource instanceof WebGLBuffer) gl.deleteBuffer(resource);
+      else if (resource instanceof HTMLElement) resource.remove();
+    });
+  }
+  resources = {}; // Clears the object reference.
 
-  let src1 = new ImageSource({ resource: sv.customShapeGraphics.canvas });
-  let tex1 = new Texture({ source: src1 });
-  let src2 = new ImageSource({ resource: sv.circleGraphicLeft.canvas });
-  let tex2 = new Texture({ source: src2 });
-  let src3 = new ImageSource({ resource: sv.circleGraphicRight.canvas });
-  let tex3 = new Texture({ source: src3 });
-  let noiseSrc = new ImageSource({ resource: noiseCanvas.canvas });
-  let noiseTex = new Texture({ source: noiseSrc });
+  resources = createResources(sv.currentlyMoreThanOneImage, noiseCanvas);
+  console.log("sv.currentlyMoreThanOneImage: ", sv.currentlyMoreThanOneImage);
+
+  // Prepare resources dynamically
+  // resources = {
+  // hourglassTex: tex1.source,
+  // leftCircleTex: tex2.source,
+  // rightCircleTex: tex3.source,
+  // noiseTex: noiseTex.source,
+  //
+  // waveUniforms: {
+  // time: { value: 1.0, type: "f32" },
+  // gridResolution: { value: sv.gridResolution, type: "f32" },
+  // rowCount: { value: sv.rowCount, type: "f32" },
+  // colCount: { value: sv.colCount, type: "f32" },
+  // hgAR: { value: art1, type: "f32" },
+  // lcAR: { value: art2, type: "f32" },
+  // rcAR: { value: art3, type: "f32" },
+  //
+  // tlThresh1: { value: sv.tlThresh1, type: "f32" },
+  // tlThresh2: { value: sv.tlThresh2, type: "f32" },
+  // tlThresh3: { value: sv.tlThresh3, type: "f32" },
+  // },
+  // };
 
   let bTexes = [];
   bTexes = sv.stills.map((still) => {
@@ -120,46 +152,7 @@ export function shaderRendering() {
     return tex;
   });
 
-  const art1 = sv.p.int(tex1.source.width / tex1.source.height);
-  const art2 = sv.p.int(tex2.source.width / tex2.source.height);
-  const art3 = sv.p.int(tex3.source.width / tex3.source.height);
-
-  let resources = {};
-  if (resources) {
-    Object.keys(resources).forEach((key) => {
-      const resource = resources[key];
-      if (resource instanceof WebGLBuffer) gl.deleteBuffer(resource);
-      else if (resource instanceof HTMLElement) resource.remove();
-      // Add other resource types if needed.
-    });
-  }
-  resources = {}; // Clears the object reference.
-
-  // Prepare resources dynamically
-  resources = {
-    hourglassTex: tex1.source,
-    leftCircleTex: tex2.source,
-    rightCircleTex: tex3.source,
-    noiseTex: noiseTex.source,
-
-    waveUniforms: {
-      time: { value: 1.0, type: "f32" },
-      gridResolution: { value: sv.gridResolution, type: "f32" },
-      rowCount: { value: sv.rowCount, type: "f32" },
-      colCount: { value: sv.colCount, type: "f32" },
-      hgAR: { value: art1, type: "f32" },
-      lcAR: { value: art2, type: "f32" },
-      rcAR: { value: art3, type: "f32" },
-
-      tlThresh1: { value: sv.tlThresh1, type: "f32" },
-      tlThresh2: { value: sv.tlThresh2, type: "f32" },
-      tlThresh3: { value: sv.tlThresh3, type: "f32" },
-    },
-  };
-
   resources.waveUniforms.numBTexes = { value: bTexes.length, type: "i32" };
-
-  // resources.waveUniforms.bodyRightAR = { value: bTexes.length, type: "i32" };
 
   if (bTexes.length == 1) {
     resources["bTex1"] = bTexes[0].source;
@@ -214,4 +207,73 @@ export function shaderRendering() {
   }
 
   sv.sceneContainer.addChild(sv.triangleMesh);
+}
+
+function createResources(_multipleImages, noiseCanvas) {
+  // Common properties for both modes
+  let noiseSrc = new ImageSource({ resource: noiseCanvas.canvas });
+  let noiseTex = new Texture({ source: noiseSrc });
+  const commonResources = {
+    noiseTex: noiseTex.source,
+    waveUniforms: {
+      time: { value: 1.0, type: "f32" },
+      gridResolution: { value: sv.gridResolution, type: "f32" },
+      rowCount: { value: sv.rowCount, type: "f32" },
+      colCount: { value: sv.colCount, type: "f32" },
+      tlThresh1: { value: sv.tlThresh1, type: "f32" },
+      tlThresh2: { value: sv.tlThresh2, type: "f32" },
+      tlThresh3: { value: sv.tlThresh3, type: "f32" },
+    },
+  };
+
+  const graphics = [
+    sv.iconGraphic0.canvas,
+    sv.iconGraphic1.canvas,
+    sv.iconGraphic2.canvas,
+    // sv.customShapeGraphics.canvas,
+    // sv.circleGraphicLeft.canvas,
+    // sv.circleGraphicRight.canvas,
+  ];
+  const textures = graphics.map((canvas) => {
+    const src = new ImageSource({ resource: canvas });
+    return new Texture({ source: src });
+  });
+  const [tex1, tex2, tex3] = textures;
+  const [art1, art2, art3] = textures.map((tex) =>
+    sv.p.int(tex.source.width / tex.source.height)
+  );
+
+  // Mode-specific textures
+  const modeSpecificTextures =
+    _multipleImages === true
+      ? {
+          hourglassTex: tex1.source,
+          leftCircleTex: tex2.source,
+          rightCircleTex: tex3.source,
+          waveUniforms: {
+            hgAR: { value: art1, type: "f32" },
+            lcAR: { value: art2, type: "f32" },
+            rcAR: { value: art3, type: "f32" },
+          },
+        }
+      : {
+          hourglassTex: tex1.source,
+          leftCircleTex: tex2.source,
+          rightCircleTex: tex3.source,
+          waveUniforms: {
+            hgAR: { value: art1, type: "f32" },
+            lcAR: { value: art2, type: "f32" },
+            rcAR: { value: art3, type: "f32" },
+          },
+        };
+
+  // Merge common and specific resources
+  return {
+    ...commonResources,
+    ...modeSpecificTextures,
+    waveUniforms: {
+      ...commonResources.waveUniforms,
+      ...modeSpecificTextures.waveUniforms,
+    },
+  };
 }

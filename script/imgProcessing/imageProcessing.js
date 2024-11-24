@@ -2,7 +2,10 @@ import { sv } from "../utils/variables.js";
 import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";
 import { Still } from "./Stills.js";
 import { shaderRendering } from "../rendering/shaderRendering.js";
-import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
+import {
+  createAll20Graphics,
+  createAllThreeGraphics,
+} from "../rendering/createShapeGraphics.js";
 import { hideLoadIcon } from "../utils/icons.js";
 
 export async function updateCellData() {
@@ -34,6 +37,7 @@ export async function updateCellData() {
   }
   await Promise.all(promises).then(() => {
     createAllThreeGraphics();
+    createAll20Graphics();
     shaderRendering();
     // if (sv.currentlyMoreThanOneImage) shaderRenderingMult();
     // else shaderRenderingSingle();

@@ -3,6 +3,27 @@ import { sv } from "../utils/variables.js";
 const cDiamMult = 0.5;
 const scaleAmount = 1;
 
+export function createAll20Graphics() {
+  console.log("running createAll20Graphics");
+  for (let i = 0; i < 20; i++) {
+    if (sv[`iconGraphic${i}`]) sv[`iconGraphic${i}`].remove();
+  }
+  for (let i = 0; i < 20; i++) {
+    sv[`iconGraphic${i}`] = createSVGGraphic(i, sv.cellW);
+  }
+}
+
+function createSVGGraphic(_i, size) {
+  const w = size;
+  const h = size;
+  const pg = sv.p.createGraphics(w, h);
+  pg.pixelDensity(3);
+  // pg.noStroke();
+  pg.clear();
+  pg.image(sv.singleImgIcons[_i], 0.0, 0.0, w, h);
+  return pg;
+}
+
 export function createAllThreeGraphics() {
   // console.log("running createAllThreeGraphics");
   if (sv.circleGraphicLeft) sv.circleGraphicLeft.remove();
@@ -11,7 +32,6 @@ export function createAllThreeGraphics() {
   sv.circleGraphicLeft = createLeftCircle(sv.cellW);
   sv.circleGraphicRight = createRightCircle(sv.cellW);
   sv.customShapeGraphics = createShapeGraphic(sv.cellW);
-  // console.log("FINISHED createAllThreeGraphics");
 }
 
 export function createLeftCircle(size) {

@@ -131,9 +131,9 @@ void main() {
     // vec2 scaledRCUV = (rcUV - center) * scaleFactor + center;
     // vec4 rightCircle = texture2D(rightCircleTex, scaledRCUV);
 
-    // gl_FragColor = hourglass + rightCircle + leftCircle;
+    gl_FragColor = hourglass + rightCircle + leftCircle;
     // gl_FragColor = rightCircle;
     // gl_FragColor = vec4(0.0, bTex1AR, 0.0, 1.0);
     // gl_FragColor = vec4(brightness, brightness, brightness, 1.0);
-    gl_FragColor = vec4(0.0, brightness, 0.0, 1.0);
+    // gl_FragColor = vec4(0.0, brightness, 0.0, 1.0);
 }

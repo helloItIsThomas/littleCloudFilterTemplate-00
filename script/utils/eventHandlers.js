@@ -3,7 +3,6 @@ import { updateCellData } from "../imgProcessing/imageProcessing.js";
 import { Recorder } from "canvas-record";
 import { AVC, HEVC } from "media-codecs";
 import { initGridLoadingScreen } from "../rendering/loading.js";
-import { createAllThreeGraphics } from "../rendering/createShapeGraphics.js";
 import { scaleDims } from "./utils.js";
 import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
 import { showLoadIcon, initializeLoadIcon } from "./icons.js";
