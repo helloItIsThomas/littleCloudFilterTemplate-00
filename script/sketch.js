@@ -1,5 +1,5 @@
 import "p5.js-svg";
-import { Application, Ticker } from "pixi.js";
+import { Application, RenderTexture, Ticker } from "pixi.js";
 
 import { sv } from "./utils/variables.js";
 import { recalculateGrid } from "./utils/eventHandlers.js";
@@ -7,8 +7,7 @@ import { loadSetupImages } from "./utils/loadImages";
 import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
-import { Recorder } from "canvas-record";
-import { takeScreenshot } from "./utils/utils.js";
+import { downloadCanvas, takeScreenshot } from "./utils/utils.js";
 
 const bodyRightDiv = document.getElementById("bodyRight");
 sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
@@ -19,6 +18,7 @@ await sv.pApp.init({
   background: "#fff",
   // background: "00ff00",
   clearBeforeRender: true,
+  preserveDrawingBuffer: true,
   autoDensity: true,
   resolution: 2,
   antialias: true,
@@ -46,18 +46,30 @@ export default function (p) {
     sv.ticker.start();
 
     await loadSetupImages();
+
     recalculateGrid();
 
-    const context = sv.p.drawingContext;
-    context.imageSmoothingEnabled = true;
-    sv.canvasRecorder = new Recorder(context, {
-      name: "canvas-record-example",
-      duration: Infinity,
-      encoderOptions: {
-        framerate: sv.frameRate,
-        bitrate: 2500000,
-      },
-    });
+    // const debugP5Canv = sv.p.createGraphics(500, 500);
+    // debugP5Canv.background("pink");
+    // debugP5Canv.fill("green");
+    // debugP5Canv.circle(150, 50, 50);
+
+    // const previewCanvas = Object.assign(document.createElement("canvas"), {
+    // width: 500,
+    // height: 500,
+    // });
+    // const context = webglCanvas.getContext("2d");
+    // context.drawImage(debugP5Canv.canvas, 0, 0);
+    // console.log("context:", context);
+
+    // sv.canvasRecorder = new Recorder(webglCanvas, {
+    // name: "canvas-record-example",
+    // duration: Infinity,
+    // encoderOptions: {
+    // framerate: sv.frameRate,
+    // bitrate: 2000000,
+    // },
+    // });
 
     sv.setupDone = true;
   }

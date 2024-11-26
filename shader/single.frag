@@ -54,9 +54,8 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 
-    vec4 thisIcon = texture2D(atlasTex, vUV);
-    vec4 debug = texture2D(atlasTex, vUV);
+    // vec4 debug = texture2D(atlasTex, vUV);
+    vec4 debug = vec4(0.0, 0.0, brightness, 1.0);
 
-    // gl_FragColor = vec4(0.0, 0.0, 1.0, vUV.x);
     gl_FragColor = debug;
 }

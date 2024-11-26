@@ -12,6 +12,7 @@
     "vite": "^5.2.0"
   },
   "dependencies": {
+    "canvas-context": "^3.3.0",
     "canvas-record": "^5.1.0",
     "dat.gui": "^0.7.9",
     "gsap": "^3.12.5",

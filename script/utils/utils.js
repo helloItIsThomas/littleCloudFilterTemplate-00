@@ -99,7 +99,13 @@ export async function takeScreenshot() {
     sv.pixiScreenshot.remove();
   }
 
-  console.log("Canvas size:", sv.pApp.canvas.width, sv.pApp.canvas.height);
+  // set up for recorder here
+  // const webglCanvas = sv.pApp.canvas;
+  // console.log("recordingCanvas: ", webglCanvas);
+  // const recordingCanvas = sv.pApp.renderer.extract.canvas(sv.pApp.stage);
+  // console.log("recordingCanvas: ", recordingCanvas);
+  // const context = recordingCanvas.getContext("2d");
+  // set up for recorder above
 
   sv.pApp.stop();
 
@@ -109,13 +115,13 @@ export async function takeScreenshot() {
     height: sv.bodyRightDivHeight,
   });
 
-  // sv.pApp.renderer.render(sv.sceneContainerFrame, { renderTexture });
   sv.pApp.renderer.render({
     container: sv.sceneContainerFrame,
     target: renderTexture,
   });
 
   sv.pApp.renderer.extract.base64(renderTexture).then((url) => {
+    console.log(url);
     sv.pixiScreenshot = document.createElement("a");
 
     document.body.append(sv.pixiScreenshot);

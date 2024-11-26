@@ -1,6 +1,6 @@
 import * as dat from "dat.gui";
 import { recalculateGrid } from "./eventHandlers";
-import { startRecording, stopRecording } from "./recording";
+import { setupRecorder, startRecording, stopRecording } from "./recording";
 import { updateCellData } from "../imgProcessing/imageProcessing";
 import { createInput } from "./input";
 import { downloadBlob } from "canvas-record";
@@ -109,7 +109,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "2",
+  gridResolution: "10",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 
@@ -140,9 +140,12 @@ const screenshotController = recording
 const recordingController = recording.add(sv, "isRecording").name("Recording");
 
 recordingController.onChange((value) => {
+  console.log("recording toggled: ", value);
+  if (!sv.canvasRecorder) setupRecorder();
   if (sv.isRecording) startRecording();
   else if (!sv.isRecording) stopRecording();
 });
+
 screenshotController.onChange((value) => {
   if (value) {
     sv.pApp.renderer.extract.image(sv.pApp.stage).then((image) => {
