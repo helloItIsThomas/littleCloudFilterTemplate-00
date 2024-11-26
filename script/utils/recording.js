@@ -4,16 +4,14 @@ import { sv } from "./variables.js";
 import { Recorder, RecorderStatus, Encoders } from "canvas-record";
 
 export async function startRecording() {
-  // await sv.canvasRecorder.start();
-  // await sv.canvasRecorder.stop();
+  sv.ticker.stop();
   await sv.canvasRecorder.start();
   tick(sv.canvasRecorder);
-  // console.log("starting recording");
 }
 
 export async function stopRecording() {
   await sv.canvasRecorder.stop();
-  // console.log("stopping recording");
+  sv.ticker.start();
 }
 
 export function setupRecorder() {

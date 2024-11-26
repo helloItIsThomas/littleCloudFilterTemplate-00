@@ -30,33 +30,31 @@ document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
 
 sv.ticker = new Ticker();
 sv.ticker.autoStart = false;
+sv.ticker.add(() => {
+  render();
+});
 sv.ticker.stop();
 
 export default function (p) {
   sv.p = p;
-
-  async function mySetup() {
-    initializeLoadIcon();
-    createInput();
-    showLoadIcon();
-
-    await loadSetupImages();
-
-    recalculateGrid();
-    sv.setupDone = true;
-    sv.ticker.start();
-    setupRecorder();
-  }
-
-  p.setup = function () {
-    mySetup();
-  };
 }
 
-window.addEventListener("load", (event) => {
-  console.log("Page is fully loaded");
+async function mySetup() {
+  initializeLoadIcon();
+  createInput();
+  showLoadIcon();
 
-  // Your code to execute after the page is fully loaded goes here
+  await loadSetupImages();
+
+  recalculateGrid();
+  sv.setupDone = true;
+
+  sv.ticker.start();
+  setupRecorder();
+}
+
+window.addEventListener("load", () => {
+  mySetup();
 });
 
 export const tick = async () => {
@@ -73,11 +71,10 @@ export const tick = async () => {
 };
 
 function render() {
+  console.log("Current FPS:", sv.pApp.ticker.FPS);
   sv.stats.begin();
-  console.log("render running");
 
   if (sv.setupDone) {
-    console.log("draw running");
     draw();
     sv.clock += sv.speed;
   }
