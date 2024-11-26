@@ -213,7 +213,6 @@ function createResources(noiseCanvas) {
   const textures = graphics.map(
     (canvas) => new Texture({ source: new ImageSource({ resource: canvas }) })
   );
-  console.log(textures);
 
   // Mode-specific textures
   const modeSpecificTextures =
