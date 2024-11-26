@@ -41,8 +41,6 @@ export function initializeLoadIcon() {
 
     sv.arcCont.appendChild(sv.animatedArc);
     sv.loadIconDiv.appendChild(sv.arcCont);
-
-    // sv.clock = 0; // Initialize clock
   }
   // get a reference to loadIconDiv
   sv.loadIconDiv.style.width = window.innerWidth + "px";
@@ -62,12 +60,15 @@ export function initializeLoadIcon() {
 }
 
 export function showLoadIcon() {
+  console.log("show load icon");
   sv.loadIconDiv.style.display = "block";
   showTimeline.restart();
   startLoadIconAnimation();
+  sv.ticker.stop();
 }
 
 export function hideLoadIcon() {
+  sv.ticker.start();
   gsap.to("#pixiApp", { opacity: 1, duration: 0.1 });
   gsap.to("#bodyLeft", { opacity: 1, duration: 0.1 });
   gsap.to("#bodyRight", { opacity: 1, duration: 0.1 });
@@ -77,21 +78,12 @@ export function hideLoadIcon() {
 }
 
 export function startLoadIconAnimation() {
-  // Update sv.clock
-  // sv.clock += 0.05;
-
   // Calculate progress oscillating between 0 and 1
-  const progress = (Math.sin(sv.clock) + 1) / 2;
-
-  // Adjust clock speed based on progress
-  let clockSpeed = progress > 0.5 ? 2 : 1;
-
-  // Modify sv.clock to adjust speed
-  // sv.clock += 0.05 * (clockSpeed - 1);
+  const progress = (Math.sin(sv.animationFrameId * 0.025) + 1) / 2;
 
   // Calculate arc percentage and start angle
   const arcPercentage = 0.8 * progress + 0.1; // Ranges between 0.1 and 0.9
-  const startAngle = sv.clock * 10; // Rotate the arc
+  const startAngle = sv.animationFrameId * 0.025 * 20; // Rotate the arc
 
   // Function to convert angle to point coordinates
   const angleToPoint = (angle) => {
@@ -118,7 +110,7 @@ export function startLoadIconAnimation() {
 
   // Rotate the entire arc container
   sv.arcCont.style.transform = `translate(-50%, -50%) rotate(${
-    sv.clock * 10
+    sv.animationFrameId * 0.025 * 10
   }deg)`;
 
   // Continue the animation if the loading icon is visible

@@ -53,8 +53,9 @@ void main() {
     vec2 bTexUV = vec2(x, y);
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
-    float bTime = mod(brightness + time, 1.0);
-    float bTime2 = mod(x + time, 1.0);
+    float bTime = sin(brightness + time);
+    float noise = texture2D(noiseTex, bTexUV).r;
+    float bTime2 = mod(time + x + y + noise + brightness, 1.0);
 
     // vec4 debug = texture2D(atlasTex, vUV);
     vec4 debug = vec4(0.0, 0.0, bTime2, 1.0);
