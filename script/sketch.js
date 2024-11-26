@@ -1,5 +1,6 @@
 import "p5.js-svg";
 import { Application, RenderTexture, Ticker } from "pixi.js";
+import { Recorder, RecorderStatus, Encoders } from "canvas-record";
 
 import { sv } from "./utils/variables.js";
 import { recalculateGrid } from "./utils/eventHandlers.js";
@@ -8,6 +9,7 @@ import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
 import { downloadCanvas, takeScreenshot } from "./utils/utils.js";
+import { setupRecorder } from "./utils/recording.js";
 
 const bodyRightDiv = document.getElementById("bodyRight");
 sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
@@ -16,14 +18,12 @@ sv.bodyRightDivHeight = document.getElementById("bodyRight").offsetHeight;
 sv.pApp = new Application();
 await sv.pApp.init({
   background: "#fff",
-  // background: "00ff00",
   clearBeforeRender: true,
   preserveDrawingBuffer: true,
   autoDensity: true,
   resolution: 2,
   antialias: true,
   resizeTo: bodyRightDiv,
-  // resizeTo: window,
   preference: "webgl",
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
@@ -33,70 +33,50 @@ sv.ticker.autoStart = false;
 sv.ticker.stop();
 
 export default function (p) {
-  // console.log("running main sketch");
   sv.p = p;
+}
 
-  sv.stepPromise = Promise.resolve();
+async function mySetup() {
+  initializeLoadIcon();
+  createInput();
+  showLoadIcon();
 
-  async function mySetup() {
-    initializeLoadIcon();
-    createInput();
-    showLoadIcon();
+  await loadSetupImages();
 
-    sv.ticker.start();
+  recalculateGrid();
+  sv.setupDone = true;
+  sv.ticker.start();
+  setupRecorder();
+}
 
-    await loadSetupImages();
+window.addEventListener("load", (event) => {
+  mySetup();
+});
 
-    recalculateGrid();
+export const tick = async () => {
+  render();
 
-    // const debugP5Canv = sv.p.createGraphics(500, 500);
-    // debugP5Canv.background("pink");
-    // debugP5Canv.fill("green");
-    // debugP5Canv.circle(150, 50, 50);
+  console.log("tick running");
 
-    // const previewCanvas = Object.assign(document.createElement("canvas"), {
-    // width: 500,
-    // height: 500,
-    // });
-    // const context = webglCanvas.getContext("2d");
-    // context.drawImage(debugP5Canv.canvas, 0, 0);
-    // console.log("context:", context);
+  if (sv.canvasRecorder.status !== RecorderStatus.Recording) return;
+  await sv.canvasRecorder.step();
 
-    // sv.canvasRecorder = new Recorder(webglCanvas, {
-    // name: "canvas-record-example",
-    // duration: Infinity,
-    // encoderOptions: {
-    // framerate: sv.frameRate,
-    // bitrate: 2000000,
-    // },
-    // });
+  if (sv.canvasRecorder.status !== RecorderStatus.Stopped) {
+    requestAnimationFrame(() => tick());
+  }
+};
 
-    sv.setupDone = true;
+function render() {
+  sv.stats.begin();
+  console.log("render running");
+
+  if (sv.setupDone) {
+    console.log("draw running");
+    draw();
+    sv.clock += sv.speed;
   }
 
-  p.setup = function () {
-    mySetup();
-  };
-
-  sv.ticker.add((deltaTime) => {
-    sv.stats.begin();
-    sv.constantClock += sv.speed;
-
-    if (sv.setupDone) {
-      draw();
-    }
-
-    if (sv.setupDone) {
-      if (sv.isRecording) {
-        console.log("recording");
-        sv.stepPromise = sv.stepPromise.then(async () => {
-          await sv.canvasRecorder.step();
-        });
-      }
-      // if (sv.isRecording) drawIcon();
-    }
-    sv.stats.end();
-  });
+  sv.stats.end();
 }
 
 sv.pApp.stage.eventMode = "static";

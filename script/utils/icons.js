@@ -42,7 +42,7 @@ export function initializeLoadIcon() {
     sv.arcCont.appendChild(sv.animatedArc);
     sv.loadIconDiv.appendChild(sv.arcCont);
 
-    sv.constantClock = 0; // Initialize constantClock
+    // sv.clock = 0; // Initialize clock
   }
   // get a reference to loadIconDiv
   sv.loadIconDiv.style.width = window.innerWidth + "px";
@@ -77,21 +77,21 @@ export function hideLoadIcon() {
 }
 
 export function startLoadIconAnimation() {
-  // Update sv.constantClock
-  sv.constantClock += 0.05;
+  // Update sv.clock
+  // sv.clock += 0.05;
 
   // Calculate progress oscillating between 0 and 1
-  const progress = (Math.sin(sv.constantClock) + 1) / 2;
+  const progress = (Math.sin(sv.clock) + 1) / 2;
 
   // Adjust clock speed based on progress
   let clockSpeed = progress > 0.5 ? 2 : 1;
 
-  // Modify sv.constantClock to adjust speed
-  sv.constantClock += 0.05 * (clockSpeed - 1);
+  // Modify sv.clock to adjust speed
+  // sv.clock += 0.05 * (clockSpeed - 1);
 
   // Calculate arc percentage and start angle
   const arcPercentage = 0.8 * progress + 0.1; // Ranges between 0.1 and 0.9
-  const startAngle = sv.constantClock * 10; // Rotate the arc
+  const startAngle = sv.clock * 10; // Rotate the arc
 
   // Function to convert angle to point coordinates
   const angleToPoint = (angle) => {
@@ -118,7 +118,7 @@ export function startLoadIconAnimation() {
 
   // Rotate the entire arc container
   sv.arcCont.style.transform = `translate(-50%, -50%) rotate(${
-    sv.constantClock * 10
+    sv.clock * 10
   }deg)`;
 
   // Continue the animation if the loading icon is visible
