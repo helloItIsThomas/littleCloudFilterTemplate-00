@@ -144,18 +144,20 @@ recordingController.onChange((value) => {
   else if (!sv.isRecording) stopRecording();
 });
 
-screenshotController.onChange((value) => {
+function sameResDownload(value) {
   if (value) {
-    sv.pApp.renderer.extract.image(sv.pApp.stage).then((image) => {
-      // Add the extracted image to the DOM
-      const imgElement = document.createElement("img");
-      imgElement.src = image.src; // Use the extracted image's source
-      imgElement.style.width = "255px";
-      imgElement.style.height = "255px";
-      document.body.appendChild(imgElement); // Append the image to the body (or another container)
-    });
+    const webglCanvas = sv.pApp.canvas;
+
+    downloadCanvas(webglCanvas);
     screenshotController.setValue(false);
   }
+}
+
+function upscaledDownload(value) {}
+
+screenshotController.onChange((value) => {
+  sameResDownload(value);
+  upscaledDownload(value);
 });
 
 const general = gui.addFolder("General");

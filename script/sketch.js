@@ -83,7 +83,3 @@ function render() {
 
   sv.stats.end();
 }
-
-sv.pApp.stage.eventMode = "static";
-sv.pApp.stage.hitArea = sv.pApp.screen;
-sv.pApp.stage.on("pointerdown", takeScreenshot);

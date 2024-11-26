@@ -89,12 +89,11 @@ export function downloadCanvas(_canvas, name = "canvas.png") {
   const link = document.createElement("a");
   link.href = dataURL;
   link.download = name;
-  document.body.appendChild(link);
   link.click();
-  document.body.removeChild(link);
 }
 
 export async function takeScreenshot() {
+  console.log("take screenshot");
   if (sv.pixiScreenshot !== undefined) {
     sv.pixiScreenshot.remove();
   }
@@ -114,22 +113,22 @@ export async function takeScreenshot() {
 
   sv.pApp.renderer.extract.base64(renderTexture).then((url) => {
     console.log(url);
-    sv.pixiScreenshot = document.createElement("a");
+    sv.pixiScreenshot = document.createElement("img");
 
     document.body.append(sv.pixiScreenshot);
 
-    sv.pixiScreenshot.style.position = "fixed";
+    sv.pixiScreenshot.style.position = "absolute";
     sv.pixiScreenshot.style.bottom = "0px";
     sv.pixiScreenshot.style.left = "20px";
-    sv.pixiScreenshot.download = "screenshot";
-    sv.pixiScreenshot.href = url;
+    // sv.pixiScreenshot.download = "screenshot";
+    // sv.pixiScreenshot.href = url;
 
-    const image = new Image();
+    // const image = new Image();
 
-    image.width = sv.pApp.screen.width / 5;
-    image.src = url;
+    // image.width = sv.pApp.screen.width / 5;
+    // image.src = url;
 
-    sv.pixiScreenshot.innerHTML = image.outerHTML;
+    // sv.pixiScreenshot.innerHTML = image.outerHTML;
 
     sv.pApp.start();
   });

@@ -18,8 +18,6 @@ export function setupRecorder() {
   console.log("running setup recorder");
   const webglCanvas = sv.pApp.canvas;
   const webgl2CTX = webglCanvas.getContext("webgl2");
-  if (webgl2CTX) console.log("Canvas context is webgl2");
-  else console.log("BAD CONTEXT");
 
   sv.canvasRecorder = new Recorder(webgl2CTX, {
     name: "canvas-record-example",

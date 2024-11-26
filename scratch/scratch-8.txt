@@ -18,9 +18,10 @@ we need to do the following:
                 • start invisible
                 • scale dynamically
                 • clip outliers
+        • make screenshot and screenrecording large
         ~~~~screenshot~~~~
-                                                    https://pixijs.com/8.x/examples/advanced/screen-shot?_highlight=scre
-        • screen recording
+        ~~~~screen recording~~~~
+        • fix crop for screenshot and screen recording
         • speed
         • noise offset
         • color
@@ -29,6 +30,3 @@ we need to do the following:
     ~~~~a stable, centered viewport for the sketch~~~~
 Nice to haves:
     • make sure the cells have clean lines at 100% and 0% brightness
-
-
-~~~
