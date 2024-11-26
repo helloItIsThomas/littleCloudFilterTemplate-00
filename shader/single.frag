@@ -54,9 +54,10 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
     float bTime = mod(brightness + time, 1.0);
+    float bTime2 = mod(x + time, 1.0);
 
     // vec4 debug = texture2D(atlasTex, vUV);
-    vec4 debug = vec4(0.0, 0.0, bTime, 1.0);
+    vec4 debug = vec4(0.0, 0.0, bTime2, 1.0);
 
     gl_FragColor = debug;
 }

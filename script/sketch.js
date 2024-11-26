@@ -34,23 +34,29 @@ sv.ticker.stop();
 
 export default function (p) {
   sv.p = p;
-}
 
-async function mySetup() {
-  initializeLoadIcon();
-  createInput();
-  showLoadIcon();
+  async function mySetup() {
+    initializeLoadIcon();
+    createInput();
+    showLoadIcon();
 
-  await loadSetupImages();
+    await loadSetupImages();
 
-  recalculateGrid();
-  sv.setupDone = true;
-  sv.ticker.start();
-  setupRecorder();
+    recalculateGrid();
+    sv.setupDone = true;
+    sv.ticker.start();
+    setupRecorder();
+  }
+
+  p.setup = function () {
+    mySetup();
+  };
 }
 
 window.addEventListener("load", (event) => {
-  mySetup();
+  console.log("Page is fully loaded");
+
+  // Your code to execute after the page is fully loaded goes here
 });
 
 export const tick = async () => {
