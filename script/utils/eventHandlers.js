@@ -2,7 +2,6 @@ import { sv } from "./variables.js";
 import { updateCellData } from "../imgProcessing/imageProcessing.js";
 import { AVC, HEVC } from "media-codecs";
 import { initGridLoadingScreen } from "../rendering/loading.js";
-import { scaleDims } from "./utils.js";
 import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
 import { showLoadIcon, initializeLoadIcon } from "./icons.js";
 import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";

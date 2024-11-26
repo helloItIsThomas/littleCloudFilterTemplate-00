@@ -207,7 +207,7 @@ function createResources(noiseCanvas) {
   };
 
   const graphics = sv.oneActiveImage
-    ? Array.from({ length: 10 }, (_, i) => sv[`iconGraphic${i}`].canvas)
+    ? Array.from({ length: 20 }, (_, i) => sv[`iconGraphic${i}`].canvas)
     : [
         sv.customShapeGraphics.canvas,
         sv.circleGraphicLeft.canvas,
@@ -232,6 +232,16 @@ function createResources(noiseCanvas) {
           icon7Tex: textures[7].source,
           icon8Tex: textures[8].source,
           icon9Tex: textures[9].source,
+          icon10Tex: textures[10].source,
+          icon11Tex: textures[11].source,
+          icon12Tex: textures[12].source,
+          icon13Tex: textures[13].source,
+          icon14Tex: textures[14].source,
+          icon15Tex: textures[15].source,
+          icon16Tex: textures[16].source,
+          icon17Tex: textures[17].source,
+          icon18Tex: textures[18].source,
+          icon19Tex: textures[19].source,
           waveUniforms: {
             iconAR: { value: 1.0, type: "f32" },
           },
