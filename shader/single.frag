@@ -1,9 +1,18 @@
 in vec2 vUV;
 in float vIndex;
 
-uniform sampler2D hourglassTex;
-uniform sampler2D leftCircleTex;
-uniform sampler2D rightCircleTex;
+// uniform sampler2D hourglassTex;
+uniform sampler2D icon0Tex;
+uniform sampler2D icon1Tex;
+uniform sampler2D icon2Tex;
+uniform sampler2D icon3Tex;
+uniform sampler2D icon4Tex;
+uniform sampler2D icon5Tex;
+uniform sampler2D icon6Tex;
+uniform sampler2D icon7Tex;
+uniform sampler2D icon8Tex;
+uniform sampler2D icon9Tex;
+
 uniform sampler2D noiseTex;
 uniform sampler2D bTex1;
 uniform sampler2D bTex2;
@@ -12,9 +21,7 @@ uniform float time;
 uniform float gridResolution;
 uniform float rowCount;
 uniform float colCount;
-uniform float hgAR;
-uniform float lcAR;
-uniform float rcAR;
+uniform float iconAR;
 uniform float bTex1AR;
 uniform float bTex2AR;
 
@@ -48,13 +55,13 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 
-    vec4 rightCircle = texture2D(rightCircleTex, vUV);
+    vec4 rightCircle = texture2D(icon0Tex, vUV);
     if(brightness < 0.5) {
-        rightCircle = texture2D(rightCircleTex, vUV);
+        rightCircle = texture2D(icon0Tex, vUV);
     } else {
-        rightCircle = texture2D(leftCircleTex, vUV);
+        rightCircle = texture2D(icon0Tex, vUV);
     }
 
-    // gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
-    gl_FragColor = rightCircle;
+    gl_FragColor = vec4(0.0, 0.0, brightness, 1.0);
+    // gl_FragColor = rightCircle;
 }

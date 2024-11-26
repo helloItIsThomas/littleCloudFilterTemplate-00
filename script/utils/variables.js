@@ -17,7 +17,7 @@ var customContainer = document
 export const sv = {
   pixiScreenshot: undefined,
 
-  currentlyMoreThanOneImage: null,
+  oneActiveImage: null,
   arcCont: null,
   animatedArc: null,
   workerDone: false,
@@ -108,7 +108,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "90",
+  gridResolution: "20",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 
@@ -125,7 +125,6 @@ export const sv = {
   isRecording: false,
   takeScreenshot: false,
   tempUploadFiles: [],
-  // multiImgMode: false,
 
   // HTML elements
   inputElement: null,

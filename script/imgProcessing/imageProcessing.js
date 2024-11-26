@@ -3,8 +3,8 @@ import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";
 import { Still } from "./Stills.js";
 import { shaderRendering } from "../rendering/shaderRendering.js";
 import {
-  createAll20Graphics,
-  createAllThreeGraphics,
+  createGraphicsForSingleImage,
+  createGraphicsForMultipleImages,
 } from "../rendering/createShapeGraphics.js";
 import { hideLoadIcon } from "../utils/icons.js";
 
@@ -35,12 +35,14 @@ export async function updateCellData() {
       })
     );
   }
+
   await Promise.all(promises).then(() => {
-    createAllThreeGraphics();
-    // createAll20Graphics();
+    console.log("checking oneActiveImage state: ", sv.oneActiveImage);
+    if (sv.oneActiveImage === true) createGraphicsForSingleImage();
+    else if (sv.oneActiveImage === false) createGraphicsForMultipleImages();
+    else throw new Error("No valid images loaded");
+
     shaderRendering();
-    // if (sv.currentlyMoreThanOneImage) shaderRenderingMult();
-    // else shaderRenderingSingle();
 
     setTimeout(() => {
       sv.workerDone = true;

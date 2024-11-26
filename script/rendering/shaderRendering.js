@@ -14,28 +14,26 @@ import {
   Container,
 } from "pixi.js";
 
-async function loadFragShader(_currentlyMoreThanOneImage) {
+async function loadFragShader() {
   const vertexLoader = import.meta.glob("../../shader/vert.vert", {
     as: "raw",
   });
-  const fragmentLoader = _currentlyMoreThanOneImage
-    ? import.meta.glob("../../shader/frag.frag", { as: "raw" })
-    : import.meta.glob("../../shader/fragSingleImg.frag", { as: "raw" });
+  const fragmentLoader = sv.oneActiveImage
+    ? import.meta.glob("../../shader/single.frag", { as: "raw" })
+    : import.meta.glob("../../shader/mult.frag", { as: "raw" });
 
   const [vertex, fragment] = await Promise.all([
     vertexLoader["../../shader/vert.vert"](),
-    _currentlyMoreThanOneImage
-      ? fragmentLoader["../../shader/frag.frag"]()
-      : fragmentLoader["../../shader/fragSingleImg.frag"](),
+    sv.oneActiveImage
+      ? fragmentLoader["../../shader/single.frag"]()
+      : fragmentLoader["../../shader/mult.frag"](),
   ]);
 
   return { vertex, fragment };
 }
 
 export async function shaderRendering() {
-  const { vertex, fragment } = await loadFragShader(
-    sv.currentlyMoreThanOneImage
-  );
+  const { vertex, fragment } = await loadFragShader();
   const gl = { vertex, fragment };
 
   sv.totalTriangles = sv.totalCells;
@@ -119,30 +117,7 @@ export async function shaderRendering() {
   }
   resources = {}; // Clears the object reference.
 
-  resources = createResources(sv.currentlyMoreThanOneImage, noiseCanvas);
-  console.log("sv.currentlyMoreThanOneImage: ", sv.currentlyMoreThanOneImage);
-
-  // Prepare resources dynamically
-  // resources = {
-  // hourglassTex: tex1.source,
-  // leftCircleTex: tex2.source,
-  // rightCircleTex: tex3.source,
-  // noiseTex: noiseTex.source,
-  //
-  // waveUniforms: {
-  // time: { value: 1.0, type: "f32" },
-  // gridResolution: { value: sv.gridResolution, type: "f32" },
-  // rowCount: { value: sv.rowCount, type: "f32" },
-  // colCount: { value: sv.colCount, type: "f32" },
-  // hgAR: { value: art1, type: "f32" },
-  // lcAR: { value: art2, type: "f32" },
-  // rcAR: { value: art3, type: "f32" },
-  //
-  // tlThresh1: { value: sv.tlThresh1, type: "f32" },
-  // tlThresh2: { value: sv.tlThresh2, type: "f32" },
-  // tlThresh3: { value: sv.tlThresh3, type: "f32" },
-  // },
-  // };
+  resources = createResources(noiseCanvas);
 
   let bTexes = [];
   bTexes = sv.stills.map((still) => {
@@ -208,7 +183,7 @@ export async function shaderRendering() {
   sv.sceneContainer.addChild(sv.triangleMesh);
 }
 
-function createResources(_multipleImages, noiseCanvas) {
+function createResources(noiseCanvas) {
   // Common properties for both modes
   let noiseSrc = new ImageSource({ resource: noiseCanvas.canvas });
   let noiseTex = new Texture({ source: noiseSrc });
@@ -225,46 +200,51 @@ function createResources(_multipleImages, noiseCanvas) {
     },
   };
 
-  const graphics = [
-    // sv.iconGraphic0.canvas,
-    // sv.iconGraphic1.canvas,
-    // sv.iconGraphic2.canvas,
-    sv.customShapeGraphics.canvas,
-    sv.circleGraphicLeft.canvas,
-    sv.circleGraphicRight.canvas,
-  ];
-  const textures = graphics.map((canvas) => {
-    const src = new ImageSource({ resource: canvas });
-    return new Texture({ source: src });
-  });
-  const [tex1, tex2, tex3] = textures;
-  const [art1, art2, art3] = textures.map((tex) =>
-    sv.p.int(tex.source.width / tex.source.height)
+  const graphics = sv.oneActiveImage
+    ? Array.from({ length: 10 }, (_, i) => sv[`iconGraphic${i}`].canvas)
+    : [
+        sv.customShapeGraphics.canvas,
+        sv.circleGraphicLeft.canvas,
+        sv.circleGraphicRight.canvas,
+      ];
+
+  const textures = graphics.map(
+    (canvas) => new Texture({ source: new ImageSource({ resource: canvas }) })
   );
 
   // Mode-specific textures
   const modeSpecificTextures =
-    _multipleImages === true
+    sv.oneActiveImage === true
       ? {
-          hourglassTex: tex1.source,
-          leftCircleTex: tex2.source,
-          rightCircleTex: tex3.source,
+          icon0Tex: textures[0].source,
+          icon1Tex: textures[1].source,
+          icon2Tex: textures[2].source,
+          icon3Tex: textures[3].source,
+          icon4Tex: textures[4].source,
+          icon5Tex: textures[5].source,
+          icon6Tex: textures[6].source,
+          icon7Tex: textures[7].source,
+          icon8Tex: textures[8].source,
+          icon9Tex: textures[9].source,
           waveUniforms: {
-            hgAR: { value: art1, type: "f32" },
-            lcAR: { value: art2, type: "f32" },
-            rcAR: { value: art3, type: "f32" },
+            iconAR: { value: 1.0, type: "f32" },
           },
         }
-      : {
-          hourglassTex: tex1.source,
-          leftCircleTex: tex2.source,
-          rightCircleTex: tex3.source,
-          waveUniforms: {
-            hgAR: { value: art1, type: "f32" },
-            lcAR: { value: art2, type: "f32" },
-            rcAR: { value: art3, type: "f32" },
-          },
-        };
+      : (() => {
+          const [art1, art2, art3] = textures.map((tex) =>
+            sv.p.int(tex.source.width / tex.source.height)
+          );
+          return {
+            hourglassTex: textures[0].source,
+            leftCircleTex: textures[0].source,
+            rightCircleTex: textures[0].source,
+            waveUniforms: {
+              hgAR: { value: art1, type: "f32" },
+              lcAR: { value: art2, type: "f32" },
+              rcAR: { value: art3, type: "f32" },
+            },
+          };
+        })();
 
   // Merge common and specific resources
   return {

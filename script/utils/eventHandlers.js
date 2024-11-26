@@ -7,7 +7,7 @@ import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
 import { showLoadIcon, initializeLoadIcon } from "./icons.js";
 import { gsap } from "gsap";
 
-export function handleMultFiles(p) {
+export function handleImgInputAtRuntime(p) {
   sv.animUnderImgs = [];
 
   sv.tempUploadFiles.forEach((_file) => {
@@ -54,6 +54,17 @@ export async function recalculateGrid() {
 }
 
 export function updateActiveImgBar() {
+  // set oneActiveImage flag here
+  if (sv.totalUploadNum == 1) {
+    sv.oneActiveImage = true;
+    sv.advanced.show();
+  } else if (sv.totalUploadNum > 1) {
+    sv.oneActiveImage = false;
+    sv.advanced.hide();
+  } else throw console.error("Less than 1 active image detected");
+
+  console.log("oneActiveImage: ", sv.oneActiveImage);
+
   // get the background images
   const imgs = sv.animUnderImgs;
 
