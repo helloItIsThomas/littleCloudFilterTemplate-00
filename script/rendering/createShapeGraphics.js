@@ -9,11 +9,31 @@ export function createGraphicsForSingleImage() {
     if (sv[`iconGraphic${i}`]) sv[`iconGraphic${i}`].remove();
   }
   for (let i = 0; i < 20; i++) {
-    sv[`iconGraphic${i}`] = createSVGGraphic(i, sv.cellW);
+    sv[`iconGraphic${i}`] = createIcon(i, sv.cellW);
   }
+  sv.iconAtlas = createIconAtlas();
 }
 
-function createSVGGraphic(_i, size) {
+function createIconAtlas() {
+  // create a 5x4 texture atlas, or sprite sheet.
+  const atlasColCount = 5;
+  const atlasRowCount = 4;
+  const iconW = 138;
+  const iconH = 138;
+  const atlasW = iconW * atlasColCount;
+  const atlasH = iconH * atlasRowCount;
+  const pg = sv.p.createGraphics(atlasW, atlasH);
+  pg.pixelDensity(3);
+  let i = 0;
+  for (let y = 0; y < atlasRowCount; y++) {
+    for (let x = 0; x < atlasColCount; x++) {
+      pg.image(sv.singleImgIcons[i++], x * iconW, y * iconH, iconW, iconH);
+    }
+  }
+  return pg;
+}
+
+function createIcon(_i, size) {
   const w = size;
   const h = size;
   const pg = sv.p.createGraphics(w, h);

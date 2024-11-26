@@ -35,6 +35,7 @@ export const sv = {
   instancePositionBuffer: null,
   totalTriangles: null,
   triangles: null,
+  iconAtlas: null,
   spritesheet: null,
   sSheetTextures: [],
   sheets: [],
@@ -108,7 +109,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "20",
+  gridResolution: "2",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 

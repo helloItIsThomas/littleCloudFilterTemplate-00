@@ -184,10 +184,6 @@ export async function shaderRendering() {
 }
 
 function createResources(noiseCanvas) {
-  console.log("gridW: ", sv.gridW);
-  console.log("gridH: ", sv.gridH);
-  console.log("cellW: ", sv.cellW);
-  console.log("cellH: ", sv.cellH);
   // Common properties for both modes
   let noiseSrc = new ImageSource({ resource: noiseCanvas.canvas });
   let noiseTex = new Texture({ source: noiseSrc });
@@ -206,8 +202,9 @@ function createResources(noiseCanvas) {
     },
   };
 
+  sv.iconAtlas.save();
   const graphics = sv.oneActiveImage
-    ? Array.from({ length: 20 }, (_, i) => sv[`iconGraphic${i}`].canvas)
+    ? [sv.iconAtlas.canvas]
     : [
         sv.customShapeGraphics.canvas,
         sv.circleGraphicLeft.canvas,
@@ -223,25 +220,6 @@ function createResources(noiseCanvas) {
     sv.oneActiveImage === true
       ? {
           icon0Tex: textures[0].source,
-          icon1Tex: textures[1].source,
-          icon2Tex: textures[2].source,
-          icon3Tex: textures[3].source,
-          icon4Tex: textures[4].source,
-          icon5Tex: textures[5].source,
-          icon6Tex: textures[6].source,
-          icon7Tex: textures[7].source,
-          icon8Tex: textures[8].source,
-          icon9Tex: textures[9].source,
-          icon10Tex: textures[10].source,
-          icon11Tex: textures[11].source,
-          icon12Tex: textures[12].source,
-          icon13Tex: textures[13].source,
-          icon14Tex: textures[14].source,
-          icon15Tex: textures[15].source,
-          icon16Tex: textures[16].source,
-          icon17Tex: textures[17].source,
-          icon18Tex: textures[18].source,
-          icon19Tex: textures[19].source,
           waveUniforms: {
             iconAR: { value: 1.0, type: "f32" },
           },
@@ -252,8 +230,8 @@ function createResources(noiseCanvas) {
           );
           return {
             hourglassTex: textures[0].source,
-            leftCircleTex: textures[0].source,
-            rightCircleTex: textures[0].source,
+            leftCircleTex: textures[1].source,
+            rightCircleTex: textures[2].source,
             waveUniforms: {
               hgAR: { value: art1, type: "f32" },
               lcAR: { value: art2, type: "f32" },
