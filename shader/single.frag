@@ -21,6 +21,8 @@ uniform float time;
 uniform float gridResolution;
 uniform float rowCount;
 uniform float colCount;
+uniform float cellW;
+uniform float cellH;
 uniform float iconAR;
 uniform float bTex1AR;
 uniform float bTex2AR;
@@ -30,21 +32,7 @@ uniform float tlThresh1;
 uniform float tlThresh2;
 uniform float tlThresh3;
 
-float ease(float t, float easeFactor) {
-    // Ensure easeFactor is between 0.5 and 2 for reasonable curve control
-    easeFactor = mix(0.2, 3.0, easeFactor);
-    return pow(t, easeFactor) / (pow(t, easeFactor) + pow(1.0 - t, easeFactor));
-}
-
-vec2 adjustUV(vec2 uv, float aspectRatio) {
-    if(aspectRatio >= 1.0) {
-        uv.x = uv.x * aspectRatio;
-    } else {
-        uv.y = uv.y * (1.0 / aspectRatio);
-    }
-    return uv;
-}
-
+// it seems that this is running for each grid unit.
 void main() {
     float totalCells = rowCount * colCount;
     float indexFloat = vIndex * totalCells; // Scale normalized index to total cells
@@ -55,13 +43,6 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 
-    vec4 rightCircle = texture2D(icon0Tex, vUV);
-    if(brightness < 0.5) {
-        rightCircle = texture2D(icon0Tex, vUV);
-    } else {
-        rightCircle = texture2D(icon0Tex, vUV);
-    }
-
-    gl_FragColor = vec4(0.0, 0.0, brightness, 1.0);
-    // gl_FragColor = rightCircle;
+    gl_FragColor = vec4(0.0, 0.0, 1.0, vUV.x);
+    // gl_FragColor = icon0;
 }

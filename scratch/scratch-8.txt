@@ -12,7 +12,6 @@ we need to do the following:
         ~~~~manual scale~~~~
         • implement support for 1 or 2 images
             • single image mode
-I need a single way to flag what mode we are in.
                 replace custom tiles with my svg's
                 ~~~~support image with any aspect ratio~~~~
                 ~~~~contrast~~~~
@@ -30,3 +29,20 @@ I need a single way to flag what mode we are in.
     ~~~~a stable, centered viewport for the sketch~~~~
 Nice to haves:
     • make sure the cells have clean lines at 100% and 0% brightness
+
+
+~~~
+Currently, the pixi app is resizing to fit the bodyRightDiv.
+This means that when I screenshot the pixi app,
+it has some excess on the edges.
+I either want to resize the pixi app to fit the current image,
+or I want to find a way to trim that excess from the screenshot.
+The other issue is,
+the icons for both single and mult img frags are not scaling correctly.
+They should be scaling based on the aspect ratio of the active image.
+
+The problem seems to be that i am basing the grid off the images,
+but I am resizing the images after I am creating the grid.
+WHY isnt the gridW or H changing when I resize the window?
+Because it seems i am changing the width and height of a copy of the images,
+not the original images.

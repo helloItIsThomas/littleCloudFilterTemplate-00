@@ -5,6 +5,7 @@ import { initGridLoadingScreen } from "../rendering/loading.js";
 import { scaleDims } from "./utils.js";
 import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
 import { showLoadIcon, initializeLoadIcon } from "./icons.js";
+import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";
 import { gsap } from "gsap";
 
 export function handleImgInputAtRuntime(p) {
@@ -29,7 +30,19 @@ export function handleImgInputAtRuntime(p) {
 }
 
 export async function recalculateGrid() {
-  const imgs = sv.animUnderImgs;
+  let _imgs = Array.isArray(sv.animUnderImgs)
+    ? sv.animUnderImgs
+    : [sv.animUnderImgs]; // Ensure _imgs is always an array
+
+  // Preprocess images
+  const processedImages = _imgs.map((img) => {
+    img = fitImageToWindow(img);
+    const processed = img.get();
+    processed.filter(sv.p.GRAY);
+    return processed;
+  });
+
+  const imgs = processedImages;
 
   // this assumes all background images are the same size and aspect ratio(?)
   if (imgs.length > 1) {
@@ -42,7 +55,6 @@ export async function recalculateGrid() {
 
   sv.workerDone = false;
   showLoadIcon();
-  console.log("• Running recalculateGrid() •");
 
   sv.colCount = sv.gridResolution;
   sv.rowCount = Math.floor((sv.gridH / sv.gridW) * sv.gridResolution);
@@ -50,7 +62,7 @@ export async function recalculateGrid() {
   sv.cellW = sv.gridW / sv.colCount;
   sv.cellH = sv.gridH / sv.rowCount;
 
-  await updateCellData();
+  await updateCellData(imgs);
 }
 
 export function updateActiveImgBar() {

@@ -184,6 +184,10 @@ export async function shaderRendering() {
 }
 
 function createResources(noiseCanvas) {
+  console.log("gridW: ", sv.gridW);
+  console.log("gridH: ", sv.gridH);
+  console.log("cellW: ", sv.cellW);
+  console.log("cellH: ", sv.cellH);
   // Common properties for both modes
   let noiseSrc = new ImageSource({ resource: noiseCanvas.canvas });
   let noiseTex = new Texture({ source: noiseSrc });
@@ -194,6 +198,8 @@ function createResources(noiseCanvas) {
       gridResolution: { value: sv.gridResolution, type: "f32" },
       rowCount: { value: sv.rowCount, type: "f32" },
       colCount: { value: sv.colCount, type: "f32" },
+      nCellW: { value: sv.cellW / sv.gridW, type: "f32" },
+      nCellH: { value: sv.cellH / sv.gridH, type: "f32" },
       tlThresh1: { value: sv.tlThresh1, type: "f32" },
       tlThresh2: { value: sv.tlThresh2, type: "f32" },
       tlThresh3: { value: sv.tlThresh3, type: "f32" },

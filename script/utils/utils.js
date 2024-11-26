@@ -2,7 +2,7 @@ import { sv } from "./variables.js";
 import { autoDetectRenderer, RenderTexture, Sprite } from "pixi.js";
 
 export function scaleDims(_img) {
-  // console.log("• running scaleDims •");
+  console.log("• running scaleDims •");
   const maxRes = 1000;
   const maxPixels = maxRes * maxRes;
   const width = _img.width;
@@ -38,6 +38,7 @@ export function getAspectRatio(img) {
 }
 
 export function fitImageToWindow(img) {
+  console.log("°°° running fitImageToWindow °°° ");
   const windowWidth = sv.bodyRightDivWidth;
   const windowHeight = sv.bodyRightDivHeight;
 
