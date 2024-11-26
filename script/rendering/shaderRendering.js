@@ -202,7 +202,6 @@ function createResources(noiseCanvas) {
     },
   };
 
-  sv.iconAtlas.save();
   const graphics = sv.oneActiveImage
     ? [sv.iconAtlas.canvas]
     : [
@@ -214,12 +213,13 @@ function createResources(noiseCanvas) {
   const textures = graphics.map(
     (canvas) => new Texture({ source: new ImageSource({ resource: canvas }) })
   );
+  console.log(textures);
 
   // Mode-specific textures
   const modeSpecificTextures =
     sv.oneActiveImage === true
       ? {
-          icon0Tex: textures[0].source,
+          atlasTex: textures[0].source,
           waveUniforms: {
             iconAR: { value: 1.0, type: "f32" },
           },

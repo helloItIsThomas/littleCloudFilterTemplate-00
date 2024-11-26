@@ -2,8 +2,8 @@ in vec2 vUV;
 in float vIndex;
 
 // uniform sampler2D hourglassTex;
-uniform sampler2D icon0Tex;
 uniform sampler2D atlasTex;
+uniform sampler2D icon0Tex;
 uniform sampler2D icon1Tex;
 uniform sampler2D icon2Tex;
 uniform sampler2D icon3Tex;
