@@ -49,10 +49,7 @@ void main() {
     // float y = floor(indexFloat / gridResolution) / gridResolution;
     float x = mod(indexFloat, colCount) / colCount;
     float y = floor(indexFloat / colCount) / rowCount;
-
-    // Adjust UV coordinates for bTex1
     vec2 bTexUV = vec2(x, y);
-    // bTexUV = adjustUV(bTexUV, bTex1AR);
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
     float noise = texture2D(noiseTex, bTexUV).r;

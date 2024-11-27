@@ -32,10 +32,10 @@ body {
 
   padding: 20px;
   margin: 0;
-  /* width: 500px !important; */
-  /* min-width: 500px !important; */
   width: 100px !important;
   min-width: 100px !important;
+  width: 500px !important;
+  min-width: 500px !important;
   height: 100%;
   /* background-color: purple; */
   box-sizing: border-box;
