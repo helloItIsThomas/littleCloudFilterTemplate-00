@@ -176,8 +176,8 @@ export async function shaderRendering() {
   let count = 0;
   for (let i = 0; i < sv.totalTriangles; i++) {
     const triangle = sv.triangles[i];
-    data[count++] = triangle.x;
-    data[count++] = triangle.y;
+    data[count++] = triangle.x * sv.xExcess;
+    data[count++] = triangle.y * sv.yExcess;
   }
 
   sv.sceneContainer.addChild(sv.triangleMesh);

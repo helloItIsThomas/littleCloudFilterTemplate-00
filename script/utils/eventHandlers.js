@@ -60,10 +60,8 @@ export async function recalculateGrid() {
   sv.cellH = sv.cellW;
   sv.rowCount = sv.p.floor(sv.gridH / sv.cellH);
   sv.totalCells = sv.rowCount * sv.colCount;
-
-  console.log("gridHeight: " + sv.gridH, "gridWidth: " + sv.gridW);
-  console.log("cellW: " + sv.cellW, "cellH: " + sv.cellH);
-  console.log("rowCount: " + sv.rowCount, "colCount: " + sv.colCount);
+  sv.xExcess = (sv.cellW * sv.colCount) / sv.gridW;
+  sv.yExcess = (sv.cellH * sv.rowCount) / sv.gridH;
 
   await updateCellData(imgs);
 }

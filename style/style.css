@@ -42,7 +42,7 @@ body {
   overflow-y: scroll;
 }
 #bodyRight {
-  margin: 10px;
+  /* margin: 10px; */
   box-sizing: border-box;
   flex-grow: 1 !important;
   min-width: 50px;
