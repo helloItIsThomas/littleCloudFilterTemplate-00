@@ -3,12 +3,13 @@ in float vIndex;
 
 uniform float rowCount;
 uniform float colCount;
-
+uniform sampler2D noiseTex;
 uniform sampler2D bTex1;
 uniform sampler2D bTex2;
 uniform sampler2D atlasTex;
 
 void main() {
+
     float atlasColCount = 5.0;
     float atlasRowCount = 4.0;
     float totalNumCells = atlasColCount * atlasRowCount;
@@ -19,6 +20,8 @@ void main() {
     float x = mod(indexFloat, colCount) / colCount;
     float y = floor(indexFloat / colCount) / rowCount;
     vec2 bTexUV = vec2(x, y);
+    float noise = texture2D(noiseTex, bTexUV).r;
+
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 

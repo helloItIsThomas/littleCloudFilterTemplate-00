@@ -98,6 +98,7 @@ export const sv = {
   shapes: [],
   shapes2: [],
   noiseTex: null,
+  noisyValues: null,
 
   rowCount: null,
   colCount: null,
@@ -110,7 +111,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "120",
+  gridResolution: "30",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 

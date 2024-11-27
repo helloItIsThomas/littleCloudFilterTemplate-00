@@ -66,33 +66,23 @@ export async function shaderRendering() {
   });
 
   // this seems to be a good thing to use for manual scaling
-  const sclr = 0.1;
-  sv.aPositionData = new Float32Array([
-    0.0,
-    0.0,
-    sv.cellW * sclr,
-    0.0,
-    sv.cellW * sclr,
-    sv.cellH * sclr,
-    0.0,
-    sv.cellH * sclr,
-  ]);
+  const sclr = 1.0;
 
-  sv.aPositionBuffer = new Buffer({
-    data: sv.aPositionData,
-    usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
-  });
-
-  // Define geometry with explicit buffers
   const geometry = new Geometry({
     topology: "triangle-strip",
     instanceCount: sv.totalTriangles,
     attributes: {
-      aPosition: {
-        buffer: sv.aPositionBuffer,
-        instance: false, // This is a per-vertex attribute
-      },
-      aUV: [0, 0, 1, 0, 1, 1, 0, 1], // Can remain as an array if static
+      aPosition: [
+        0.0,
+        0.0,
+        sv.cellW * sclr,
+        0.0,
+        sv.cellW * sclr,
+        sv.cellH * sclr,
+        0.0,
+        sv.cellH * sclr,
+      ],
+      aUV: [0, 0, 1, 0, 1, 1, 0, 1],
       aPositionOffset: {
         buffer: sv.instancePositionBuffer,
         instance: true,
@@ -202,9 +192,12 @@ function createResources(noiseCanvas) {
     noiseTex: noiseTex.source,
     waveUniforms: {
       time: { value: 1.0, type: "f32" },
+      scale: { value: 0.5, type: "f32" },
       gridResolution: { value: sv.gridResolution, type: "f32" },
       rowCount: { value: sv.rowCount, type: "f32" },
       colCount: { value: sv.colCount, type: "f32" },
+      vRowCount: { value: sv.rowCount, type: "f32" },
+      vColCount: { value: sv.colCount, type: "f32" },
       tlThresh1: { value: sv.tlThresh1, type: "f32" },
       tlThresh2: { value: sv.tlThresh2, type: "f32" },
       tlThresh3: { value: sv.tlThresh3, type: "f32" },
