@@ -23,7 +23,7 @@ function createIconAtlas() {
   const atlasW = iconW * atlasColCount;
   const atlasH = iconH * atlasRowCount;
   const pg = sv.p.createGraphics(atlasW, atlasH);
-  pg.pixelDensity(3);
+  // pg.pixelDensity(3);
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {

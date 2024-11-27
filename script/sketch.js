@@ -72,7 +72,7 @@ export const tick = async () => {
 
 function render() {
   if (sv.pApp.ticker.FPS <= 30.0) {
-    console.log("<<XXXXXXXX BAD FPS XXXXXXX>>>", sv.pApp.ticker.FPS);
+    // console.log("<<XXXXXXXX BAD FPS XXXXXXX>>>", sv.pApp.ticker.FPS);
   }
   sv.stats.begin();
 

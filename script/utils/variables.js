@@ -107,7 +107,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "800",
+  gridResolution: "7",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 
