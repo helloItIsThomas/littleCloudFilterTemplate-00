@@ -13,7 +13,7 @@ export function createGraphicsForSingleImage() {
     sv[`iconGraphic${i}`] = createIcon(i, sv.cellW);
   }
   sv.iconAtlas = createIconAtlas();
-  downloadCanvas(sv.iconAtlas.canvas);
+  // downloadCanvas(sv.iconAtlas.canvas);
 }
 
 function createIconAtlas() {
@@ -25,7 +25,7 @@ function createIconAtlas() {
   const atlasW = iconW * atlasColCount;
   const atlasH = iconH * atlasRowCount;
   const pg = sv.p.createGraphics(atlasW, atlasH);
-  // pg.pixelDensity(3);
+  pg.pixelDensity(3);
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
@@ -40,7 +40,6 @@ function createIcon(_i, size) {
   const h = size;
   const pg = sv.p.createGraphics(w, h);
   pg.pixelDensity(3);
-  // pg.noStroke();
   pg.clear();
   pg.image(sv.singleImgIcons[_i], 0.0, 0.0, sv.cellW, sv.cellH);
   return pg;

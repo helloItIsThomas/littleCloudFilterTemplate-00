@@ -22,9 +22,10 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 
-    float range = floor(totalNumCells * 0.5);
+    float range = floor(totalNumCells - 1.0);
     float bToIndex = float(floor(brightness * range));
-    bToIndex += floor(range * 0.25);
+    // float bToIndex = float(floor(brightness * range));
+    // bToIndex += floor(range * 0.25);
 
     float row = floor(bToIndex / atlasRowCount);
     float col = mod(bToIndex, atlasColCount);

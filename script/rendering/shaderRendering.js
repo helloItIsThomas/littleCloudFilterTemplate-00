@@ -66,22 +66,33 @@ export async function shaderRendering() {
   });
 
   // this seems to be a good thing to use for manual scaling
-  const sclr = sv.manualScale;
+  const sclr = 0.1;
+  sv.aPositionData = new Float32Array([
+    0.0,
+    0.0,
+    sv.cellW * sclr,
+    0.0,
+    sv.cellW * sclr,
+    sv.cellH * sclr,
+    0.0,
+    sv.cellH * sclr,
+  ]);
+
+  sv.aPositionBuffer = new Buffer({
+    data: sv.aPositionData,
+    usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
+  });
+
+  // Define geometry with explicit buffers
   const geometry = new Geometry({
     topology: "triangle-strip",
     instanceCount: sv.totalTriangles,
     attributes: {
-      aPosition: [
-        0.0,
-        0.0,
-        sv.cellW * sclr,
-        0.0,
-        sv.cellW * sclr,
-        sv.cellH * sclr,
-        0.0,
-        sv.cellH * sclr,
-      ],
-      aUV: [0, 0, 1, 0, 1, 1, 0, 1],
+      aPosition: {
+        buffer: sv.aPositionBuffer,
+        instance: false, // This is a per-vertex attribute
+      },
+      aUV: [0, 0, 1, 0, 1, 1, 0, 1], // Can remain as an array if static
       aPositionOffset: {
         buffer: sv.instancePositionBuffer,
         instance: true,

@@ -28,6 +28,7 @@ export const sv = {
   pContainer: null,
   sceneContainer: null,
   sceneContainerFrame: null,
+  aPositionBuffer: null,
   ticker: null,
   frameRate: null,
   spinnyBG: null,
@@ -109,7 +110,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "40",
+  gridResolution: "120",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 
