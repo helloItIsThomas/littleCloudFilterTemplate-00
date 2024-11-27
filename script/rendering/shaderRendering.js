@@ -1,5 +1,5 @@
 import { sv } from "../utils/variables.js";
-import { getAspectRatio } from "../utils/utils.js";
+import { downloadCanvas, getAspectRatio } from "../utils/utils.js";
 
 import {
   Assets,
@@ -66,7 +66,7 @@ export async function shaderRendering() {
   });
 
   // this seems to be a good thing to use for manual scaling
-  const sclr = 1.0;
+  const sclr = sv.manualScale;
   const geometry = new Geometry({
     topology: "triangle-strip",
     instanceCount: sv.totalTriangles,

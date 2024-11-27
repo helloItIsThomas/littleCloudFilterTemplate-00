@@ -11,6 +11,7 @@ we need to do the following:
         ~~~~grid resolution~~~~
         ~~~~manual scale~~~~
         ~~~~implement support for 1 or 2 images~~~~
+        • make sure the single frag shader is picking the right icons from the atlas, verify with grad.png
             • single image mode
                 ~~~~replace custom tiles with my png's~~~~
                 ~~~~support image with any aspect ratio~~~~

@@ -22,15 +22,19 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 
-    float bToIndex = float(floor(brightness * (totalNumCells - 1.0)));
+    float range = floor(totalNumCells * 0.5);
+    float bToIndex = float(floor(brightness * range));
+    bToIndex += floor(range * 0.25);
 
-    float row = floor(bToIndex / atlasColCount);
+    float row = floor(bToIndex / atlasRowCount);
     float col = mod(bToIndex, atlasColCount);
 
     float xi = col;
     float yi = row;
 
     vec2 debugUV = vec2((vUV.x / atlasColCount) + (mod((1.0 / atlasColCount) * xi, 1.0)), (vUV.y / atlasRowCount) + (mod((1.0 / atlasRowCount) * yi, 1.0)));
+
+    vec2 deleteme = vec2(0.5, 0.0);
 
     gl_FragColor = texture2D(atlasTex, debugUV);
     // gl_FragColor = vec4(0.0, 0.0, brightness, 1.0);

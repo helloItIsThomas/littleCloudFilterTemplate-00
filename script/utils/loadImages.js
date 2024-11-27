@@ -1,4 +1,5 @@
 import { updateActiveImgBar } from "./eventHandlers.js";
+import { downloadCanvas } from "./utils.js";
 import { sv } from "./variables.js";
 
 export async function loadSetupImages() {
@@ -20,14 +21,14 @@ export async function loadSetupImages() {
     });
   };
 
-  const loadASetupIcon = (path) => {
-    sv.singleImgIcons = [];
+  const loadASetupIcon = (path, index) => {
+    sv.singleImgIcons = new Array(singleImgIconPaths.length);
 
     return new Promise((resolve, reject) => {
       sv.p.loadImage(
         path,
         (img) => {
-          sv.singleImgIcons.push(img);
+          sv.singleImgIcons[index] = img; // Assign image to the correct index
           resolve(img);
         },
         (err) => {
@@ -46,13 +47,16 @@ export async function loadSetupImages() {
   // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/studio.png"];
   // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/debug/satan.png"];
   // const sourceImgPaths = ["/assets/grad.png"];
-  // const sourceImgPaths = ["/assets/debug/satan.png"];
-  const sourceImgPaths = ["/assets/studio.png"];
+  const sourceImgPaths = ["/assets/debug/satan.png"];
+  // const sourceImgPaths = ["/assets/studio.png"];
 
   sv.totalUploadNum = sourceImgPaths.length;
 
   await Promise.all(sourceImgPaths.map(loadASetupImage));
-  await Promise.all(singleImgIconPaths.map(loadASetupIcon));
+  // await Promise.all(singleImgIconPaths.map(loadASetupIcon));
+  await Promise.all(
+    singleImgIconPaths.map((path, index) => loadASetupIcon(path, index))
+  );
 
   updateActiveImgBar();
 }

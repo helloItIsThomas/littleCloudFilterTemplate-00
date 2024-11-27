@@ -1,3 +1,4 @@
+import { downloadCanvas } from "../utils/utils.js";
 import { sv } from "../utils/variables.js";
 
 const cDiamMult = 0.5;
@@ -12,6 +13,7 @@ export function createGraphicsForSingleImage() {
     sv[`iconGraphic${i}`] = createIcon(i, sv.cellW);
   }
   sv.iconAtlas = createIconAtlas();
+  downloadCanvas(sv.iconAtlas.canvas);
 }
 
 function createIconAtlas() {
