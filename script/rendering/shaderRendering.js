@@ -192,7 +192,7 @@ function createResources(noiseCanvas) {
     noiseTex: noiseTex.source,
     waveUniforms: {
       time: { value: 1.0, type: "f32" },
-      scale: { value: 0.5, type: "f32" },
+      // manualScale: { value: 0.5, type: "f32" },
       gridResolution: { value: sv.gridResolution, type: "f32" },
       rowCount: { value: sv.rowCount, type: "f32" },
       colCount: { value: sv.colCount, type: "f32" },
@@ -201,6 +201,8 @@ function createResources(noiseCanvas) {
       tlThresh1: { value: sv.tlThresh1, type: "f32" },
       tlThresh2: { value: sv.tlThresh2, type: "f32" },
       tlThresh3: { value: sv.tlThresh3, type: "f32" },
+      sD: { value: sv.params.sdU, type: "i32" },
+      noiseLevel: { value: sv.noiseOffset, type: "f32" },
     },
   };
 

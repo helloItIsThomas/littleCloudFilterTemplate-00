@@ -61,7 +61,8 @@ export const sv = {
   params: {
     contrast: 5.0,
     clipOutliers: false,
-    scaleDynamically: true,
+    scaleDynamically: false,
+    sdU: 0,
     startInvisible: false,
   },
   totalUploadNum: null,
@@ -111,7 +112,7 @@ export const sv = {
   cellH: null,
   gridGutterMult: 1.0,
   gridResolutionBuffer: "1",
-  gridResolution: "180",
+  gridResolution: "10",
   // noiseOffset: 3.4,
   noiseOffset: 0.0,
 
@@ -169,14 +170,25 @@ general.open();
 const gridResController = general
   .add(sv, "gridResolutionBuffer")
   .name("Grid Resolution");
-general.add(sv, "manualScale", 0.1, 1.0).name("Manual Scale");
 general.add(sv, "speed", 0.0, 0.1).name("Speed");
-general.add(sv, "noiseOffset", 0, 10, 0.1).name("Noise Offset");
+
+const manualScaleController = general
+  .add(sv, "manualScale", 0.1, 1.0, 0.01)
+  .name("Manual Scale");
+const noiseController = general
+  .add(sv, "noiseOffset", 0, 1, 0.01)
+  .name("Noise Offset");
 
 const threshController1 = general.add(sv, "tlThresh1").name("tlThresh1");
 const threshController2 = general.add(sv, "tlThresh2").name("tlThresh2");
 const threshController3 = general.add(sv, "tlThresh3").name("tlThresh3");
 
+noiseController.onChange((value) => {
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
+});
+manualScaleController.onChange((value) => {
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.manualScale = value;
+});
 threshController1.onChange((value) => {
   sv.tlThresh1 = value % 1.0;
   recalculateGrid();
@@ -236,6 +248,13 @@ function addAdvancedParameters() {
   scaleDynamicController = sv.advanced
     .add(sv.params, "scaleDynamically")
     .name("Scale Dynamically");
+
+  scaleDynamicController.onChange((value) => {
+    console.log(value);
+    if (value) sv.params.sdU = 1;
+    else sv.params.sdU = 0;
+    sv.triangleMesh.shader.resources.waveUniforms.uniforms.sD = sv.params.sdU;
+  });
 
   startInvisibleController = sv.advanced
     .add(sv.params, "startInvisible")

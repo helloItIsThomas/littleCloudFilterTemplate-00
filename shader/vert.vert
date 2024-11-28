@@ -6,7 +6,10 @@ in float aIndex;
 uniform float vRowCount;
 uniform float vColCount;
 uniform float time;
-uniform float scale;
+// uniform float manualScale;
+uniform float noiseLevel;
+uniform int sD;
+uniform sampler2D bTex1;
 uniform sampler2D noiseTex;
 
 out vec2 vUV;
@@ -26,13 +29,17 @@ void main() {
     float x = mod(indexFloat, colCount) / colCount;
     float y = floor(indexFloat / colCount) / rowCount;
     vec2 bTexUV = vec2(x, y);
-    float noise = texture2D(noiseTex, bTexUV).r;
+    float noise = (texture2D(noiseTex, bTexUV).r) * noiseLevel;
+    vec4 bTexColor = texture2D(bTex1, bTexUV);
+    float brightness = bTexColor.r;
 
-    noise = 0.0;
-    float scaleDynamically = mod(noise + time, 1.0);
+    float scale = mod(time + noise, 1.0);
+    if(sD == 1) {
+        scale = mod(time + noise + brightness, 1.0);
+    }
 
     mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
-    gl_Position = vec4((mvp * vec3(aPosition * (scaleDynamically) + aPositionOffset, 1.0)).xy, 0.0, 1.0);
+    gl_Position = vec4((mvp * vec3(aPosition * (scale) + aPositionOffset, 1.0)).xy, 0.0, 1.0);
 
     vUV = aUV;
     vIndex = aIndex;
