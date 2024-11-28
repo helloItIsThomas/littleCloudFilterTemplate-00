@@ -16,9 +16,10 @@ we need to do the following:
                 ~~~~replace custom tiles with my png's~~~~
                 ~~~~support image with any aspect ratio~~~~
                 ~~~~contrast~~~~
+                ~~~~scale dynamically~~~~
                 • start invisible
-                • scale dynamically
                 • clip outliers
+                • the new thing, the 3 start point (shader) uniforms •
         • make screenshot and screenrecording large
         ~~~~screenshot~~~~
         ~~~~screen recording~~~~
@@ -26,7 +27,6 @@ we need to do the following:
         • speed
         • noise offset
         • color
-        ~~~~the new thing, the 3 start point (shader) uniforms~~~~
     ~~~~re-implement resizing~~~~
     ~~~~a stable, centered viewport for the sketch~~~~
 Nice to haves:

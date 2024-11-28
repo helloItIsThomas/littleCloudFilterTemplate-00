@@ -28,8 +28,11 @@ void main() {
     vec2 bTexUV = vec2(x, y);
     float noise = texture2D(noiseTex, bTexUV).r;
 
+    noise = 0.0;
+    float scaleDynamically = mod(noise + time, 1.0);
+
     mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
-    gl_Position = vec4((mvp * vec3(aPosition * (mod(noise + time, 1.0)) + aPositionOffset, 1.0)).xy, 0.0, 1.0);
+    gl_Position = vec4((mvp * vec3(aPosition * (scaleDynamically) + aPositionOffset, 1.0)).xy, 0.0, 1.0);
 
     vUV = aUV;
     vIndex = aIndex;
