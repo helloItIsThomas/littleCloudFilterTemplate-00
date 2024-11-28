@@ -5,10 +5,11 @@ in float aIndex;
 
 uniform float vRowCount;
 uniform float vColCount;
-uniform float time;
-// uniform float manualScale;
+uniform float vTime;
+uniform float manualScale;
 uniform float noiseLevel;
 uniform int sD;
+uniform int sI;
 uniform sampler2D bTex1;
 uniform sampler2D noiseTex;
 
@@ -33,10 +34,13 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 
-    float scale = mod(time + noise, 1.0);
+    float scale = mod(manualScale, 1.0);
     if(sD == 1) {
-        scale = mod(time + noise + brightness, 1.0);
+        scale = mod(vTime + noise + brightness, 1.0);
+    } else if(sI == 1) {
+        scale = mod(vTime + noise, 1.0);
     }
+    // mod(vTime + noise, 1.0);
 
     mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
     gl_Position = vec4((mvp * vec3(aPosition * (scale) + aPositionOffset, 1.0)).xy, 0.0, 1.0);

@@ -9,9 +9,16 @@ createStatsGUI();
 
 export function draw() {
   if (sv.triangleMesh && sv.workerDone) {
-    if (sv.params.startInvisible)
+    if (sv.params.startInvisible) {
       sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = pauseClock;
-    else sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = sv.clock;
+      sv.triangleMesh.shader.resources.waveUniforms.uniforms.vTime = pauseClock;
+    } else {
+      console.log("else");
+      sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = sv.clock;
+      sv.triangleMesh.shader.resources.waveUniforms.uniforms.vTime = sv.clock;
+    }
+
+    console.log(pauseClock);
   }
   updateClock();
 }

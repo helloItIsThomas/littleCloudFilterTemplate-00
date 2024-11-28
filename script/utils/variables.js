@@ -59,11 +59,11 @@ export const sv = {
   transitionDelay: 0.5,
   speed: 0.02,
   params: {
-    contrast: 5.0,
     clipOutliers: false,
     scaleDynamically: false,
     sdU: 0,
     startInvisible: false,
+    siU: 0,
   },
   totalUploadNum: null,
   advanced: null,
@@ -111,9 +111,8 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "1",
-  gridResolution: "10",
-  // noiseOffset: 3.4,
+  gridResolutionBuffer: "20",
+  gridResolution: "160",
   noiseOffset: 0.0,
 
   tlThresh1: 0.15,
@@ -173,7 +172,7 @@ const gridResController = general
 general.add(sv, "speed", 0.0, 0.1).name("Speed");
 
 const manualScaleController = general
-  .add(sv, "manualScale", 0.1, 1.0, 0.01)
+  .add(sv, "manualScale", 0.0, 0.99, 0.01)
   .name("Manual Scale");
 const noiseController = general
   .add(sv, "noiseOffset", 0, 1, 0.01)
@@ -187,7 +186,10 @@ noiseController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
 });
 manualScaleController.onChange((value) => {
-  sv.triangleMesh.shader.resources.waveUniforms.uniforms.manualScale = value;
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.manualScale = Math.min(
+    value,
+    0.9999999
+  );
 });
 threshController1.onChange((value) => {
   sv.tlThresh1 = value % 1.0;
@@ -226,21 +228,13 @@ inputField.addEventListener("keydown", (event) => {
 // outerDiv.classList.add("title-class");
 
 // References for dynamically added controllers
-let contrastController,
-  clipController,
-  scaleDynamicController,
-  startInvisibleController;
+let clipController, scaleDynamicController, startInvisibleController;
 
 // Function to add advanced parameters
 sv.advanced = gui.addFolder("Advanced");
 sv.advanced.open();
 sv.advanced.hide();
 function addAdvancedParameters() {
-  // console.log(" • running addAdvancedParameters • ");
-  contrastController = sv.advanced
-    .add(sv.params, "contrast", 0, 10)
-    .name("Contrast");
-
   clipController = sv.advanced
     .add(sv.params, "clipOutliers")
     .name("Clip Outliers");
@@ -249,16 +243,23 @@ function addAdvancedParameters() {
     .add(sv.params, "scaleDynamically")
     .name("Scale Dynamically");
 
+  startInvisibleController = sv.advanced
+    .add(sv.params, "startInvisible")
+    .name("Start Invisible");
+
+  startInvisibleController.onChange((value) => {
+    console.log(value);
+    if (value) sv.params.siU = 1;
+    else sv.params.siU = 0;
+    sv.triangleMesh.shader.resources.waveUniforms.uniforms.sI = sv.params.siU;
+  });
+
   scaleDynamicController.onChange((value) => {
     console.log(value);
     if (value) sv.params.sdU = 1;
     else sv.params.sdU = 0;
     sv.triangleMesh.shader.resources.waveUniforms.uniforms.sD = sv.params.sdU;
   });
-
-  startInvisibleController = sv.advanced
-    .add(sv.params, "startInvisible")
-    .name("Start Invisible");
 }
 addAdvancedParameters();
 
