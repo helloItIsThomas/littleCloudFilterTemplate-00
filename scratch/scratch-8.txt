@@ -2,12 +2,13 @@ BLUE COLOR
 #73c9fd
 
 SINGLE IMAGE MODE
-    • clip outliers
     • figure out how to implement 1-3 threshes for single image mode
     • verify single.frag with grad.png
+    • implement svg
+    • implement change of color for single image mode
 SCREENSHOT
     • make screenshot and screenrecording large
     • fix crop for screenshot and screen recording
 ETC
-    • Make the gui always reflect the current state.
+    • clip outliers
     • make sure the cells have clean lines at 100% and 0% brightness

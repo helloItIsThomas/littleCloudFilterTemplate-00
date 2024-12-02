@@ -207,6 +207,9 @@ function createResources(noiseCanvas) {
       vColCount: { value: sv.colCount, type: "f32" },
       sD: { value: sv.params.sdU, type: "i32" },
       sI: { value: sv.params.siU, type: "i32" },
+      cO: { value: sv.params.coU, type: "i32" },
+      clipDarkOutliers: { value: sv.params.clipDarkOutliers, type: "f32" },
+      clipLightOutliers: { value: sv.params.clipLightOutliers, type: "f32" },
       noiseLevel: { value: sv.noiseOffset, type: "f32" },
     },
   };

@@ -62,7 +62,10 @@ export const sv = {
   speed: 0.02,
   color: false,
   params: {
-    clipOutliers: false,
+    // clipOutliers: false,
+    // coU: 0,
+    clipDarkOutliers: 0,
+    clipLightOutliers: 0,
     scaleDynamically: false,
     sdU: 0,
     startInvisible: false,
@@ -160,8 +163,6 @@ function sameResDownload(value) {
   }
 }
 
-function upscaledDownload(value) {}
-
 screenshotController.onChange((value) => {
   sameResDownload(value);
   upscaledDownload(value);
@@ -234,16 +235,25 @@ inputField.addEventListener("keydown", (event) => {
 // outerDiv.classList.add("title-class");
 
 // References for dynamically added controllers
-let clipController, scaleDynamicController, startInvisibleController;
+let scaleDynamicController,
+  startInvisibleController,
+  clipDarkController,
+  clipLightController;
 
 // Function to add advanced parameters
 sv.advanced = gui.addFolder("Advanced");
 sv.advanced.open();
 sv.advanced.hide();
 function addAdvancedParameters() {
-  clipController = sv.advanced
-    .add(sv.params, "clipOutliers")
-    .name("Clip Outliers");
+  // clipController = sv.advanced
+  // .add(sv.params, "clipOutliers")
+  // .name("Clip Outliers");
+  clipDarkController = sv.advanced
+    .add(sv.params, "clipDarkOutliers", 0.0, 1.0, 0.01)
+    .name("Clip Dark Outliers");
+  clipLightController = sv.advanced
+    .add(sv.params, "clipLightOutliers", 0.0, 1.0, 0.01)
+    .name("Clip Light Outliers");
 
   scaleDynamicController = sv.advanced
     .add(sv.params, "scaleDynamically")
@@ -253,6 +263,21 @@ function addAdvancedParameters() {
     .add(sv.params, "startInvisible")
     .name("Start Invisible");
 
+  clipDarkController.onChange((value) => {
+    console.log(value);
+    // if (value) sv.params.coU = 1;
+    // else sv.params.coU = 0;
+    sv.triangleMesh.shader.resources.waveUniforms.uniforms.clipDarkOutliers =
+      value;
+  });
+  clipLightController.onChange((value) => {
+    console.log(value);
+    // if (value) sv.params.coU = 1;
+    // else sv.params.coU = 0;
+    sv.triangleMesh.shader.resources.waveUniforms.uniforms.clipLightOutliers =
+      1.0 - value;
+  });
+
   startInvisibleController.onChange((value) => {
     console.log(value);
     if (value) sv.params.siU = 1;
@@ -261,7 +286,6 @@ function addAdvancedParameters() {
   });
 
   scaleDynamicController.onChange((value) => {
-    console.log(value);
     if (value) sv.params.sdU = 1;
     else sv.params.sdU = 0;
     sv.triangleMesh.shader.resources.waveUniforms.uniforms.sD = sv.params.sdU;

@@ -31,8 +31,7 @@ void main() {
 
     float range = floor(totalNumCells - 1.0);
     float bToIndex = float(floor(brightness * range));
-    // float bToIndex = float(floor(brightness * range));
-    // bToIndex += floor(range * 0.25);
+    // clipOutliers
 
     float row = floor(bToIndex / atlasRowCount);
     float col = mod(bToIndex, atlasColCount);
