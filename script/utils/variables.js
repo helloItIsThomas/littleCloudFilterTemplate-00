@@ -5,6 +5,8 @@ import { updateCellData } from "../imgProcessing/imageProcessing";
 import { createInput } from "./input";
 import { downloadBlob } from "canvas-record";
 import { downloadCanvas } from "./utils";
+import { createGraphicsForSingleImage } from "../rendering/createShapeGraphics";
+import { shaderRendering } from "../rendering/shaderRendering";
 
 export const gui = new dat.GUI({
   autoPlace: false,
@@ -58,6 +60,7 @@ export const sv = {
   transitionSpeed: 3000.0,
   transitionDelay: 0.5,
   speed: 0.02,
+  color: false,
   params: {
     clipOutliers: false,
     scaleDynamically: false,
@@ -111,8 +114,8 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "20",
-  gridResolution: "160",
+  gridResolutionBuffer: "80",
+  gridResolution: "80",
   noiseOffset: 0.0,
 
   tlThresh1: 0.15,
@@ -171,6 +174,8 @@ const gridResController = general
   .name("Grid Resolution");
 general.add(sv, "speed", 0.0, 0.1).name("Speed");
 
+const colorController = general.add(sv, "color", false).name("Color");
+
 const manualScaleController = general
   .add(sv, "manualScale", 0.0, 0.99, 0.01)
   .name("Manual Scale");
@@ -178,10 +183,20 @@ const noiseController = general
   .add(sv, "noiseOffset", 0, 1, 0.01)
   .name("Noise Offset");
 
-const threshController1 = general.add(sv, "tlThresh1").name("tlThresh1");
-const threshController2 = general.add(sv, "tlThresh2").name("tlThresh2");
-const threshController3 = general.add(sv, "tlThresh3").name("tlThresh3");
+const threshController1 = general
+  .add(sv, "tlThresh1", 0.0, 1.0)
+  .name("tlThresh1");
+const threshController2 = general
+  .add(sv, "tlThresh2", 0.0, 1.0)
+  .name("tlThresh2");
+const threshController3 = general
+  .add(sv, "tlThresh3", 0.0, 1.0)
+  .name("tlThresh3");
 
+colorController.onChange((value) => {
+  createGraphicsForSingleImage();
+  recalculateGrid();
+});
 noiseController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
 });
@@ -191,18 +206,9 @@ manualScaleController.onChange((value) => {
     0.9999999
   );
 });
-threshController1.onChange((value) => {
-  sv.tlThresh1 = value % 1.0;
-  recalculateGrid();
-});
-threshController2.onChange((value) => {
-  sv.tlThresh2 = value % 1.0;
-  recalculateGrid();
-});
-threshController3.onChange((value) => {
-  sv.tlThresh3 = value % 1.0;
-  recalculateGrid();
-});
+threshController1.onChange((value) => {});
+threshController2.onChange((value) => {});
+threshController3.onChange((value) => {});
 
 const inputField = gridResController.domElement.querySelector("input");
 inputField.addEventListener("keydown", (event) => {

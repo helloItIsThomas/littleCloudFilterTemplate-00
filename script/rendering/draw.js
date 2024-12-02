@@ -9,16 +9,23 @@ createStatsGUI();
 
 export function draw() {
   if (sv.triangleMesh && sv.workerDone) {
-    if (sv.params.startInvisible) {
-      sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = pauseClock;
-      sv.triangleMesh.shader.resources.waveUniforms.uniforms.vTime = pauseClock;
-    } else {
-      console.log("else");
-      sv.triangleMesh.shader.resources.waveUniforms.uniforms.time = sv.clock;
-      sv.triangleMesh.shader.resources.waveUniforms.uniforms.vTime = sv.clock;
-    }
+    const uniforms = sv.triangleMesh.shader.resources.waveUniforms.uniforms;
 
-    console.log(pauseClock);
+    // uniforms.noiseLevel = sv.noiseOffset;
+
+    uniforms.tlThresh1 = sv.tlThresh1;
+    uniforms.tlThresh2 = sv.tlThresh2;
+    uniforms.tlThresh3 = sv.tlThresh3;
+    uniforms.vTlThresh1 = sv.tlThresh1;
+    uniforms.vTlThresh2 = sv.tlThresh2;
+    uniforms.vTlThresh3 = sv.tlThresh3;
+    if (sv.params.startInvisible) {
+      uniforms.time = pauseClock;
+      uniforms.vTime = pauseClock;
+    } else {
+      uniforms.time = sv.clock;
+      uniforms.vTime = sv.clock;
+    }
   }
   updateClock();
 }

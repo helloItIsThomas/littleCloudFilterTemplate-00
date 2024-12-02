@@ -37,9 +37,6 @@ export class Still {
       worker.postMessage({ imageData, rowCount, colCount, cellW, cellH });
 
       worker.onmessage = (e) => {
-        // console.log(
-        // "¶ acting on response from worker's internal postMessage ¶"
-        // );
         const result = e.data;
         const canvas = document.createElement("canvas");
         canvas.width = originalW;

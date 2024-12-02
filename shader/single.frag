@@ -8,6 +8,10 @@ uniform sampler2D bTex1;
 uniform sampler2D bTex2;
 uniform sampler2D atlasTex;
 
+uniform float vTlThresh1;
+uniform float vTlThresh2;
+uniform float vTlThresh3;
+
 void main() {
 
     float atlasColCount = 5.0;
@@ -23,7 +27,7 @@ void main() {
     float noise = texture2D(noiseTex, bTexUV).r;
 
     vec4 bTexColor = texture2D(bTex1, bTexUV);
-    float brightness = bTexColor.r;
+    float brightness = bTexColor.r + vTlThresh1;
 
     float range = floor(totalNumCells - 1.0);
     float bToIndex = float(floor(brightness * range));
@@ -37,8 +41,6 @@ void main() {
     float yi = row;
 
     vec2 debugUV = vec2((vUV.x / atlasColCount) + (mod((1.0 / atlasColCount) * xi, 1.0)), (vUV.y / atlasRowCount) + (mod((1.0 / atlasRowCount) * yi, 1.0)));
-
-    vec2 deleteme = vec2(0.5, 0.0);
 
     gl_FragColor = texture2D(atlasTex, debugUV);
     // gl_FragColor = vec4(0.0, 0.0, brightness, 1.0);

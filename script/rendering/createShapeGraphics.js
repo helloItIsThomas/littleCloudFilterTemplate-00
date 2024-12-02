@@ -3,9 +3,11 @@ import { sv } from "../utils/variables.js";
 
 const cDiamMult = 0.5;
 const scaleAmount = 1;
+let fillColor = "#000";
 
 export function createGraphicsForSingleImage() {
-  console.log("running createGraphicsForSingleImage");
+  if (sv.color) fillColor = "#73c9fd";
+  else fillColor = "#000";
   for (let i = 0; i < 20; i++) {
     if (sv[`iconGraphic${i}`]) sv[`iconGraphic${i}`].remove();
   }
@@ -25,7 +27,7 @@ function createIconAtlas() {
   const atlasW = iconW * atlasColCount;
   const atlasH = iconH * atlasRowCount;
   const pg = sv.p.createGraphics(atlasW, atlasH);
-  pg.pixelDensity(3);
+  pg.pixelDensity(2);
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
@@ -39,7 +41,7 @@ function createIcon(_i, size) {
   const w = size;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
-  pg.pixelDensity(3);
+  pg.pixelDensity(2);
   pg.clear();
   pg.image(sv.singleImgIcons[_i], 0.0, 0.0, sv.cellW, sv.cellH);
   return pg;
@@ -60,9 +62,9 @@ export function createLeftCircle(size) {
   const w = size * 2;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
-  pg.pixelDensity(3);
+  pg.pixelDensity(2);
+  pg.fill(fillColor);
   pg.noStroke();
-  pg.fill(0);
   // pg.stroke(255, 0, 0);
   pg.background(0, 255, 0);
   pg.clear();
@@ -82,9 +84,9 @@ export function createRightCircle(size) {
   const w = size * 2;
   const h = size;
   const pg = sv.p.createGraphics(w, h);
-  pg.pixelDensity(3);
+  pg.pixelDensity(2);
   pg.noStroke();
-  pg.fill(0);
+  pg.fill(fillColor);
   // pg.stroke(255, 0, 0);
   pg.background(0, 255, 0);
   pg.clear();
@@ -110,8 +112,8 @@ export function createShapeGraphic(size) {
   const pg = sv.p.createGraphics(width, height);
   // const cDiameter = height * cDiamMult * scaleAmount;
   const cDiameter = height * cDiamMult;
-  pg.pixelDensity(3);
-  pg.fill(0);
+  pg.pixelDensity(2);
+  pg.fill(fillColor);
   pg.noStroke();
 
   const borderOffset = 0.0;

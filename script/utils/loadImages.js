@@ -44,10 +44,10 @@ export async function loadSetupImages() {
     (_, i) => `/assets/brightnessSortedPNG/${i}.png`
   );
 
-  // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/studio.png"];
-  const sourceImgPaths = ["/assets/debug/satan.png", "/assets/img.jpg"];
+  // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/img.jpg"];
+  const sourceImgPaths = ["/assets/debug/satan.png"];
   // const sourceImgPaths = ["/assets/grad.png"];
-  // const sourceImgPaths = ["/assets/debug/satan.png"];
+  // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/notSquare.png"];
   // const sourceImgPaths = ["/assets/studio.png"];
 
   sv.totalUploadNum = sourceImgPaths.length;
