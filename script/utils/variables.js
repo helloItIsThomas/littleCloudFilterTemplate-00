@@ -249,10 +249,10 @@ function addAdvancedParameters() {
   // .add(sv.params, "clipOutliers")
   // .name("Clip Outliers");
   clipDarkController = sv.advanced
-    .add(sv.params, "clipDarkOutliers", 0.0, 1.0, 0.01)
+    .add(sv.params, "clipDarkOutliers", 0.0, 1.0, 0.001)
     .name("Clip Dark Outliers");
   clipLightController = sv.advanced
-    .add(sv.params, "clipLightOutliers", 0.0, 1.0, 0.01)
+    .add(sv.params, "clipLightOutliers", 0.0, 1.0, 0.001)
     .name("Clip Light Outliers");
 
   scaleDynamicController = sv.advanced
@@ -275,7 +275,7 @@ function addAdvancedParameters() {
     // if (value) sv.params.coU = 1;
     // else sv.params.coU = 0;
     sv.triangleMesh.shader.resources.waveUniforms.uniforms.clipLightOutliers =
-      1.0 - value;
+      value;
   });
 
   startInvisibleController.onChange((value) => {

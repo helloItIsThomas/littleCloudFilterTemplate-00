@@ -45,7 +45,7 @@ void main() {
         scale = mod(vTime + noise, 1.0);
     }
 
-    if(brightness <= clipDarkOutliers || brightness >= clipLightOutliers) {
+    if(brightness <= clipDarkOutliers || brightness >= 1.0 - clipLightOutliers) {
         scale = 0.0;
     }
 
