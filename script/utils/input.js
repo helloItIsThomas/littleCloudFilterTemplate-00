@@ -9,7 +9,6 @@ export function createInput() {
 
     sv.tempUploadFiles.push(_file);
     if (sv.tempUploadFiles.length === sv.totalSourceUploadNum) {
-      console.log("running handleImgInputAtRuntime from createInput");
       handleImgInputAtRuntime(sv.p);
       sv.tempUploadFiles = [];
     }

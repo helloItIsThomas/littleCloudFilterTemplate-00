@@ -15,7 +15,7 @@ export async function stopRecording() {
 }
 
 export function setupRecorder() {
-  console.log("running setup recorder");
+  // console.log("running setup recorder");
   const webglCanvas = sv.pApp.canvas;
   const webgl2CTX = webglCanvas.getContext("webgl2");
 

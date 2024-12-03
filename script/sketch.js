@@ -4,7 +4,7 @@ import { Recorder, RecorderStatus, Encoders } from "canvas-record";
 
 import { sv } from "./utils/variables.js";
 import { recalculateGrid } from "./utils/eventHandlers.js";
-import { loadSetupImages } from "./utils/loadImages";
+import { loadSetupImages, updateSvgIcons } from "./utils/loadImages";
 import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
@@ -47,8 +47,9 @@ async function mySetup() {
   await loadSetupImages();
 
   recalculateGrid();
-  sv.setupDone = true;
+  updateSvgIcons();
 
+  sv.setupDone = true;
   sv.ticker.start();
   setupRecorder();
 }

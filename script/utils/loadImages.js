@@ -3,6 +3,7 @@ import { downloadCanvas } from "./utils.js";
 import { sv } from "./variables.js";
 
 export async function loadSetupImages() {
+  console.log("should run once ");
   const loadASetupImage = (path) => {
     return new Promise((resolve, reject) => {
       sv.p.loadImage(
@@ -18,42 +19,11 @@ export async function loadSetupImages() {
     });
   };
 
-  const loadASetupIcon = (path) => {
-    console.log("••§∞¢§™£¡ running loadASetupIcon");
-    // this should return a vanilla canvas of an svg.
-    return new Promise((resolve, reject) => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-
-      // MAKE SURE THIS ISN'T RUINING PERFORMANCE
-      // figure out an optimal number for svgResolution
-      const svgResolution = window.innerWidth * 0.1;
-      canvas.width = svgResolution;
-      canvas.height = svgResolution;
-
-      const img = new Image();
-      img.onload = () => {
-        console.log("•••• loading an svg <<<<");
-        ctx.fillStyle = "#73c9fd";
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        ctx.globalCompositeOperation = "source-in";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.globalCompositeOperation = "source-over";
-
-        resolve(canvas);
-      };
-      img.onerror = (err) => {
-        console.log("Error loading SVG: " + err);
-        reject(err);
-      };
-      img.src = path;
-    });
-  };
-
-  const singleImgIconPaths = Array.from(
+  sv.singleImgIconPaths = Array.from(
     { length: 20 },
     (_, i) => `/assets/brightnessSortedSVG/${i}.svg`
   );
+
   // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/img.jpg"];
   const sourceImgPaths = ["/assets/debug/satan.png"];
   // const sourceImgPaths = ["/assets/grad.png"];
@@ -67,13 +37,57 @@ export async function loadSetupImages() {
       sv.animUnderImgs.push(img);
     })
   );
+
+  updateActiveImgBar();
+}
+
+const loadASetupIcon = (path) => {
+  // this should return a vanilla canvas of an svg.
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // MAKE SURE THIS ISN'T RUINING PERFORMANCE
+    // figure out an optimal number for svgResolution
+    let svgResolution = window.innerWidth * 1.0;
+    if (sv.gridResolution <= 20)
+      svgResolution = window.innerWidth / sv.gridResolution;
+    else svgResolution = window.innerWidth * 0.1;
+    svgResolution = (sv.gridW / sv.gridResolution) * 2;
+    // console.log("svgResolution", svgResolution);
+    console.log("GRID WIDTH", sv.gridW);
+
+    canvas.width = svgResolution;
+    canvas.height = svgResolution;
+
+    // console.log("START");
+    // this seems to be slowing down the loading screen
+    const img = new Image();
+    img.onload = () => {
+      if (sv.color) ctx.fillStyle = "#73c9fd";
+      else ctx.fillStyle = "#000000";
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "source-in";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "source-over";
+
+      resolve(canvas);
+    };
+    img.onerror = (err) => {
+      console.log("Error loading SVG: " + err);
+      reject(err);
+    };
+    img.src = path;
+  });
+};
+
+export async function updateSvgIcons() {
+  console.log("running updateSvgIcons");
   sv.singleImgIcons = [];
   await Promise.all(
-    singleImgIconPaths.map(async (path) => {
+    sv.singleImgIconPaths.map(async (path) => {
       const icon = await loadASetupIcon(path);
       sv.singleImgIcons.push(icon);
     })
   );
-
-  updateActiveImgBar();
 }

@@ -5,8 +5,9 @@ import { updateCellData } from "../imgProcessing/imageProcessing";
 import { createInput } from "./input";
 import { downloadBlob } from "canvas-record";
 import { downloadCanvas } from "./utils";
-import { createIconAtlas } from "../rendering/createShapeGraphics";
+import { createGraphicsForSingleImage } from "../rendering/createShapeGraphics";
 import { shaderRendering } from "../rendering/shaderRendering";
+import { updateSvgIcons } from "./loadImages";
 
 export const gui = new dat.GUI({
   autoPlace: false,
@@ -96,6 +97,7 @@ export const sv = {
   iconGraphic17: null,
   iconGraphic18: null,
   iconGraphic19: null,
+  singleImgIconPaths: null,
 
   cTex: null,
   sTex: null,
@@ -165,7 +167,7 @@ function sameResDownload(value) {
 
 screenshotController.onChange((value) => {
   sameResDownload(value);
-  upscaledDownload(value);
+  // upscaledDownload(value);
 });
 
 const general = gui.addFolder("General");
@@ -195,8 +197,8 @@ const threshController3 = general
   .name("tlThresh3");
 
 colorController.onChange((value) => {
-  sv.iconAtlas = createIconAtlas();
   recalculateGrid();
+  updateSvgIcons();
 });
 noiseController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
@@ -221,6 +223,7 @@ inputField.addEventListener("keydown", (event) => {
         else sv.gridResolution = 400;
         if (value == 0) sv.gridResolution = 1;
         recalculateGrid();
+        updateSvgIcons();
       }
     }
   }

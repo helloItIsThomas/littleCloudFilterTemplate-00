@@ -5,7 +5,8 @@ const cDiamMult = 0.5;
 const scaleAmount = 1;
 let fillColor = "#000";
 
-export function createIconAtlas() {
+export function createGraphicsForSingleImage() {
+  console.log("••§∞¢§™£¡ running createGraphicsForSingleImage");
   // create a 5x4 texture atlas, or sprite sheet.
   const atlasColCount = 5;
   const atlasRowCount = 4;
@@ -20,7 +21,6 @@ export function createIconAtlas() {
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
       const vanillaCanvas = sv.singleImgIcons[i++];
-      downloadCanvas(vanillaCanvas);
       const imageData = vanillaCanvas
         .getContext("2d")
         .getImageData(0, 0, vanillaCanvas.width, vanillaCanvas.height);
@@ -40,14 +40,13 @@ export function createIconAtlas() {
 }
 
 export function createGraphicsForMultipleImages() {
-  console.log("running createGraphicsForMultipleImages");
   if (sv.circleGraphicLeft) sv.circleGraphicLeft.remove();
   if (sv.circleGraphicRight) sv.circleGraphicRight.remove();
   if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
 
   sv.circleGraphicLeft = createLeftCircle(sv.cellW);
   sv.circleGraphicRight = createRightCircle(sv.cellW);
-  sv.customShapeGraphics = createShapeGraphic(sv.cellW);
+  sv.customShapeGraphics = createCenterGraphic(sv.cellW);
 }
 
 export function createLeftCircle(size) {
@@ -95,9 +94,9 @@ export function createRightCircle(size) {
   return pg;
 }
 
-export function createShapeGraphic(size) {
+export function createCenterGraphic(size) {
   // const scaleAmount = 0.95;
-  // console.log("running createShapeGraphic");
+  // console.log("running createCenterGraphic");
 
   // Define quad dimensions
   const width = size * 2;

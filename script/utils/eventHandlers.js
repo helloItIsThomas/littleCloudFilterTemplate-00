@@ -6,6 +6,7 @@ import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
 import { showLoadIcon, initializeLoadIcon } from "./icons.js";
 import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";
 import { gsap } from "gsap";
+import { updateSvgIcons } from "./loadImages.js";
 
 export function handleImgInputAtRuntime(p) {
   sv.animUnderImgs = [];
@@ -67,6 +68,7 @@ export async function recalculateGrid() {
 }
 
 export function updateActiveImgBar() {
+  console.log("running updateActiveImgBar");
   // set oneActiveImage flag here
   if (sv.totalSourceUploadNum == 1) {
     sv.oneActiveImage = true;
@@ -127,12 +129,12 @@ window.addEventListener("resize", () => {
   }
 
   resizeTimeout = setTimeout(() => {
-    console.log("User finished resizing");
     sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
     sv.bodyRightDivHeight = document.getElementById("bodyRight").offsetHeight;
 
     initializeLoadIcon();
     recalculateGrid();
+    updateSvgIcons();
 
     resizingStarted = false; // Reset for next resize
   }, 500); // Adjust timeout as needed
