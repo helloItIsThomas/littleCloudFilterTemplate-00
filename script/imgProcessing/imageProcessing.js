@@ -2,7 +2,7 @@ import { sv } from "../utils/variables.js";
 import { Still } from "./Stills.js";
 import { shaderRendering } from "../rendering/shaderRendering.js";
 import {
-  createGraphicsForSingleImage,
+  createIconAtlas,
   createGraphicsForMultipleImages,
 } from "../rendering/createShapeGraphics.js";
 import { hideLoadIcon } from "../utils/icons.js";
@@ -25,7 +25,7 @@ export async function updateCellData(_processedImgs) {
 
   await Promise.all(promises).then(() => {
     console.log("checking oneActiveImage state: ", sv.oneActiveImage);
-    if (sv.oneActiveImage === true) createGraphicsForSingleImage();
+    if (sv.oneActiveImage === true) sv.iconAtlas = createIconAtlas();
     else if (sv.oneActiveImage === false) createGraphicsForMultipleImages();
     else throw new Error("No valid images loaded");
 

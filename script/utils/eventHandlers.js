@@ -14,7 +14,7 @@ export function handleImgInputAtRuntime(p) {
     if (_file.type === "image") {
       p.loadImage(_file.data, function (img) {
         sv.animUnderImgs.push(img);
-        if (sv.animUnderImgs.length === sv.totalUploadNum) {
+        if (sv.animUnderImgs.length === sv.totalSourceUploadNum) {
           updateActiveImgBar();
           recalculateGrid();
         }
@@ -68,10 +68,10 @@ export async function recalculateGrid() {
 
 export function updateActiveImgBar() {
   // set oneActiveImage flag here
-  if (sv.totalUploadNum == 1) {
+  if (sv.totalSourceUploadNum == 1) {
     sv.oneActiveImage = true;
     sv.advanced.show();
-  } else if (sv.totalUploadNum > 1) {
+  } else if (sv.totalSourceUploadNum > 1) {
     sv.oneActiveImage = false;
     sv.advanced.hide();
   } else throw console.error("Less than 1 active image detected");

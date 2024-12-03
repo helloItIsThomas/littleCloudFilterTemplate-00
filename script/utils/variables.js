@@ -5,7 +5,7 @@ import { updateCellData } from "../imgProcessing/imageProcessing";
 import { createInput } from "./input";
 import { downloadBlob } from "canvas-record";
 import { downloadCanvas } from "./utils";
-import { createGraphicsForSingleImage } from "../rendering/createShapeGraphics";
+import { createIconAtlas } from "../rendering/createShapeGraphics";
 import { shaderRendering } from "../rendering/shaderRendering";
 
 export const gui = new dat.GUI({
@@ -71,7 +71,7 @@ export const sv = {
     startInvisible: false,
     siU: 0,
   },
-  totalUploadNum: null,
+  totalSourceUploadNum: null,
   advanced: null,
   customShapeGraphics: null,
   circleGraphicLeft: null,
@@ -117,8 +117,8 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "80",
-  gridResolution: "80",
+  gridResolutionBuffer: "2",
+  gridResolution: "2",
   noiseOffset: 0.0,
 
   tlThresh1: 0.15,
@@ -195,7 +195,7 @@ const threshController3 = general
   .name("tlThresh3");
 
 colorController.onChange((value) => {
-  createGraphicsForSingleImage();
+  sv.iconAtlas = createIconAtlas();
   recalculateGrid();
 });
 noiseController.onChange((value) => {

@@ -5,20 +5,7 @@ const cDiamMult = 0.5;
 const scaleAmount = 1;
 let fillColor = "#000";
 
-export function createGraphicsForSingleImage() {
-  if (sv.color) fillColor = "#73c9fd";
-  else fillColor = "#000";
-  for (let i = 0; i < 20; i++) {
-    if (sv[`iconGraphic${i}`]) sv[`iconGraphic${i}`].remove();
-  }
-  for (let i = 0; i < 20; i++) {
-    sv[`iconGraphic${i}`] = createIcon(i, sv.cellW);
-  }
-  sv.iconAtlas = createIconAtlas();
-  // downloadCanvas(sv.iconAtlas.canvas);
-}
-
-function createIconAtlas() {
+export function createIconAtlas() {
   // create a 5x4 texture atlas, or sprite sheet.
   const atlasColCount = 5;
   const atlasRowCount = 4;
@@ -27,23 +14,28 @@ function createIconAtlas() {
   const atlasW = iconW * atlasColCount;
   const atlasH = iconH * atlasRowCount;
   const pg = sv.p.createGraphics(atlasW, atlasH);
+
   pg.pixelDensity(2);
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
-      pg.image(sv.singleImgIcons[i++], x * iconW, y * iconH, iconW, iconH);
+      const vanillaCanvas = sv.singleImgIcons[i++];
+      downloadCanvas(vanillaCanvas);
+      const imageData = vanillaCanvas
+        .getContext("2d")
+        .getImageData(0, 0, vanillaCanvas.width, vanillaCanvas.height);
+      const p5TempCanvas = sv.p.createImage(
+        vanillaCanvas.width,
+        vanillaCanvas.height
+      );
+      p5TempCanvas.loadPixels();
+      for (let i = 0; i < imageData.data.length; i++) {
+        p5TempCanvas.pixels[i] = imageData.data[i];
+      }
+      p5TempCanvas.updatePixels();
+      pg.image(p5TempCanvas, x * iconW, y * iconH, iconW, iconH);
     }
   }
-  return pg;
-}
-
-function createIcon(_i, size) {
-  const w = size;
-  const h = size;
-  const pg = sv.p.createGraphics(w, h);
-  pg.pixelDensity(2);
-  pg.clear();
-  pg.image(sv.singleImgIcons[_i], 0.0, 0.0, sv.cellW, sv.cellH);
   return pg;
 }
 
@@ -52,6 +44,7 @@ export function createGraphicsForMultipleImages() {
   if (sv.circleGraphicLeft) sv.circleGraphicLeft.remove();
   if (sv.circleGraphicRight) sv.circleGraphicRight.remove();
   if (sv.customShapeGraphics) sv.customShapeGraphics.remove();
+
   sv.circleGraphicLeft = createLeftCircle(sv.cellW);
   sv.circleGraphicRight = createRightCircle(sv.cellW);
   sv.customShapeGraphics = createShapeGraphic(sv.cellW);

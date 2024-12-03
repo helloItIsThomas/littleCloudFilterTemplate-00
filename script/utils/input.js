@@ -5,10 +5,10 @@ export function createInput() {
   // console.log("• Running createInput() •");
   if (sv.inputElement) sv.inputElement.remove();
   sv.inputElement = sv.p.createFileInput(function (_file) {
-    sv.totalUploadNum = sv.inputElement.elt.files.length;
+    sv.totalSourceUploadNum = sv.inputElement.elt.files.length;
 
     sv.tempUploadFiles.push(_file);
-    if (sv.tempUploadFiles.length === sv.totalUploadNum) {
+    if (sv.tempUploadFiles.length === sv.totalSourceUploadNum) {
       console.log("running handleImgInputAtRuntime from createInput");
       handleImgInputAtRuntime(sv.p);
       sv.tempUploadFiles = [];
