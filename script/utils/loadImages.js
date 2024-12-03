@@ -49,13 +49,12 @@ const loadASetupIcon = (path) => {
 
     // MAKE SURE THIS ISN'T RUINING PERFORMANCE
     // figure out an optimal number for svgResolution
-    let svgResolution = window.innerWidth * 1.0;
-    if (sv.gridResolution <= 20)
-      svgResolution = window.innerWidth / sv.gridResolution;
-    else svgResolution = window.innerWidth * 0.1;
-    svgResolution = (sv.gridW / sv.gridResolution) * 2;
-    // console.log("svgResolution", svgResolution);
-    console.log("GRID WIDTH", sv.gridW);
+    let svgResolution = sv.gridW / sv.gridResolution;
+    // let svgResolution = window.innerWidth * 1.0;
+    // if (sv.gridResolution <= 20)
+    // svgResolution = window.innerWidth / sv.gridResolution;
+    // else svgResolution = window.innerWidth * 0.1;
+    // svgResolution = (sv.gridW / sv.gridResolution) * 2;
 
     canvas.width = svgResolution;
     canvas.height = svgResolution;
@@ -66,10 +65,13 @@ const loadASetupIcon = (path) => {
     img.onload = () => {
       if (sv.color) ctx.fillStyle = "#73c9fd";
       else ctx.fillStyle = "#000000";
+      ctx.imageSmoothingEnabled = true;
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "source-in";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "source-over";
+      // svg's seem to be perfectly sharp here.
+      // downloadCanvas(canvas);
 
       resolve(canvas);
     };
@@ -88,6 +90,8 @@ export async function updateSvgIcons() {
     sv.singleImgIconPaths.map(async (path) => {
       const icon = await loadASetupIcon(path);
       sv.singleImgIcons.push(icon);
+      // svg's are canvases here and are perfectly sharp.
+      // downloadCanvas(icon);
     })
   );
 }

@@ -43,11 +43,23 @@ body {
 }
 #bodyRight {
   margin: 10px;
+  /* position: absolute; */
   box-sizing: border-box;
-  flex-grow: 1 !important;
-  min-width: 50px;
-  min-height: 50px;
+  /* flex-grow: 1 !important; */
+  /* min-width: 50px; */
+  /* min-height: 50px; */
   background-color: white;
+  /* width: 1920px !important; */
+  /* height: 1920px !important; */
+  /* display: none; */
+}
+
+#pixiView {
+  position: absolute;
+  z-index: 10;
+  border: 10px solid red;
+  width: 200px;
+  height: 200px;
 }
 
 .appTitle {

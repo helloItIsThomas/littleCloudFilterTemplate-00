@@ -8,12 +8,14 @@ import { loadSetupImages, updateSvgIcons } from "./utils/loadImages";
 import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
-import { downloadCanvas, takeScreenshot } from "./utils/utils.js";
+import { downloadCanvas } from "./utils/utils.js";
 import { setupRecorder } from "./utils/recording.js";
 
-const bodyRightDiv = document.getElementById("bodyRight");
-sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
-sv.bodyRightDivHeight = document.getElementById("bodyRight").offsetHeight;
+let bodyRightDiv = document.getElementById("bodyRight");
+sv.bodyRightDivWidth = 1000;
+sv.bodyRightDivHeight = 1000;
+
+let pixiView = document.getElementById("pixiView");
 
 sv.pApp = new Application();
 await sv.pApp.init({
@@ -21,9 +23,11 @@ await sv.pApp.init({
   clearBeforeRender: true,
   preserveDrawingBuffer: true,
   autoDensity: true,
-  resolution: 2,
+  width: 1000,
+  height: 1000,
+  // resolution: 2,
   antialias: true,
-  resizeTo: bodyRightDiv,
+  // resizeTo: bodyRightDiv,
   preference: "webgl",
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
@@ -84,3 +88,10 @@ function render() {
 
   sv.stats.end();
 }
+
+window.addEventListener("mousedown", () => {
+  console.log("mousedown");
+  const webglCanvas = sv.pApp.canvas;
+  downloadCanvas(webglCanvas);
+  // sv.pApp.renderer.resize(200, 200);
+});

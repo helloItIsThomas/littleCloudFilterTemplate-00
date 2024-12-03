@@ -16,11 +16,13 @@ export function createGraphicsForSingleImage() {
   const atlasH = iconH * atlasRowCount;
   const pg = sv.p.createGraphics(atlasW, atlasH);
 
-  pg.pixelDensity(2);
+  // pg.pixelDensity(2);
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
       const vanillaCanvas = sv.singleImgIcons[i++];
+      downloadCanvas(vanillaCanvas);
+      // we are likely losing resolution somewhere below.
       const imageData = vanillaCanvas
         .getContext("2d")
         .getImageData(0, 0, vanillaCanvas.width, vanillaCanvas.height);
