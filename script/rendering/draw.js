@@ -23,8 +23,13 @@ export function draw() {
       uniforms.time = pauseClock;
       uniforms.vTime = pauseClock;
     } else {
-      uniforms.time = sv.clock;
-      uniforms.vTime = sv.clock;
+      if (!sv.oneActiveImage) {
+        uniforms.time = pauseClock;
+        uniforms.vTime = pauseClock;
+      } else {
+        uniforms.time = sv.clock;
+        uniforms.vTime = sv.clock;
+      }
     }
   }
   updateClock();

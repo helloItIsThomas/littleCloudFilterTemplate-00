@@ -220,6 +220,7 @@ function createResources(noiseCanvas) {
       clipDarkOutliers: { value: sv.params.clipDarkOutliers, type: "f32" },
       clipLightOutliers: { value: sv.params.clipLightOutliers, type: "f32" },
       noiseLevel: { value: sv.noiseOffset, type: "f32" },
+      vNoiseLevel: { value: sv.noiseOffset, type: "f32" },
     },
   };
 

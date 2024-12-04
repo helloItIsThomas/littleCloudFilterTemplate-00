@@ -1,3 +1,5 @@
+precision highp float;
+
 in vec2 vUV;
 in float vIndex;
 

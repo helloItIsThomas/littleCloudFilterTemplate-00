@@ -1,3 +1,5 @@
+precision highp float;
+
 in vec2 vUV;
 in float vIndex;
 
@@ -7,6 +9,7 @@ uniform sampler2D rightCircleTex;
 uniform sampler2D noiseTex;
 uniform sampler2D bTex1;
 uniform sampler2D bTex2;
+uniform float noiseLevel;
 
 uniform float time;
 uniform float gridResolution;
@@ -54,7 +57,7 @@ void main() {
     float brightness = bTexColor.r;
     float noise = texture2D(noiseTex, bTexUV).r;
 
-    float clock = mod(time, 1.0);
+    float clock = mod(time + noise, 1.0);
 
     // If using bTex2
     if(numBTexes == 2) {

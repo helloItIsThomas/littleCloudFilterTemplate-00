@@ -18,8 +18,9 @@ export function createStatsGUI() {
     .querySelectorAll("canvas");
 
   for (var i = 0; i < statsALL.length; i++) {
-    // statsALL[i].style.position = "relative";
-    statsALL[i].style.width = "100%";
+    statsALL[i].style.position = "absolute";
+    // statsALL[i].style.zIndex = "10";
+    statsALL[i].style.width = "60px";
     statsALL[i].style.height = "160px";
   }
 }

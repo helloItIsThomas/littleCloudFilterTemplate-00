@@ -130,7 +130,7 @@ export function createCenterGraphic(size) {
     sv.createCenterGraphic = undefined;
   }
 
-  const pg = sv.p.createGraphics(w, h);
+  const pg = sv.p.createGraphics(width, height);
   sv.createCenterGraphic = pg;
 
   // const cDiameter = height * cDiamMult * scaleAmount;

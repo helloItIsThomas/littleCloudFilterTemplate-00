@@ -18,14 +18,18 @@ export function setupRecorder() {
   // console.log("running setup recorder");
   const webglCanvas = sv.pApp.canvas;
   const webgl2CTX = webglCanvas.getContext("webgl2");
+  const dpr = window.devicePixelRatio || 2;
+
+  webglCanvas.width = webglCanvas.clientWidth * dpr;
+  webglCanvas.height = webglCanvas.clientHeight * dpr;
+  webgl2CTX.viewport(0, 0, webglCanvas.width, webglCanvas.height);
 
   sv.canvasRecorder = new Recorder(webgl2CTX, {
     name: "canvas-record-example",
     duration: Infinity,
     encoderOptions: {
       download: true,
-      // bitrate: 2000000,
-      bitrate: 3500000,
+      bitrate: 9500000,
     },
   });
 }

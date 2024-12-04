@@ -7,7 +7,7 @@ uniform float vRowCount;
 uniform float vColCount;
 uniform float vTime;
 uniform float manualScale;
-uniform float noiseLevel;
+uniform float vNoiseLevel;
 uniform float clipDarkOutliers;
 uniform float clipLightOutliers;
 uniform int sD;
@@ -33,7 +33,7 @@ void main() {
     float x = mod(indexFloat, colCount) / colCount;
     float y = floor(indexFloat / colCount) / rowCount;
     vec2 bTexUV = vec2(x, y);
-    float noise = (texture2D(noiseTex, bTexUV).r) * noiseLevel;
+    float noise = (texture2D(noiseTex, bTexUV).r) * vNoiseLevel;
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 
