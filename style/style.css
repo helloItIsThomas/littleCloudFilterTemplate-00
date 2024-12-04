@@ -74,26 +74,27 @@ canvas {
 
 #pixiSizerDiv {
   position: absolute;
-  width: 800px !important;
-  height: 800px !important;
+  width: 800px;
+  height: 800px;
   background-color: red;
   z-index: 501;
   margin: 0;
   padding: 0;
-  top: -99%;
+  /* top: -200%; */
   /* display: none; */
+  visibility: hidden;
 }
 
 #pixiCanvasTarget {
   z-index: 500;
   position: absolute;
-  width: 800px !important;
-  height: 800px !important;
+  width: 800px;
+  height: 800px;
   bottom: 0;
-  border: 5px solid green;
-  margin: 0;
-  padding: 0;
+  /* border: 5px solid green; */
+  box-sizing: border-box;
   /* display: none; */
+  visibility: hidden;
 }
 
 .appTitle {

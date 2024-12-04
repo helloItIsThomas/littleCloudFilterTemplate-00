@@ -12,6 +12,7 @@ import { downloadCanvas } from "./utils/utils.js";
 import { setupRecorder } from "./utils/recording.js";
 
 let resizeAppToMe = document.getElementById("pixiSizerDiv");
+console.log("resizeAppToMe", resizeAppToMe);
 let targetCanvas = document.getElementById("pixiCanvasTarget");
 sv.resizeAppToMeWidth = resizeAppToMe.offsetWidth;
 sv.resizeAppToMeHeight = resizeAppToMe.offsetHeight;
@@ -19,8 +20,8 @@ sv.resizeAppToMeHeight = resizeAppToMe.offsetHeight;
 // console.log("resizeAppToMeHeight", sv.resizeAppToMeHeight);
 sv.pApp = new Application();
 await sv.pApp.init({
-  // background: "#0000ff",
-  background: "#ffffff",
+  background: "#0000ff",
+  // background: "#ffffff",
   // background: "#00f0ff",
   // transparent: true,
   clearBeforeRender: true,
@@ -31,11 +32,10 @@ await sv.pApp.init({
   // THIS WIDTH AND HEIGHT
   // MUST currently match img.width and img.height in  debugImageTo100(),
   // and the width and height of pixiSizerDiv and pixiCanvasTarget in style.css
-
   width: 800,
   height: 800,
   canvas: targetCanvas,
-  // resizeTo: resizeAppToMe,
+  resizeTo: resizeAppToMe,
   preference: "webgl",
 });
 // document.getElementById("pixiApp").appendChild(sv.pApp.canvas);

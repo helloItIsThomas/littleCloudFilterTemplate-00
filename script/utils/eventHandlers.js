@@ -41,6 +41,7 @@ export async function recalculateGrid() {
   // Preprocess images
   const processedImages = _imgs.map((img) => {
     img = fitImageToWindow(img);
+    console.log("img.width", img.width);
     const processed = img.get();
     processed.filter(sv.p.GRAY);
     return processed;
@@ -130,17 +131,30 @@ window.addEventListener("resize", () => {
   }
 
   resizeTimeout = setTimeout(() => {
-    sv.resizeAppToMeWidth = document.getElementById("bodyRight").offsetWidth;
-    sv.resizeAppToMeHeight = document.getElementById("bodyRight").offsetHeight;
+    // sv.resizeAppToMeWidth = document.getElementById("bodyRight").offsetWidth;
+    // sv.resizeAppToMeHeight = document.getElementById("bodyRight").offsetHeight;
 
-    resizeRecorderCanvas();
-
+    // resizeRecorderCanvas();
     initializeLoadIcon();
     recalculateGrid();
     updateSvgIcons();
 
     resizingStarted = false; // Reset for next resize
   }, 500); // Adjust timeout as needed
+
+  let resizeAppToMe = document.getElementById("pixiSizerDiv");
+  console.log("resizeAppToMe.offsetWidth", resizeAppToMe.offsetWidth);
+
+  console.log("sv.gridW", sv.gridW);
+  console.log("sv.gridH", sv.gridH);
 });
 
-function resizeRecorderCanvas() {}
+function resizeRecorderCanvas() {
+  const pixiCanvasTarget = document.getElementById("pixiCanvasTarget");
+  //  read the width and height of pixiSizerDiv and assign it to pixiCanvasTarget
+  const pixiSizerDiv = document.getElementById("pixiSizerDiv");
+
+  // changing this below fucks everything up.
+  pixiCanvasTarget.width = pixiSizerDiv.offsetWidth;
+  pixiCanvasTarget.height = pixiSizerDiv.offsetHeight;
+}

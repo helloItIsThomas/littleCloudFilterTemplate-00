@@ -16,8 +16,10 @@ export function getAspectRatio(img) {
 
 export function debugImageTo100(img) {
   console.log("°°° running debugImageTo100 °°° ");
-  img.width = 800;
-  img.height = 800;
+  const pixiSizerDiv = document.getElementById("pixiSizerDiv");
+  // 800 , 800
+  img.width = pixiSizerDiv.offsetWidth;
+  img.height = pixiSizerDiv.offsetHeight;
   return img;
 }
 
