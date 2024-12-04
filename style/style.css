@@ -91,6 +91,7 @@ canvas {
   width: 800px;
   height: 800px;
   bottom: 0;
+  right: 0;
   /* border: 5px solid green; */
   box-sizing: border-box;
   /* display: none; */

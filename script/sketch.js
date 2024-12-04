@@ -101,8 +101,8 @@ function render() {
     // });
 
     // Scale the preview sprite to fit the secondary canvas
-    // sv.previewSprite.width = 300; // Adjust these dimensions as needed
-    // sv.previewSprite.height = 300; // to fit #bodyRight
+    // sv.previewSprite.width = 800; // Adjust these dimensions as needed
+    // sv.previewSprite.height = 800; // to fit #bodyRight
     // Render the scaled-down preview
     // sv.pApp.renderer.render({ renderTexture: null });
     sv.clock += sv.speed;

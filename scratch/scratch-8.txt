@@ -4,9 +4,10 @@ BLUE COLOR
 SCREENSHOT
     • fix crop for screenshot and screen recording
 ETC
-    • implement noise offset in multi image mode so it wraps cleanly.
     • fix endless accelleration of pauseClock.
     • make sure the cells have clean lines at 100% and 0% brightness.
+    
+    • implement noise offset in multi image mode so it wraps cleanly.
 
 POST WEDNESDAY
     SINGLE IMAGE MODE
