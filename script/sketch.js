@@ -1,5 +1,8 @@
 import "p5.js-svg";
-import { Application, RenderTexture, Ticker } from "pixi.js";
+// import pixi from pixi.js
+import * as PIXI from "pixi.js";
+
+import { Application, RenderTexture, Sprite, Ticker } from "pixi.js";
 import { Recorder, RecorderStatus, Encoders } from "canvas-record";
 
 import { sv } from "./utils/variables.js";
@@ -66,6 +69,8 @@ async function mySetup() {
   setupRecorder();
 }
 
+const originalCanvas = document.getElementById("pixiCanvasTarget");
+
 window.addEventListener("load", () => {
   mySetup();
 });
@@ -91,6 +96,15 @@ function render() {
 
   if (sv.setupDone) {
     draw();
+    // sv.pApp.renderer.render(sv.pApp.stage, {
+    // renderTexture: sv.renderTexture,
+    // });
+
+    // Scale the preview sprite to fit the secondary canvas
+    // sv.previewSprite.width = 300; // Adjust these dimensions as needed
+    // sv.previewSprite.height = 300; // to fit #bodyRight
+    // Render the scaled-down preview
+    // sv.pApp.renderer.render({ renderTexture: null });
     sv.clock += sv.speed;
   }
 

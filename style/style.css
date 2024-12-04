@@ -94,7 +94,16 @@ canvas {
   /* border: 5px solid green; */
   box-sizing: border-box;
   /* display: none; */
-  visibility: hidden;
+  /* visibility: hidden; */
+}
+#pixiCanvasTargetCopy {
+  position: absolute;
+  background-color: pink;
+  width: 800px;
+  height: 800px;
+  visibility: visible;
+  top: 0;
+  right: 0;
 }
 
 .appTitle {
