@@ -11,22 +11,28 @@ import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
 import { downloadCanvas } from "./utils/utils.js";
 import { setupRecorder } from "./utils/recording.js";
 
-let bodyRightDiv = document.getElementById("bodyRight");
+let bodyRightDiv = document.getElementById("pixiSizerDiv");
+// let bodyRightDiv = document.getElementById("pixiDivTarget");
+let targetCanvas = document.getElementById("pixiCanvasTarget");
 sv.bodyRightDivWidth = bodyRightDiv.offsetWidth;
 sv.bodyRightDivHeight = bodyRightDiv.offsetHeight;
 
 sv.pApp = new Application();
 await sv.pApp.init({
-  background: "#fff",
+  // background: "#0000ff",
+  // background: "#ffffff",
+  background: "#00f0ff",
+  // transparent: true,
   clearBeforeRender: true,
   preserveDrawingBuffer: true,
   autoDensity: true,
   resolution: 2,
   antialias: true,
+  canvas: targetCanvas,
   resizeTo: bodyRightDiv,
   preference: "webgl",
 });
-document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
+// document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
 
 sv.ticker = new Ticker();
 sv.ticker.autoStart = false;
@@ -51,7 +57,7 @@ async function mySetup() {
 
   sv.setupDone = true;
   sv.ticker.start();
-  setupRecorder();
+  // setupRecorder();
 }
 
 window.addEventListener("load", () => {
@@ -87,6 +93,8 @@ function render() {
 
 window.addEventListener("mousedown", () => {
   console.log("mousedown");
+  // setupRecorder() here for testing debug
+  setupRecorder();
   // const webglCanvas = sv.pApp.canvas;
   // sv.pApp.renderer.resize(200, 200);
 });

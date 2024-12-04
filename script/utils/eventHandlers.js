@@ -36,7 +36,7 @@ export async function recalculateGrid() {
 
   // Preprocess images
   const processedImages = _imgs.map((img) => {
-    img = fitImageToWindow(img);
+    // img = fitImageToWindow(img);
     const processed = img.get();
     processed.filter(sv.p.GRAY);
     return processed;
@@ -121,6 +121,8 @@ window.addEventListener("resize", () => {
   console.log("Resizing...");
   clearTimeout(resizeTimeout);
 
+  console.log(sv.gridW, sv.gridH);
+
   if (!resizingStarted) {
     console.log("Resizing started");
     resizingStarted = true;
@@ -133,6 +135,8 @@ window.addEventListener("resize", () => {
     sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
     sv.bodyRightDivHeight = document.getElementById("bodyRight").offsetHeight;
 
+    resizeRecorderCanvas();
+
     initializeLoadIcon();
     recalculateGrid();
     updateSvgIcons();
@@ -140,3 +144,5 @@ window.addEventListener("resize", () => {
     resizingStarted = false; // Reset for next resize
   }, 500); // Adjust timeout as needed
 });
+
+function resizeRecorderCanvas() {}
