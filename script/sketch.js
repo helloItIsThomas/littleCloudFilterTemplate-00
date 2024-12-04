@@ -28,6 +28,10 @@ await sv.pApp.init({
   autoDensity: true,
   resolution: 3,
   antialias: true,
+  // THIS WIDTH AND HEIGHT
+  // MUST currently match img.width and img.height in  debugImageTo100(),
+  // and the width and height of pixiSizerDiv and pixiCanvasTarget in style.css
+
   width: 800,
   height: 800,
   canvas: targetCanvas,
