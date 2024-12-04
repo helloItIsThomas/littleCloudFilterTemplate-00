@@ -69,6 +69,7 @@ export async function recalculateGrid() {
 
 export function updateActiveImgBar() {
   console.log("running updateActiveImgBar");
+
   // set oneActiveImage flag here
   if (sv.totalSourceUploadNum == 1) {
     sv.oneActiveImage = true;

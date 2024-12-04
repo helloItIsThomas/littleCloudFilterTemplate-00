@@ -19,7 +19,7 @@ export function createStatsGUI() {
 
   for (var i = 0; i < statsALL.length; i++) {
     // statsALL[i].style.position = "relative";
-    // statsALL[i].style.width = "100%";
-    // statsALL[i].style.height = "160px";
+    statsALL[i].style.width = "100%";
+    statsALL[i].style.height = "160px";
   }
 }

@@ -14,7 +14,14 @@ export function createGraphicsForSingleImage() {
   const iconH = sv.singleImgIcons[0].height;
   const atlasW = iconW * atlasColCount;
   const atlasH = iconH * atlasRowCount;
+
+  if (sv.createGraphicsForSingleImageGraphic) {
+    sv.createGraphicsForSingleImageGraphic.remove();
+    sv.createGraphicsForSingleImageGraphic = undefined;
+  }
+
   const pg = sv.p.createGraphics(atlasW, atlasH);
+  sv.createGraphicsForSingleImageGraphic = pg;
 
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
@@ -53,7 +60,15 @@ export function createLeftCircle(size) {
   // console.log("running createLeftCircle");
   const w = size * 2;
   const h = size;
+
+  if (sv.createLeftCircleGraphic) {
+    sv.createLeftCircleGraphic.remove();
+    sv.createLeftCircleGraphic = undefined;
+  }
+
   const pg = sv.p.createGraphics(w, h);
+  sv.createLeftCircleGraphic = pg;
+
   pg.pixelDensity(2);
   pg.fill(fillColor);
   pg.noStroke();
@@ -75,7 +90,15 @@ export function createRightCircle(size) {
   // console.log("running createRightCircle");
   const w = size * 2;
   const h = size;
+
+  if (sv.createRightCircleGraphic) {
+    sv.createRightCircleGraphic.remove();
+    sv.createRightCircleGraphic = undefined;
+  }
+
   const pg = sv.p.createGraphics(w, h);
+  sv.createRightCircleGraphic = pg;
+
   pg.pixelDensity(2);
   pg.noStroke();
   pg.fill(fillColor);
@@ -101,7 +124,15 @@ export function createCenterGraphic(size) {
   // Define quad dimensions
   const width = size * 2;
   const height = size;
-  const pg = sv.p.createGraphics(width, height);
+
+  if (sv.createCenterGraphic) {
+    sv.createCenterGraphic.remove();
+    sv.createCenterGraphic = undefined;
+  }
+
+  const pg = sv.p.createGraphics(w, h);
+  sv.createCenterGraphic = pg;
+
   // const cDiameter = height * cDiamMult * scaleAmount;
   const cDiameter = height * cDiamMult;
   pg.pixelDensity(2);

@@ -47,17 +47,11 @@ const loadASetupIcon = (path) => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
-    // MAKE SURE THIS ISN'T RUINING PERFORMANCE
     let svgResolution = (sv.gridW / sv.gridResolution) * 2;
-    console.log("svgResolution", svgResolution);
-    console.log("sv.gridW", sv.gridW);
-    console.log("sv.gridResolution", sv.gridResolution);
 
     canvas.width = svgResolution;
     canvas.height = svgResolution;
 
-    // console.log("START");
-    // this seems to be slowing down the loading screen
     const img = new Image();
     img.onload = () => {
       if (sv.color) ctx.fillStyle = "#73c9fd";
@@ -66,8 +60,6 @@ const loadASetupIcon = (path) => {
       ctx.globalCompositeOperation = "source-in";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "source-over";
-      // svg's seem to be perfectly sharp here.
-      // downloadCanvas(canvas);
 
       resolve(canvas);
     };
@@ -86,8 +78,6 @@ export async function updateSvgIcons() {
     sv.singleImgIconPaths.map(async (path) => {
       const icon = await loadASetupIcon(path);
       sv.singleImgIcons.push(icon);
-      // svg's are canvases here and are perfectly sharp.
-      // downloadCanvas(icon);
     })
   );
 }

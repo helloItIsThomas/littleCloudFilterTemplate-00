@@ -119,8 +119,8 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "120",
-  gridResolution: "120",
+  gridResolutionBuffer: "50",
+  gridResolution: "50",
   noiseOffset: 0.0,
 
   tlThresh1: 0.15,
@@ -159,7 +159,6 @@ recordingController.onChange((value) => {
 function sameResDownload(value) {
   if (value) {
     const webglCanvas = sv.pApp.canvas;
-
     downloadCanvas(webglCanvas);
     screenshotController.setValue(false);
   }
@@ -167,7 +166,6 @@ function sameResDownload(value) {
 
 screenshotController.onChange((value) => {
   sameResDownload(value);
-  // upscaledDownload(value);
 });
 
 const general = gui.addFolder("General");

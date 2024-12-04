@@ -41,9 +41,9 @@ body {
   box-sizing: border-box;
   overflow-y: scroll;
 }
+
 #bodyRight {
   margin: 10px;
-  /* position: absolute; */
   box-sizing: border-box;
   flex-grow: 1 !important;
   min-width: 50px;
@@ -284,8 +284,8 @@ body {
 }
 
 #statsDisplay {
-  display: none;
-  /* position: relative !important; */
+  /* display: none; */
+  position: absolute !important;
 
   /* z-index: 2; */
   /* top: 0; */

@@ -36,9 +36,15 @@ export function fitImageToWindow(img) {
     newHeight = windowWidth / imgAspect;
   }
 
-  // Create a new p5.Graphics canvas to resize the image
+  if (sv.fitImageToWindowGraphic) {
+    sv.fitImageToWindowGraphic.remove();
+    sv.fitImageToWindowGraphic = undefined;
+  }
+
   const resizedImg = sv.p.createGraphics(newWidth, newHeight);
   resizedImg.image(img, 0, 0, newWidth, newHeight);
+
+  sv.fitImageToWindowGraphic = resizedImg;
 
   return resizedImg;
 }
@@ -91,45 +97,3 @@ export function downloadCanvas(_canvas, name = "canvas.png") {
   link.download = name;
   link.click();
 }
-
-// export async function takeScreenshot() {
-//   console.log("take screenshot");
-//   if (sv.pixiScreenshot !== undefined) {
-//     sv.pixiScreenshot.remove();
-//   }
-
-//   sv.pApp.stop();
-
-//   sv.pApp.renderer.render(sv.pApp.stage);
-//   const renderTexture = RenderTexture.create({
-//     width: sv.bodyRightDivWidth,
-//     height: sv.bodyRightDivHeight,
-//   });
-
-//   sv.pApp.renderer.render({
-//     container: sv.sceneContainerFrame,
-//     target: renderTexture,
-//   });
-
-//   sv.pApp.renderer.extract.base64(renderTexture).then((url) => {
-//     console.log(url);
-//     sv.pixiScreenshot = document.createElement("img");
-
-//     document.body.append(sv.pixiScreenshot);
-
-//     sv.pixiScreenshot.style.position = "absolute";
-//     sv.pixiScreenshot.style.bottom = "0px";
-//     sv.pixiScreenshot.style.left = "20px";
-//     // sv.pixiScreenshot.download = "screenshot";
-//     // sv.pixiScreenshot.href = url;
-
-//     // const image = new Image();
-
-//     // image.width = sv.pApp.screen.width / 5;
-//     // image.src = url;
-
-//     // sv.pixiScreenshot.innerHTML = image.outerHTML;
-
-//     sv.pApp.start();
-//   });
-// }

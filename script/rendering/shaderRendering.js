@@ -96,7 +96,16 @@ export async function shaderRendering() {
   });
 
   //// WIP WIP WIP WIP WIP WIP
+
+  if (sv.noiseCanvasGraphic) {
+    sv.noiseCanvasGraphic.remove();
+    sv.noiseCanvasGraphic = undefined;
+  }
+
   const noiseCanvas = sv.p.createGraphics(sv.gridResolution, sv.gridResolution);
+
+  sv.noiseCanvasGraphic = noiseCanvas;
+
   let n = 0;
   for (let y = 0; y < sv.rowCount; y++) {
     for (let x = 0; x < sv.colCount; x++) {
