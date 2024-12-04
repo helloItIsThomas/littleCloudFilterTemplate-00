@@ -12,10 +12,8 @@ import { downloadCanvas } from "./utils/utils.js";
 import { setupRecorder } from "./utils/recording.js";
 
 let bodyRightDiv = document.getElementById("bodyRight");
-sv.bodyRightDivWidth = 1000;
-sv.bodyRightDivHeight = 1000;
-
-let pixiView = document.getElementById("pixiView");
+sv.bodyRightDivWidth = bodyRightDiv.offsetWidth;
+sv.bodyRightDivHeight = bodyRightDiv.offsetHeight;
 
 sv.pApp = new Application();
 await sv.pApp.init({
@@ -23,11 +21,9 @@ await sv.pApp.init({
   clearBeforeRender: true,
   preserveDrawingBuffer: true,
   autoDensity: true,
-  width: 1000,
-  height: 1000,
-  // resolution: 2,
+  resolution: 2,
   antialias: true,
-  // resizeTo: bodyRightDiv,
+  resizeTo: bodyRightDiv,
   preference: "webgl",
 });
 document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
@@ -91,7 +87,6 @@ function render() {
 
 window.addEventListener("mousedown", () => {
   console.log("mousedown");
-  const webglCanvas = sv.pApp.canvas;
-  downloadCanvas(webglCanvas);
+  // const webglCanvas = sv.pApp.canvas;
   // sv.pApp.renderer.resize(200, 200);
 });

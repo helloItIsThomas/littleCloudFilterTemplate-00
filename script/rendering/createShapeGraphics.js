@@ -10,19 +10,16 @@ export function createGraphicsForSingleImage() {
   // create a 5x4 texture atlas, or sprite sheet.
   const atlasColCount = 5;
   const atlasRowCount = 4;
-  const iconW = 138;
-  const iconH = 138;
+  const iconW = sv.singleImgIcons[0].width;
+  const iconH = sv.singleImgIcons[0].height;
   const atlasW = iconW * atlasColCount;
   const atlasH = iconH * atlasRowCount;
   const pg = sv.p.createGraphics(atlasW, atlasH);
 
-  // pg.pixelDensity(2);
   let i = 0;
   for (let y = 0; y < atlasRowCount; y++) {
     for (let x = 0; x < atlasColCount; x++) {
       const vanillaCanvas = sv.singleImgIcons[i++];
-      downloadCanvas(vanillaCanvas);
-      // we are likely losing resolution somewhere below.
       const imageData = vanillaCanvas
         .getContext("2d")
         .getImageData(0, 0, vanillaCanvas.width, vanillaCanvas.height);
@@ -36,6 +33,7 @@ export function createGraphicsForSingleImage() {
       }
       p5TempCanvas.updatePixels();
       pg.image(p5TempCanvas, x * iconW, y * iconH, iconW, iconH);
+      // p5TempCanvas is perfectly sharp here.
     }
   }
   return pg;

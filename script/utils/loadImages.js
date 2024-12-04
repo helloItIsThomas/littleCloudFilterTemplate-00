@@ -48,13 +48,10 @@ const loadASetupIcon = (path) => {
     const ctx = canvas.getContext("2d");
 
     // MAKE SURE THIS ISN'T RUINING PERFORMANCE
-    // figure out an optimal number for svgResolution
-    let svgResolution = sv.gridW / sv.gridResolution;
-    // let svgResolution = window.innerWidth * 1.0;
-    // if (sv.gridResolution <= 20)
-    // svgResolution = window.innerWidth / sv.gridResolution;
-    // else svgResolution = window.innerWidth * 0.1;
-    // svgResolution = (sv.gridW / sv.gridResolution) * 2;
+    let svgResolution = (sv.gridW / sv.gridResolution) * 2;
+    console.log("svgResolution", svgResolution);
+    console.log("sv.gridW", sv.gridW);
+    console.log("sv.gridResolution", sv.gridResolution);
 
     canvas.width = svgResolution;
     canvas.height = svgResolution;
@@ -65,7 +62,6 @@ const loadASetupIcon = (path) => {
     img.onload = () => {
       if (sv.color) ctx.fillStyle = "#73c9fd";
       else ctx.fillStyle = "#000000";
-      ctx.imageSmoothingEnabled = true;
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "source-in";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
