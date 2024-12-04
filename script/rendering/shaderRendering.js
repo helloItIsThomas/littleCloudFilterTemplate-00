@@ -53,8 +53,10 @@ export async function shaderRendering() {
     // assuming the grid of both images is the same...
     const cell = sv.stills[0].cells[i];
     sv.triangles[i] = {
-      x: cell.x + offsetWidth,
-      y: cell.y + offsetHeight,
+      // x: cell.x + offsetWidth,
+      // y: cell.y + offsetHeight,
+      x: cell.x,
+      y: cell.y,
       speed: 1.0,
     };
   }

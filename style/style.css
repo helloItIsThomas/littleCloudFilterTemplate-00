@@ -49,11 +49,6 @@ canvas {
   margin: 0;
 }
 
-#debugCrop {
-  z-index: 1000;
-  border: 10px solid green;
-}
-
 #croppedCanvas {
   position: absolute;
   z-index: 10;
@@ -79,29 +74,26 @@ canvas {
 
 #pixiSizerDiv {
   position: absolute;
-  width: 100px;
-  height: 100px;
+  width: 800px !important;
+  height: 800px !important;
   background-color: red;
+  z-index: 501;
+  margin: 0;
+  padding: 0;
+  top: -99%;
+  /* display: none; */
 }
 
 #pixiCanvasTarget {
-  width: 100px;
-  height: 100px;
-  /* width: 100px; */
-  /* height: 100px; */
-  /* overflow: hidden; */
-  /* position: relative; */
-  border: 5px solid green;
-  /* width: 100%; */
-  /* height: 100%; */
-}
-
-#pixiView {
+  z-index: 500;
   position: absolute;
-  z-index: 10;
-  border: 10px solid red;
-  width: 200px;
-  height: 200px;
+  width: 800px !important;
+  height: 800px !important;
+  bottom: 0;
+  border: 5px solid green;
+  margin: 0;
+  padding: 0;
+  /* display: none; */
 }
 
 .appTitle {

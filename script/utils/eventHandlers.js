@@ -4,7 +4,11 @@ import { AVC, HEVC } from "media-codecs";
 import { initGridLoadingScreen } from "../rendering/loading.js";
 import { Application, Assets, Graphics, Texture, Sprite } from "pixi.js";
 import { showLoadIcon, initializeLoadIcon } from "./icons.js";
-import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";
+import {
+  fitImageToWindow,
+  debugImageTo100,
+  downloadCanvas,
+} from "../utils/utils.js";
 import { gsap } from "gsap";
 import { updateSvgIcons } from "./loadImages.js";
 
@@ -36,7 +40,7 @@ export async function recalculateGrid() {
 
   // Preprocess images
   const processedImages = _imgs.map((img) => {
-    // img = fitImageToWindow(img);
+    img = fitImageToWindow(img);
     const processed = img.get();
     processed.filter(sv.p.GRAY);
     return processed;
@@ -45,14 +49,8 @@ export async function recalculateGrid() {
   const imgs = processedImages;
 
   // this assumes all background images are the same size and aspect ratio(?)
-  if (imgs.length > 1) {
-    sv.gridW = imgs[0].width;
-    sv.gridH = imgs[0].height;
-  } else {
-    sv.gridW = imgs[0].width;
-    sv.gridH = imgs[0].height;
-  }
-
+  sv.gridW = imgs[0].width;
+  sv.gridH = imgs[0].height;
   sv.workerDone = false;
   showLoadIcon();
 
@@ -126,14 +124,14 @@ window.addEventListener("resize", () => {
   if (!resizingStarted) {
     console.log("Resizing started");
     resizingStarted = true;
-    gsap.to("#pixiApp", { opacity: 0, duration: 0.1 });
+    // gsap.to("#pixiApp", { opacity: 0, duration: 0.1 });
     gsap.to("#bodyLeft", { opacity: 0, duration: 0.1 });
     gsap.to("#bodyRight", { opacity: 0, duration: 0.1 });
   }
 
   resizeTimeout = setTimeout(() => {
-    sv.bodyRightDivWidth = document.getElementById("bodyRight").offsetWidth;
-    sv.bodyRightDivHeight = document.getElementById("bodyRight").offsetHeight;
+    sv.resizeAppToMeWidth = document.getElementById("bodyRight").offsetWidth;
+    sv.resizeAppToMeHeight = document.getElementById("bodyRight").offsetHeight;
 
     resizeRecorderCanvas();
 

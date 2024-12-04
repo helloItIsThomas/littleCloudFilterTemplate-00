@@ -11,25 +11,27 @@ import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
 import { downloadCanvas } from "./utils/utils.js";
 import { setupRecorder } from "./utils/recording.js";
 
-let bodyRightDiv = document.getElementById("pixiSizerDiv");
-// let bodyRightDiv = document.getElementById("pixiDivTarget");
+let resizeAppToMe = document.getElementById("pixiSizerDiv");
 let targetCanvas = document.getElementById("pixiCanvasTarget");
-sv.bodyRightDivWidth = bodyRightDiv.offsetWidth;
-sv.bodyRightDivHeight = bodyRightDiv.offsetHeight;
-
+sv.resizeAppToMeWidth = resizeAppToMe.offsetWidth;
+sv.resizeAppToMeHeight = resizeAppToMe.offsetHeight;
+// console.log("resizeAppToMeWidth", sv.resizeAppToMeWidth);
+// console.log("resizeAppToMeHeight", sv.resizeAppToMeHeight);
 sv.pApp = new Application();
 await sv.pApp.init({
   // background: "#0000ff",
-  // background: "#ffffff",
-  background: "#00f0ff",
+  background: "#ffffff",
+  // background: "#00f0ff",
   // transparent: true,
   clearBeforeRender: true,
   preserveDrawingBuffer: true,
   autoDensity: true,
-  resolution: 2,
+  resolution: 3,
   antialias: true,
+  width: 800,
+  height: 800,
   canvas: targetCanvas,
-  resizeTo: bodyRightDiv,
+  // resizeTo: resizeAppToMe,
   preference: "webgl",
 });
 // document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
@@ -57,7 +59,7 @@ async function mySetup() {
 
   sv.setupDone = true;
   sv.ticker.start();
-  // setupRecorder();
+  setupRecorder();
 }
 
 window.addEventListener("load", () => {
@@ -93,8 +95,4 @@ function render() {
 
 window.addEventListener("mousedown", () => {
   console.log("mousedown");
-  // setupRecorder() here for testing debug
-  setupRecorder();
-  // const webglCanvas = sv.pApp.canvas;
-  // sv.pApp.renderer.resize(200, 200);
 });

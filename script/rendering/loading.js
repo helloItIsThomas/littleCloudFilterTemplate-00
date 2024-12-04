@@ -28,8 +28,8 @@ export function initGridLoadingScreen() {
   // Create a sprite from the texture
   const loadingSprite = new Sprite(loadingScreenTex);
   loadingSprite.anchor.set(0.5);
-  loadingSprite.x = sv.bodyRightDivWidth / 2;
-  loadingSprite.y = sv.bodyRightDivHeight / 2;
+  loadingSprite.x = sv.resizeAppToMeWidth / 2;
+  loadingSprite.y = sv.resizeAppToMeHeight / 2;
   sv.loadingScreen = loadingSprite;
   // sv.pContainer.addChild(sv.loadingScreen);
 }

@@ -14,10 +14,17 @@ export function getAspectRatio(img) {
   return width / height;
 }
 
+export function debugImageTo100(img) {
+  console.log("°°° running debugImageTo100 °°° ");
+  img.width = 800;
+  img.height = 800;
+  return img;
+}
+
 export function fitImageToWindow(img) {
   console.log("°°° running fitImageToWindow °°° ");
-  const windowWidth = sv.bodyRightDivWidth;
-  const windowHeight = sv.bodyRightDivHeight;
+  const windowWidth = sv.resizeAppToMeWidth;
+  const windowHeight = sv.resizeAppToMeHeight;
 
   // Calculate aspect ratios
   const imgAspect = img.width / img.height;
