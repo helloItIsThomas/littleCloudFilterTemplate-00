@@ -24,7 +24,6 @@ sv.resizeAppToMeHeight = resizeAppToMe.offsetHeight;
 sv.pApp = new Application();
 await sv.pApp.init({
   background: "#0000ff",
-  // background: "#ffffff",
   clearBeforeRender: true,
   preserveDrawingBuffer: true,
   autoDensity: true,
@@ -33,12 +32,24 @@ await sv.pApp.init({
   width: 800,
   height: 800,
   canvas: targetCanvas,
-  resizeTo: resizeAppToMe,
+  // resizeTo: resizeAppToMe,
   preference: "webgl",
 });
-// document.getElementById("pixiApp").appendChild(targetCanvas2);
-// document.body.appendChild(targetCanvas2);
-// set the id to targetCanvas2
+
+sv.displayApp = new Application();
+sv.displayApp.init({
+  background: "#00ff00",
+  clearBeforeRender: true,
+  preserveDrawingBuffer: true,
+  autoDensity: true,
+  resolution: 3,
+  antialias: true,
+  width: 600,
+  height: 600,
+  canvas: targetCanvas2,
+  // resizeTo: resizeAppToMe,
+  preference: "webgl",
+});
 
 sv.ticker = new Ticker();
 sv.ticker.autoStart = false;
@@ -86,9 +97,6 @@ export const tick = async () => {
 };
 
 function render() {
-  if (sv.pApp.ticker.FPS <= 30.0) {
-    // console.log("<<XXXXXXXX BAD FPS XXXXXXX>>>", sv.pApp.ticker.FPS);
-  }
   sv.stats.begin();
 
   if (sv.setupDone) {
