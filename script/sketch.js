@@ -2,7 +2,7 @@ import "p5.js-svg";
 // import pixi from pixi.js
 import * as PIXI from "pixi.js";
 
-import { Application, RenderTexture, Sprite, Ticker } from "pixi.js";
+import { Application, Ticker } from "pixi.js";
 import { Recorder, RecorderStatus, Encoders } from "canvas-record";
 
 import { sv } from "./utils/variables.js";
@@ -17,31 +17,28 @@ import { setupRecorder } from "./utils/recording.js";
 let resizeAppToMe = document.getElementById("pixiSizerDiv");
 console.log("resizeAppToMe", resizeAppToMe);
 let targetCanvas = document.getElementById("pixiCanvasTarget");
+let targetCanvas2 = document.getElementById("pixiCanvasTarget2");
 sv.resizeAppToMeWidth = resizeAppToMe.offsetWidth;
 sv.resizeAppToMeHeight = resizeAppToMe.offsetHeight;
-// console.log("resizeAppToMeWidth", sv.resizeAppToMeWidth);
-// console.log("resizeAppToMeHeight", sv.resizeAppToMeHeight);
+
 sv.pApp = new Application();
 await sv.pApp.init({
   background: "#0000ff",
   // background: "#ffffff",
-  // background: "#00f0ff",
-  // transparent: true,
   clearBeforeRender: true,
   preserveDrawingBuffer: true,
   autoDensity: true,
   resolution: 3,
   antialias: true,
-  // THIS WIDTH AND HEIGHT
-  // MUST currently match img.width and img.height in  debugImageTo100(),
-  // and the width and height of pixiSizerDiv and pixiCanvasTarget in style.css
   width: 800,
   height: 800,
   canvas: targetCanvas,
   resizeTo: resizeAppToMe,
   preference: "webgl",
 });
-// document.getElementById("pixiApp").appendChild(sv.pApp.canvas);
+// document.getElementById("pixiApp").appendChild(targetCanvas2);
+// document.body.appendChild(targetCanvas2);
+// set the id to targetCanvas2
 
 sv.ticker = new Ticker();
 sv.ticker.autoStart = false;
@@ -96,15 +93,6 @@ function render() {
 
   if (sv.setupDone) {
     draw();
-    // sv.pApp.renderer.render(sv.pApp.stage, {
-    // renderTexture: sv.renderTexture,
-    // });
-
-    // Scale the preview sprite to fit the secondary canvas
-    // sv.previewSprite.width = 800; // Adjust these dimensions as needed
-    // sv.previewSprite.height = 800; // to fit #bodyRight
-    // Render the scaled-down preview
-    // sv.pApp.renderer.render({ renderTexture: null });
     sv.clock += sv.speed;
   }
 

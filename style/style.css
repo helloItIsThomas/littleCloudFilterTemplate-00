@@ -97,7 +97,7 @@ canvas {
   /* display: none; */
   /* visibility: hidden; */
 }
-#pixiCanvasTargetCopy {
+#pixiCanvasTarget2 {
   position: absolute;
   background-color: pink;
   width: 800px;

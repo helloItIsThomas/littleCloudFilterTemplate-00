@@ -1,6 +1,4 @@
 import { sv } from "./variables.js";
-import { autoDetectRenderer, RenderTexture, Sprite } from "pixi.js";
-
 export function getAspectRatio(img) {
   if (!img || !img.width || !img.height) {
     throw new Error("Invalid image object");

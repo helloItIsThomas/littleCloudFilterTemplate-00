@@ -4,6 +4,7 @@ import { handleImgInputAtRuntime } from "./eventHandlers.js";
 export function createInput() {
   // console.log("• Running createInput() •");
   if (sv.inputElement) sv.inputElement.remove();
+
   sv.inputElement = sv.p.createFileInput(function (_file) {
     sv.totalSourceUploadNum = sv.inputElement.elt.files.length;
 
