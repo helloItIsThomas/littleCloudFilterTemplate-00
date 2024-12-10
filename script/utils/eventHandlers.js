@@ -28,15 +28,14 @@ export function handleImgInputAtRuntime(p) {
   });
 }
 
-export async function recalculateGrid() {
+export async function recalculateGrid(resizeTo = "bodyRight") {
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs
     : [sv.animUnderImgs]; // Ensure _imgs is always an array
 
   // Preprocess images
   const processedImages = _imgs.map((img) => {
-    img = fitImageToWindow(img);
-    console.log("img.width", img.width);
+    img = fitImageToWindow(img, resizeTo);
     const processed = img.get();
     processed.filter(sv.p.GRAY);
     return processed;

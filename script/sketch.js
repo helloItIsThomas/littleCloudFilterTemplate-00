@@ -11,7 +11,7 @@ import { loadSetupImages, updateSvgIcons } from "./utils/loadImages";
 import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
-import { fitImageToWindow, downloadCanvas } from "./utils/utils.js";
+import { downloadCanvas } from "./utils/utils.js";
 import { setupRecorder } from "./utils/recording.js";
 
 let resizeAppToMe = document.getElementById("bodyRight");
@@ -90,7 +90,7 @@ function render() {
   sv.stats.end();
 }
 
-let clickCounter = 0;
+let clickCounter = 1;
 
 window.addEventListener("mousedown", () => {
   const aCont = document.getElementById("absoluteContainer");
@@ -98,6 +98,8 @@ window.addEventListener("mousedown", () => {
   clickCounter++;
   if (clickCounter % 2 == 0) {
     aCont.style.display = "block";
+    recalculateGrid("absoluteContainer");
+    updateSvgIcons();
     aCont.appendChild(sv.pApp.canvas);
     sv.pApp.resizeTo = aCont;
 
@@ -105,6 +107,8 @@ window.addEventListener("mousedown", () => {
   } else {
     bodyRight.appendChild(sv.pApp.canvas);
     sv.pApp.resizeTo = bodyRight;
+    recalculateGrid();
+    updateSvgIcons();
     aCont.style.display = "none";
 
     console.log("HIDE");

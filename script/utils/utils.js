@@ -12,8 +12,7 @@ export function getAspectRatio(img) {
   return width / height;
 }
 
-// export function fitImageToWindow(img, resizeTo = "bodyRight") {
-export function fitImageToWindow(img, resizeTo = "absoluteContainer") {
+export function fitImageToWindow(img, resizeTo = "bodyRight") {
   let resizeAppToMe = document.getElementById(resizeTo);
   const resizeAppToMeWidth = resizeAppToMe.offsetWidth;
   const resizeAppToMeHeight = resizeAppToMe.offsetHeight;
