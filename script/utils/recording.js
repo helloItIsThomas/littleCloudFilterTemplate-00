@@ -23,12 +23,6 @@ export function setupRecorder() {
   const webgl2CTX = webglCanvas.getContext("webgl2");
   const dpr = window.devicePixelRatio || 2;
 
-  // console.log(AV.AV_CODECS);
-  // console.log(AV.AV_PROFILES);
-  // console.log(AV.AV_LEVELS);
-  // console.log(AV.AV_TIER);
-  // console.log(AV.AV_BIT_DEPTH);
-
   console.log(AVC.AVC_PROFILES);
   console.log(AVC.AVC_LEVELS);
 
@@ -38,20 +32,10 @@ export function setupRecorder() {
     frameRate: 30,
     encoderOptions: {
       download: true,
-      // bitrate: 9500000,
-      // bitrate: 5000000,
-      // codec: "AV1",
       codec: AVC.getCodec({
-        profile: "High", // Use a more common profile
-        level: "5.2", // Use a more common level
+        profile: "High",
+        level: "5.2",
       }),
-      // codec: AV.getCodec({
-      // name: "AV1",
-      // profile: "Professional",
-      // level: "5.2",
-      // tier: "High",
-      // bitDepth: 12,
-      // }),
     },
   });
 }

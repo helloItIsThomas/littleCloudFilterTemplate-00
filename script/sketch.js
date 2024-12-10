@@ -100,6 +100,7 @@ window.addEventListener("mousedown", () => {
   const bodyRight = document.getElementById("bodyRight");
   clickCounter++;
   if (clickCounter % 2 == 0) {
+    setAbsoluteContainerSize();
     aCont.style.display = "block";
     recalculateGrid("absoluteContainer");
     updateSvgIcons();
@@ -130,3 +131,18 @@ window.addEventListener("mousedown", () => {
     console.log("HIDE");
   }
 });
+
+function setAbsoluteContainerSize() {
+  const aCont = document.getElementById("absoluteContainer");
+  // make the absolute container size the same aspect ratio as the grid, and make sure that neither the width nor height exceed 1080px
+
+  const aspectRatio = sv.gridW / sv.gridH;
+  const maxSize = 1080;
+
+  const width = Math.min(maxSize, maxSize * aspectRatio);
+  const height = Math.min(maxSize, maxSize / aspectRatio);
+  console.log(width, height);
+
+  aCont.style.width = `${width}px`;
+  aCont.style.height = `${height}px`;
+}

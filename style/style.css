@@ -65,8 +65,11 @@ body {
   top: 0;
   left: 0;
   z-index: 1000;
-  width: 1080px;
-  height: 1080px;
+
+  min-width: 150px;
+  min-height: 150px;
+  max-width: 1080px;
+  max-height: 1080px;
   display: none;
 }
 
