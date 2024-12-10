@@ -19,7 +19,7 @@ var customContainer = document
 
 export const sv = {
   pixiScreenshot: undefined,
-
+  frame: 0,
   oneActiveImage: null,
   arcCont: null,
   animatedArc: null,
@@ -136,6 +136,7 @@ export const sv = {
   testImages: null,
 
   isRecording: false,
+  recordDuration: 1,
   takeScreenshot: false,
   tempUploadFiles: [],
 
@@ -151,11 +152,19 @@ const screenshotController = recording
   .name("Screenshot");
 const recordingController = recording.add(sv, "isRecording").name("Recording");
 
+recording.add(sv, "recordDuration", 1, 60, 1).name("Record Duration (sec)");
+
 recordingController.onChange((value) => {
-  // console.log("recording toggled: ", value);
+  console.log("recording toggled: ", value);
   // if (!sv.canvasRecorder) setupRecorder();
   // if (sv.isRecording) startRecording();
   // else if (!sv.isRecording) stopRecording();
+
+  if (sv.isRecording) {
+    startRecording();
+  } else if (!sv.isRecording) {
+    stopRecording();
+  }
 });
 
 function sameResDownload(value) {

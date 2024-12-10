@@ -61,9 +61,16 @@ async function mySetup() {
   sv.setupDone = true;
   sv.ticker.start();
   setupRecorder();
-}
+  // overlay a rendering screen on top of everything
+  const renderingScreen = document.createElement("div");
+  renderingScreen.id = "renderingScreen";
+  document.body.appendChild(renderingScreen);
 
-const originalCanvas = document.getElementById("pixiCanvasTarget");
+  const renderingText = document.createElement("p");
+  renderingText.id = "renderingText";
+  renderingText.textContent = "Rendering...";
+  renderingScreen.appendChild(renderingText);
+}
 
 window.addEventListener("load", () => {
   mySetup();
@@ -77,12 +84,28 @@ export const tick = async () => {
   if (sv.canvasRecorder.status !== RecorderStatus.Recording) return;
   await sv.canvasRecorder.step();
 
+  // calculate duration of the recording given that we are recording at 30 frames / second, and the record duration is set in seconds
+
+  // replace sv.frame with a frame counter that resets to 0 when the recording is stopped
+
+  console.log(sv.frame, sv.recordDuration * 30);
+
+  if (sv.frame >= sv.recordDuration * 30) {
+    await stopRecording();
+    sv.frame = 0;
+  }
+
   if (sv.canvasRecorder.status !== RecorderStatus.Stopped) {
+    sv.frame++;
     requestAnimationFrame(() => tick());
   }
 };
 
 function render() {
+  renderingText.textContent = "Rendering...";
+  // replace the content of the rendering text with the current frame number
+  // renderingText.textContent = `Rendering... ${sv.frame}`;
+
   sv.stats.begin();
 
   if (sv.setupDone) {
@@ -91,58 +114,4 @@ function render() {
   }
 
   sv.stats.end();
-}
-
-let clickCounter = 1;
-
-window.addEventListener("mousedown", () => {
-  const aCont = document.getElementById("absoluteContainer");
-  const bodyRight = document.getElementById("bodyRight");
-  clickCounter++;
-  if (clickCounter % 2 == 0) {
-    setAbsoluteContainerSize();
-    aCont.style.display = "block";
-    recalculateGrid("absoluteContainer");
-    updateSvgIcons();
-
-    if (aCont.contains(sv.pApp.canvas)) {
-      aCont.removeChild(sv.pApp.canvas);
-    }
-    aCont.appendChild(sv.pApp.canvas);
-    sv.pApp.resizeTo = aCont;
-
-    console.log("SHOW");
-
-    if (!sv.canvasRecorder) setupRecorder();
-    startRecording();
-  } else {
-    stopRecording();
-
-    if (bodyRight.contains(sv.pApp.canvas)) {
-      bodyRight.removeChild(sv.pApp.canvas);
-    }
-    bodyRight.appendChild(sv.pApp.canvas);
-
-    sv.pApp.resizeTo = bodyRight;
-    recalculateGrid();
-    updateSvgIcons();
-    aCont.style.display = "none";
-
-    console.log("HIDE");
-  }
-});
-
-function setAbsoluteContainerSize() {
-  const aCont = document.getElementById("absoluteContainer");
-  // make the absolute container size the same aspect ratio as the grid, and make sure that neither the width nor height exceed 1080px
-
-  const aspectRatio = sv.gridW / sv.gridH;
-  const maxSize = 1080;
-
-  const width = Math.min(maxSize, maxSize * aspectRatio);
-  const height = Math.min(maxSize, maxSize / aspectRatio);
-  console.log(width, height);
-
-  aCont.style.width = `${width}px`;
-  aCont.style.height = `${height}px`;
 }
