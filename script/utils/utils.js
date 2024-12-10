@@ -43,8 +43,6 @@ export function fitImageToWindow(img) {
 
   const resizedImg = sv.p.createGraphics(newWidth, newHeight);
   resizedImg.image(img, 0, 0, newWidth, newHeight);
-  // resizedImg.image(img, 0, 0, img.width, img.height);
-  // resizedImg.image(img, 0, 0, 20, 100);
 
   sv.fitImageToWindowGraphic = resizedImg;
 

@@ -36,27 +36,22 @@ body {
   width: 500px !important;
   min-width: 500px !important;
   height: 100%;
-  background-color: purple;
+
   box-sizing: border-box;
   overflow-y: scroll;
 }
 
 #bodyRight {
-  /* make body right take up the rest of the space */
-
-  /* flex-direction: column; */
-  /* justify-content: space-between; */
   flex-grow: 1 !important;
   min-width: 50px;
   min-height: 50px;
-  background-color: green;
-  border: 10px solid grey;
   box-sizing: border-box;
   position: relative;
-
+  /* position: absolute; */
+  /* width: 2000px; */
+  /* height: 2000px; */
   padding: 0;
   margin: 0;
-  /* margin: 10px; */
 }
 
 #defaultCanvas0 {
@@ -141,7 +136,6 @@ body {
   width: 100%;
   box-sizing: border-box;
   text-align: center;
-  /* background-color: purple; */
   font-family: monospace;
   font-size: large;
   /* z-index: 1; */

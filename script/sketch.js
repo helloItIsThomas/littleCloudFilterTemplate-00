@@ -28,10 +28,8 @@ await sv.pApp.init({
   resizeTo: resizeAppToMe,
   preference: "webgl",
 });
-// add app to document
-// document.getElementById("absoluteContainer").appendChild(sv.pApp.canvas);
 document.getElementById("bodyRight").appendChild(sv.pApp.canvas);
-// add app to body
+// document.getElementById("absoluteContainer").appendChild(sv.pApp.canvas);
 // document.body.appendChild(sv.pApp.canvas);
 
 sv.ticker = new Ticker();
