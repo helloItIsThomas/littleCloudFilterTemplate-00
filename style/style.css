@@ -21,7 +21,6 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: row;
-  /* background-color: pink; */
   overflow: hidden;
 }
 
@@ -37,74 +36,50 @@ body {
   width: 500px !important;
   min-width: 500px !important;
   height: 100%;
-  /* background-color: purple; */
+  background-color: purple;
   box-sizing: border-box;
   overflow-y: scroll;
 }
 
-canvas {
-  position: relative;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-#croppedCanvas {
-  position: absolute;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  border: 10px solid red;
-}
-
 #bodyRight {
-  /* margin: 10px; */
+  /* make body right take up the rest of the space */
+
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
   flex-grow: 1 !important;
-  /* min-width: 50px; */
-  /* min-height: 50px;  */
-  min-width: 2px;
-  min-height: 2px;
+  min-width: 50px;
+  min-height: 50px;
   background-color: green;
-  /* border: 10px solid blue; */
+  border: 10px solid grey;
   box-sizing: border-box;
   position: relative;
+
   padding: 0;
   margin: 0;
+  /* margin: 10px; */
 }
 
-#pixiSizerDiv {
-  position: absolute;
-  width: 800px;
-  height: 800px;
+#defaultCanvas0 {
+  /* a bit of a bandaid to get rid of the p5 default canvas */
+  display: none;
+}
+
+@keyframes moveCircle {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+#absoluteContainer {
+  /* animation: moveCircle 1s linear infinite; */
   background-color: red;
-  z-index: 501;
-  margin: 0;
-  padding: 0;
-  /* top: -200%; */
-  /* display: none; */
-  visibility: hidden;
-}
-
-#pixiCanvasTarget {
-  z-index: 500;
   position: absolute;
-  width: 800px;
-  height: 800px;
-  bottom: 0;
-  left: 0;
-  /* border: 5px solid green; */
-  box-sizing: border-box;
-  /* display: none; */
-  /* visibility: hidden; */
-}
-#pixiCanvasTarget2 {
-  position: absolute;
-  background-color: pink;
-  width: 800px;
-  height: 800px;
-  visibility: visible;
   top: 0;
-  right: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
 }
 
 .appTitle {
@@ -117,10 +92,6 @@ canvas {
   text-align: left;
   font-family: monospace;
   font-weight: bold;
-}
-
-#defaultCanvas0 {
-  display: none;
 }
 
 #guiWrapper {

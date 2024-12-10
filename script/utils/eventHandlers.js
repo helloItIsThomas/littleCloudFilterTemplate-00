@@ -3,11 +3,7 @@ import { updateCellData } from "../imgProcessing/imageProcessing.js";
 import { AVC, HEVC } from "media-codecs";
 import { initGridLoadingScreen } from "../rendering/loading.js";
 import { showLoadIcon, initializeLoadIcon } from "./icons.js";
-import {
-  fitImageToWindow,
-  debugImageTo100,
-  downloadCanvas,
-} from "../utils/utils.js";
+import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";
 import { gsap } from "gsap";
 import { updateSvgIcons } from "./loadImages.js";
 
@@ -116,13 +112,9 @@ let resizeTimeout;
 let resizingStarted = false;
 
 window.addEventListener("resize", () => {
-  console.log("Resizing...");
   clearTimeout(resizeTimeout);
 
-  console.log(sv.gridW, sv.gridH);
-
   if (!resizingStarted) {
-    console.log("Resizing started");
     resizingStarted = true;
     // gsap.to("#pixiApp", { opacity: 0, duration: 0.1 });
     gsap.to("#bodyLeft", { opacity: 0, duration: 0.1 });
@@ -130,9 +122,6 @@ window.addEventListener("resize", () => {
   }
 
   resizeTimeout = setTimeout(() => {
-    // sv.resizeAppToMeWidth = document.getElementById("bodyRight").offsetWidth;
-    // sv.resizeAppToMeHeight = document.getElementById("bodyRight").offsetHeight;
-
     // resizeRecorderCanvas();
     initializeLoadIcon();
     recalculateGrid();
@@ -140,20 +129,4 @@ window.addEventListener("resize", () => {
 
     resizingStarted = false; // Reset for next resize
   }, 500); // Adjust timeout as needed
-
-  let resizeAppToMe = document.getElementById("pixiSizerDiv");
-  console.log("resizeAppToMe.offsetWidth", resizeAppToMe.offsetWidth);
-
-  console.log("sv.gridW", sv.gridW);
-  console.log("sv.gridH", sv.gridH);
 });
-
-function resizeRecorderCanvas() {
-  const pixiCanvasTarget = document.getElementById("pixiCanvasTarget");
-  //  read the width and height of pixiSizerDiv and assign it to pixiCanvasTarget
-  const pixiSizerDiv = document.getElementById("pixiSizerDiv");
-
-  // changing this below fucks everything up.
-  pixiCanvasTarget.width = pixiSizerDiv.offsetWidth;
-  pixiCanvasTarget.height = pixiSizerDiv.offsetHeight;
-}

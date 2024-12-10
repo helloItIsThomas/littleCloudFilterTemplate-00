@@ -14,42 +14,25 @@ import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
 import { downloadCanvas } from "./utils/utils.js";
 import { setupRecorder } from "./utils/recording.js";
 
-let resizeAppToMe = document.getElementById("pixiSizerDiv");
-console.log("resizeAppToMe", resizeAppToMe);
-let targetCanvas = document.getElementById("pixiCanvasTarget");
-let targetCanvas2 = document.getElementById("pixiCanvasTarget2");
-sv.resizeAppToMeWidth = resizeAppToMe.offsetWidth;
-sv.resizeAppToMeHeight = resizeAppToMe.offsetHeight;
+let resizeAppToMe = document.getElementById("bodyRight");
 
 sv.pApp = new Application();
 await sv.pApp.init({
-  background: "#0000ff",
-  clearBeforeRender: true,
-  preserveDrawingBuffer: true,
-  autoDensity: true,
-  resolution: 3,
-  antialias: true,
-  width: 800,
-  height: 800,
-  canvas: targetCanvas,
-  // resizeTo: resizeAppToMe,
-  preference: "webgl",
-});
-
-sv.displayApp = new Application();
-sv.displayApp.init({
   background: "#00ff00",
   clearBeforeRender: true,
   preserveDrawingBuffer: true,
   autoDensity: true,
   resolution: 3,
   antialias: true,
-  width: 600,
-  height: 600,
-  canvas: targetCanvas2,
-  // resizeTo: resizeAppToMe,
+  // canvas: targetCanvas,
+  resizeTo: resizeAppToMe,
   preference: "webgl",
 });
+// add app to document
+// document.getElementById("absoluteContainer").appendChild(sv.pApp.canvas);
+document.getElementById("bodyRight").appendChild(sv.pApp.canvas);
+// add app to body
+// document.body.appendChild(sv.pApp.canvas);
 
 sv.ticker = new Ticker();
 sv.ticker.autoStart = false;
@@ -63,6 +46,8 @@ export default function (p) {
 }
 
 async function mySetup() {
+  sv.p.noCanvas();
+
   initializeLoadIcon();
   createInput();
   showLoadIcon();

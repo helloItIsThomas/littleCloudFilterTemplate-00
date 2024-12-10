@@ -12,19 +12,12 @@ export function getAspectRatio(img) {
   return width / height;
 }
 
-export function debugImageTo100(img) {
-  console.log("°°° running debugImageTo100 °°° ");
-  const pixiSizerDiv = document.getElementById("pixiSizerDiv");
-  // 800 , 800
-  img.width = pixiSizerDiv.offsetWidth;
-  img.height = pixiSizerDiv.offsetHeight;
-  return img;
-}
-
 export function fitImageToWindow(img) {
-  console.log("°°° running fitImageToWindow °°° ");
-  const windowWidth = sv.resizeAppToMeWidth;
-  const windowHeight = sv.resizeAppToMeHeight;
+  let resizeAppToMe = document.getElementById("bodyRight");
+  const resizeAppToMeWidth = resizeAppToMe.offsetWidth;
+  const resizeAppToMeHeight = resizeAppToMe.offsetHeight;
+  const windowWidth = resizeAppToMeWidth;
+  const windowHeight = resizeAppToMeHeight;
 
   // Calculate aspect ratios
   const imgAspect = img.width / img.height;
@@ -50,6 +43,8 @@ export function fitImageToWindow(img) {
 
   const resizedImg = sv.p.createGraphics(newWidth, newHeight);
   resizedImg.image(img, 0, 0, newWidth, newHeight);
+  // resizedImg.image(img, 0, 0, img.width, img.height);
+  // resizedImg.image(img, 0, 0, 20, 100);
 
   sv.fitImageToWindowGraphic = resizedImg;
 

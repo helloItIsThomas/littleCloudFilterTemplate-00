@@ -123,14 +123,14 @@ export async function shaderRendering() {
   //// WIP WIP WIP WIP WIP WIP END END END END
 
   let resources = {};
-  // if (resources) {
-  // Object.keys(resources).forEach((key) => {
-  // const resource = resources[key];
-  // if (resource instanceof WebGLBuffer) gl.deleteBuffer(resource);
-  // else if (resource instanceof HTMLElement) resource.remove();
-  // });
-  // }
-  // resources = {}; // Clears the object reference.
+  if (resources) {
+    Object.keys(resources).forEach((key) => {
+      const resource = resources[key];
+      if (resource instanceof WebGLBuffer) gl.deleteBuffer(resource);
+      else if (resource instanceof HTMLElement) resource.remove();
+    });
+  }
+  resources = {}; // Clears the object reference.
   resources = createResources(noiseCanvas);
 
   let bTexes = [];
@@ -181,23 +181,11 @@ export async function shaderRendering() {
     drawMode: "triangle-list",
   });
 
-  sv.triangleMesh2 = new Mesh({
-    geometry,
-    shader,
-    drawMode: "triangle-list",
-  });
-
   sv.pApp.stage.removeChildren();
   sv.sceneContainer = new Container();
   sv.sceneContainerFrame = new Container();
   sv.sceneContainerFrame.addChild(sv.sceneContainer);
   sv.pApp.stage.addChild(sv.sceneContainerFrame);
-
-  sv.displayApp.stage.removeChildren();
-  sv.sceneContainer2 = new Container();
-  sv.sceneContainerFrame2 = new Container();
-  sv.sceneContainerFrame2.addChild(sv.sceneContainer2);
-  sv.displayApp.stage.addChild(sv.sceneContainerFrame2);
 
   const data = sv.instancePositionBuffer.data;
   let count = 0;
@@ -208,7 +196,6 @@ export async function shaderRendering() {
   }
 
   sv.sceneContainer.addChild(sv.triangleMesh);
-  sv.sceneContainer2.addChild(sv.triangleMesh2);
 }
 
 function createResources(noiseCanvas) {

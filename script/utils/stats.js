@@ -19,8 +19,9 @@ export function createStatsGUI() {
 
   for (var i = 0; i < statsALL.length; i++) {
     statsALL[i].style.position = "absolute";
-    // statsALL[i].style.zIndex = "10";
-    statsALL[i].style.width = "60px";
-    statsALL[i].style.height = "160px";
+    statsALL[i].style.zIndex = "10000";
+    // statsALL[i].style.display = "none";
+    // statsALL[i].style.width = "60px";
+    // statsALL[i].style.height = "160px";
   }
 }
