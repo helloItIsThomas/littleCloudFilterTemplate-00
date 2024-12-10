@@ -11,7 +11,7 @@ import { loadSetupImages, updateSvgIcons } from "./utils/loadImages";
 import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
-import { downloadCanvas } from "./utils/utils.js";
+import { fitImageToWindow, downloadCanvas } from "./utils/utils.js";
 import { setupRecorder } from "./utils/recording.js";
 
 let resizeAppToMe = document.getElementById("bodyRight");
@@ -29,7 +29,7 @@ await sv.pApp.init({
   preference: "webgl",
 });
 document.getElementById("bodyRight").appendChild(sv.pApp.canvas);
-// document.getElementById("absoluteContainer").appendChild(sv.pApp.canvas);
+
 // document.body.appendChild(sv.pApp.canvas);
 
 sv.ticker = new Ticker();
@@ -90,6 +90,23 @@ function render() {
   sv.stats.end();
 }
 
+let clickCounter = 0;
+
 window.addEventListener("mousedown", () => {
-  console.log("mousedown");
+  const aCont = document.getElementById("absoluteContainer");
+  const bodyRight = document.getElementById("bodyRight");
+  clickCounter++;
+  if (clickCounter % 2 == 0) {
+    aCont.style.display = "block";
+    aCont.appendChild(sv.pApp.canvas);
+    sv.pApp.resizeTo = aCont;
+
+    console.log("SHOW");
+  } else {
+    bodyRight.appendChild(sv.pApp.canvas);
+    sv.pApp.resizeTo = bodyRight;
+    aCont.style.display = "none";
+
+    console.log("HIDE");
+  }
 });
