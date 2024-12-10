@@ -152,10 +152,10 @@ const screenshotController = recording
 const recordingController = recording.add(sv, "isRecording").name("Recording");
 
 recordingController.onChange((value) => {
-  console.log("recording toggled: ", value);
-  if (!sv.canvasRecorder) setupRecorder();
-  if (sv.isRecording) startRecording();
-  else if (!sv.isRecording) stopRecording();
+  // console.log("recording toggled: ", value);
+  // if (!sv.canvasRecorder) setupRecorder();
+  // if (sv.isRecording) startRecording();
+  // else if (!sv.isRecording) stopRecording();
 });
 
 function sameResDownload(value) {

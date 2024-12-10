@@ -1,7 +1,6 @@
 import "p5.js-svg";
 // import pixi from pixi.js
 import * as PIXI from "pixi.js";
-
 import { Application, Ticker } from "pixi.js";
 import { Recorder, RecorderStatus, Encoders } from "canvas-record";
 
@@ -12,7 +11,11 @@ import { draw } from "./rendering/draw.js";
 import { createInput } from "./utils/input";
 import { initializeLoadIcon, showLoadIcon } from "./utils/icons.js";
 import { downloadCanvas } from "./utils/utils.js";
-import { setupRecorder } from "./utils/recording.js";
+import {
+  setupRecorder,
+  startRecording,
+  stopRecording,
+} from "./utils/recording";
 
 let resizeAppToMe = document.getElementById("bodyRight");
 
@@ -100,12 +103,25 @@ window.addEventListener("mousedown", () => {
     aCont.style.display = "block";
     recalculateGrid("absoluteContainer");
     updateSvgIcons();
+
+    if (aCont.contains(sv.pApp.canvas)) {
+      aCont.removeChild(sv.pApp.canvas);
+    }
     aCont.appendChild(sv.pApp.canvas);
     sv.pApp.resizeTo = aCont;
 
     console.log("SHOW");
+
+    if (!sv.canvasRecorder) setupRecorder();
+    startRecording();
   } else {
+    stopRecording();
+
+    if (bodyRight.contains(sv.pApp.canvas)) {
+      bodyRight.removeChild(sv.pApp.canvas);
+    }
     bodyRight.appendChild(sv.pApp.canvas);
+
     sv.pApp.resizeTo = bodyRight;
     recalculateGrid();
     updateSvgIcons();
