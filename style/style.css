@@ -160,7 +160,7 @@ body {
   /* padding-top: 10px; */
   /* display: none; */
   position: relative;
-  z-index: 1;
+  z-index: 0;
 }
 
 #badFile {

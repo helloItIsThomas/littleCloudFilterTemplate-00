@@ -54,6 +54,7 @@ const loadASetupIcon = (path) => {
 
     const img = new Image();
     img.onload = () => {
+      console.log("**°°° running loadASetupIcon: loaded svg");
       if (sv.color) ctx.fillStyle = "#73c9fd";
       else ctx.fillStyle = "#000000";
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
