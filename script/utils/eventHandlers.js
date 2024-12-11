@@ -29,6 +29,7 @@ export function handleImgInputAtRuntime(p) {
 }
 
 export async function recalculateGrid(resizeTo = "bodyRight") {
+  console.log("running recalculateGrid");
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs
     : [sv.animUnderImgs]; // Ensure _imgs is always an array
@@ -58,6 +59,7 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
   sv.yExcess = (sv.cellH * sv.rowCount) / sv.gridH;
 
   await updateCellData(imgs);
+  console.log("••••••recalculated grid");
 }
 
 export function updateActiveImgBar() {

@@ -24,8 +24,10 @@ export function draw() {
       uniforms.vTime = pauseClock;
     } else {
       if (!sv.oneActiveImage) {
-        uniforms.time = pauseClock;
-        uniforms.vTime = pauseClock;
+        // uniforms.time = pauseClock;
+        // uniforms.vTime = pauseClock;
+        uniforms.time = sv.clock;
+        uniforms.vTime = sv.clock;
       } else {
         uniforms.time = sv.clock;
         uniforms.vTime = sv.clock;

@@ -155,15 +155,10 @@ const recordingController = recording.add(sv, "isRecording").name("Recording");
 recording.add(sv, "recordDuration", 1, 60, 1).name("Record Duration (sec)");
 
 recordingController.onChange((value) => {
-  console.log("recording toggled: ", value);
-  // if (!sv.canvasRecorder) setupRecorder();
-  // if (sv.isRecording) startRecording();
-  // else if (!sv.isRecording) stopRecording();
-
   if (sv.isRecording) {
     startRecording();
   } else if (!sv.isRecording) {
-    stopRecording();
+    // stopRecording();
   }
 });
 

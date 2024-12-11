@@ -72,7 +72,7 @@ const loadASetupIcon = (path) => {
 };
 
 export async function updateSvgIcons() {
-  console.log("running updateSvgIcons");
+  console.log("running updateSVG Icons");
   sv.singleImgIcons = [];
   await Promise.all(
     sv.singleImgIconPaths.map(async (path) => {
@@ -80,4 +80,5 @@ export async function updateSvgIcons() {
       sv.singleImgIcons.push(icon);
     })
   );
+  console.log("••••••updated svg icons");
 }

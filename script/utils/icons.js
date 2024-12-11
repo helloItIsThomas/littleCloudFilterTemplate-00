@@ -64,11 +64,11 @@ export function showLoadIcon() {
   sv.loadIconDiv.style.display = "block";
   showTimeline.restart();
   startLoadIconAnimation();
-  sv.ticker.stop();
+  // sv.ticker.stop();
 }
 
 export function hideLoadIcon() {
-  sv.ticker.start();
+  // sv.ticker.start();
   // gsap.to("#pixiApp", { opacity: 1, duration: 0.1 });
   gsap.to("#bodyLeft", { opacity: 1, duration: 0.1 });
   gsap.to("#bodyRight", { opacity: 1, duration: 0.1 });

@@ -1,12 +1,12 @@
-import { tick } from "../sketch.js";
-import { downloadCanvas } from "./utils.js";
+import { tick } from "../sketch";
+import { Recorder } from "canvas-record";
+import { AVC } from "media-codecs";
 import { recalculateGrid } from "./eventHandlers";
 import { updateSvgIcons } from "./loadImages";
 import { sv } from "./variables.js";
-import { Recorder, RecorderStatus, Encoders } from "canvas-record";
-import { AVC, AV } from "media-codecs";
 
 export async function startRecording() {
+  sv.ticker.stop();
   const aCont = document.getElementById("absoluteContainer");
 
   // make the absolute container size the same aspect ratio as the grid, and make sure that neither the width nor height exceed 1080px
@@ -29,11 +29,11 @@ export async function startRecording() {
   aCont.appendChild(sv.pApp.canvas);
   sv.pApp.resizeTo = aCont;
 
-  console.log("SHOW");
   if (!sv.canvasRecorder) setupRecorder();
-  sv.ticker.stop();
   await sv.canvasRecorder.start();
-  console.log("started recording");
+
+  console.log("ÒÔ reached the end of startRecording function (*›ﬁ");
+
   tick(sv.canvasRecorder);
 }
 
@@ -42,7 +42,6 @@ export async function stopRecording() {
   const bodyRight = document.getElementById("bodyRight");
 
   await sv.canvasRecorder.stop();
-  console.log("stopped recording");
   if (bodyRight.contains(sv.pApp.canvas)) {
     bodyRight.removeChild(sv.pApp.canvas);
   }
@@ -53,18 +52,13 @@ export async function stopRecording() {
   updateSvgIcons();
   aCont.style.display = "none";
 
-  console.log("HIDE");
   sv.ticker.start();
 }
 
 export function setupRecorder() {
-  // console.log("running setup recorder");
   const webglCanvas = sv.pApp.canvas;
   const webgl2CTX = webglCanvas.getContext("webgl2");
   const dpr = window.devicePixelRatio || 2;
-
-  console.log(AVC.AVC_PROFILES);
-  console.log(AVC.AVC_LEVELS);
 
   sv.canvasRecorder = new Recorder(webgl2CTX, {
     name: "canvas-record-example",
