@@ -17,7 +17,7 @@ let resizeAppToMe = document.getElementById("bodyRight");
 
 sv.pApp = new Application();
 await sv.pApp.init({
-  background: "#00ff00",
+  background: "#ffffff",
   clearBeforeRender: true,
   preserveDrawingBuffer: true,
   autoDensity: true,
@@ -28,7 +28,6 @@ await sv.pApp.init({
   preference: "webgl",
 });
 document.getElementById("bodyRight").appendChild(sv.pApp.canvas);
-// document.body.appendChild(sv.pApp.canvas);
 
 sv.ticker = new Ticker();
 sv.ticker.autoStart = false;
@@ -54,16 +53,6 @@ async function mySetup() {
   recalculateGrid();
   updateSvgIcons();
 
-  // overlay a rendering screen on top of everything
-  const renderingScreen = document.createElement("div");
-  renderingScreen.id = "renderingScreen";
-  document.body.appendChild(renderingScreen);
-
-  const renderingText = document.createElement("p");
-  renderingText.id = "renderingText";
-  renderingText.textContent = "Rendering...";
-  renderingScreen.appendChild(renderingText);
-
   sv.setupDone = true;
   sv.ticker.start();
 }
@@ -83,6 +72,11 @@ export const tick = async () => {
 
   await sv.canvasRecorder.step();
 
+  const frameRate = 30;
+  const quantizedFrame = Math.floor((sv.frame / frameRate) * 6); // Quantize to 6 values
+  const progress = (quantizedFrame / 6) * 100;
+  document.getElementById("renderingBarProgress").style.width = progress + "%";
+
   if (sv.frame >= sv.recordDuration * 30) {
     await stopRecording();
     sv.frame = 0;
@@ -94,8 +88,6 @@ export const tick = async () => {
 };
 
 function render() {
-  renderingText.textContent = "Rendering...";
-
   sv.stats.begin();
 
   if (sv.setupDone) {

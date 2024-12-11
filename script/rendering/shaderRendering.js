@@ -46,17 +46,17 @@ export async function shaderRendering() {
 
   sv.triangles = [];
 
-  // const offsetWidth = sv.pApp.renderer.width * 0.5 - sv.gridW * 0.5;
-  // const offsetHeight = sv.pApp.renderer.height * 0.5 - sv.gridH * 0.5;
+  const offsetWidth = sv.pApp.renderer.width * 0.5 - sv.gridW * 0.5;
+  const offsetHeight = sv.pApp.renderer.height * 0.5 - sv.gridH * 0.5;
 
   for (let i = 0; i < sv.totalTriangles; i++) {
     // assuming the grid of both images is the same...
     const cell = sv.stills[0].cells[i];
     sv.triangles[i] = {
-      // x: cell.x + offsetWidth,
-      // y: cell.y + offsetHeight,
-      x: cell.x,
-      y: cell.y,
+      x: cell.x + offsetWidth,
+      y: cell.y + offsetHeight,
+      // x: cell.x,
+      // y: cell.y,
       speed: 1.0,
     };
   }

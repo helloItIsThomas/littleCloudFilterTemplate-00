@@ -7,6 +7,7 @@ import { sv } from "./variables.js";
 
 export async function startRecording() {
   sv.ticker.stop();
+  document.getElementById("renderingScreen").style.display = "flex";
   const aCont = document.getElementById("absoluteContainer");
 
   // make the absolute container size the same aspect ratio as the grid, and make sure that neither the width nor height exceed 1080px
@@ -51,6 +52,7 @@ export async function stopRecording() {
   recalculateGrid();
   updateSvgIcons();
   aCont.style.display = "none";
+  document.getElementById("renderingScreen").style.display = "none";
 
   sv.ticker.start();
 }
