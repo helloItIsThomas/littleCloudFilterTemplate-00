@@ -2,7 +2,7 @@ import { downloadCanvas } from "../utils/utils.js";
 import { sv } from "../utils/variables.js";
 
 const cDiamMult = 0.5;
-const scaleAmount = 1;
+const scaleAmount = 1.0;
 let fillColor = "#000";
 
 export function createGraphicsForSingleImage() {
@@ -137,6 +137,8 @@ export function createCenterGraphic(size) {
   const cDiameter = height * cDiamMult;
   pg.pixelDensity(2);
   pg.fill(fillColor);
+  pg.stroke("#fff");
+  // pg.strokeWeight(1);
   pg.noStroke();
 
   const borderOffset = 0.0;

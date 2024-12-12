@@ -2,13 +2,16 @@ BLUE COLOR
 #73c9fd
 
 ETC
-    • FIX updateClock function (multiple image mode)
-
-    • make sure the cells have clean lines at 100% and 0% brightness. 
-    • implement noise offset in multi image mode so it wraps cleanly.
-    • make sure loading icon is supported in all browsers.
     • figure out how we are handling 2 images of different sizes.
-    • add a bad file warning for the user.
+    • implement noise offset in multi image mode so it wraps cleanly.
+
+    • fix problems that happen sometimes on page reload.
+    • fix screen recording initialization sizing issue.
+
+    ~~~ • FIX updateClock function (multiple image mode) ~~~
+    ~~~ • make sure the cells have clean lines at 100% and 0% brightness. ~~~
+     ~~~ • make sure loading icon is supported in all browsers. ~~~
+    ~~~ • add a bad file warning for the user. ~~~
 
 POST WEDNESDAY
     SINGLE IMAGE MODE

@@ -20,10 +20,12 @@ export function handleImgInputAtRuntime(p) {
         }
       });
     } else {
+      console.warn("Invalid file type detected:", _file.type);
       document.getElementById("badFile").style.opacity = 1;
       setTimeout(() => {
         document.getElementById("badFile").style.opacity = 0;
       }, 5000);
+      return;
     }
   });
 }
@@ -124,7 +126,7 @@ window.addEventListener("resize", () => {
 
   resizeTimeout = setTimeout(() => {
     // resizeRecorderCanvas();
-    initializeLoadIcon();
+    // initializeLoadIcon();
     recalculateGrid();
     updateSvgIcons();
 

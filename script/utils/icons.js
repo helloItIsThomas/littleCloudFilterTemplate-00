@@ -12,6 +12,7 @@ const hideTimeline = gsap.timeline({ paused: true });
 
 export function initializeLoadIcon() {
   if (!sv.arcCont && !sv.animatedArc) {
+    console.log("initializing load icon");
     sv.loadIconDiv = document.createElement("div");
     sv.loadIconDiv.id = "loadIconDiv";
     sv.loadIconDiv.style.position = "fixed";
@@ -60,11 +61,11 @@ export function initializeLoadIcon() {
 }
 
 export function showLoadIcon() {
-  // console.log("show load icon");
+  console.log("show load icon");
   sv.loadIconDiv.style.display = "block";
   showTimeline.restart();
-  // startLoadIconAnimation();
-  // sv.ticker.stop();
+  startLoadIconAnimation();
+  sv.ticker.stop();
 }
 
 export function hideLoadIcon() {
@@ -78,6 +79,7 @@ export function hideLoadIcon() {
 }
 
 export function startLoadIconAnimation() {
+  if (!sv.animationFrameId) sv.animationFrameId = 0;
   // Calculate progress oscillating between 0 and 1
   const progress = (Math.sin(sv.animationFrameId * 0.025) + 1) / 2;
 

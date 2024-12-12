@@ -77,12 +77,11 @@ export const tick = async () => {
 
   await sv.canvasRecorder.step();
 
-  const frameRate = 30;
-  const quantizedFrame = Math.floor((sv.frame / frameRate) * 6); // Quantize to 6 values
+  const quantizedFrame = Math.floor((sv.frame / sv.frameRate) * 6); // Quantize to 6 values
   const progress = (quantizedFrame / 6) * 100;
   document.getElementById("renderingBarProgress").style.width = progress + "%";
 
-  if (sv.frame >= sv.recordDuration * 30) {
+  if (sv.frame >= sv.recordDuration * sv.frameRate) {
     await stopRecording();
     sv.frame = 0;
   }

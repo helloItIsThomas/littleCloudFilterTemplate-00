@@ -66,7 +66,7 @@ export function setupRecorder() {
   sv.canvasRecorder = new Recorder(webgl2CTX, {
     name: "canvas-record-example",
     duration: Infinity,
-    frameRate: 30,
+    frameRate: sv.frameRate,
     encoderOptions: {
       download: true,
       codec: AVC.getCodec({
