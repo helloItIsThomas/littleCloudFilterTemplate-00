@@ -7,22 +7,23 @@ import { sv } from "./variables.js";
 
 export async function startRecording() {
   sv.ticker.stop();
-  // document.getElementById("renderingScreen").style.display = "flex";
+  document.getElementById("renderingScreen").style.display = "flex";
   const aCont = document.getElementById("absoluteContainer");
 
   // make the absolute container size the same aspect ratio as the grid, and make sure that neither the width nor height exceed 1080px
   const aspectRatio = sv.gridW / sv.gridH;
   const maxSize = 1080;
 
-  const width = Math.min(maxSize, maxSize * aspectRatio);
-  const height = Math.min(maxSize, maxSize / aspectRatio);
+  // ensure that the width and height are divisible by 2
+  const width = Math.floor(Math.min(maxSize, maxSize * aspectRatio) / 2) * 2;
+  const height = Math.floor(Math.min(maxSize, maxSize / aspectRatio) / 2) * 2;
 
   aCont.style.width = `${width}px`;
   aCont.style.height = `${height}px`;
 
   aCont.style.display = "block";
-  await recalculateGrid("absoluteContainer");
-  await updateSvgIcons();
+  recalculateGrid("absoluteContainer");
+  updateSvgIcons();
 
   if (aCont.contains(sv.pApp.canvas)) {
     aCont.removeChild(sv.pApp.canvas);

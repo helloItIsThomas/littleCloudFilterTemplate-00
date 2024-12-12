@@ -49,6 +49,11 @@ export const sv = {
   p: null,
   setupDone: false,
   clock: null,
+  pauseClock: 0,
+  direction: 1,
+  pauseTime: 2000,
+  paused: false,
+
   duration: 2000,
   startLoop: 1.01,
   endLoop: 1.99,
@@ -62,7 +67,8 @@ export const sv = {
   manualScale: 1.0,
   transitionSpeed: 3000.0,
   transitionDelay: 0.5,
-  speed: 0.02,
+  // speed: 0.02,
+  speed: 0.05,
   color: false,
   params: {
     // clipOutliers: false,
@@ -121,8 +127,8 @@ export const sv = {
   cellW: null,
   cellH: null,
   gridGutterMult: 1.0,
-  gridResolutionBuffer: "50",
-  gridResolution: "50",
+  gridResolutionBuffer: "100",
+  gridResolution: "100",
   noiseOffset: 0.0,
 
   tlThresh1: 0.15,
@@ -136,7 +142,7 @@ export const sv = {
   testImages: null,
 
   isRecording: false,
-  recordDuration: 1,
+  recordDuration: 3,
   takeScreenshot: false,
   tempUploadFiles: [],
 

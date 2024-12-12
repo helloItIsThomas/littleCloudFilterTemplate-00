@@ -14,7 +14,9 @@ uniform int sD;
 uniform int sI;
 uniform int cO;
 uniform sampler2D bTex1;
+uniform sampler2D bTex2;
 uniform sampler2D noiseTex;
+uniform int numBTexes;
 
 out vec2 vUV;
 out float vIndex;
@@ -24,6 +26,8 @@ uniform mat3 uWorldTransformMatrix;
 uniform mat3 uTransformMatrix;
 
 void main() {
+
+    float clock = vTime;
 
     float rowCount = vRowCount;
     float colCount = vColCount;
@@ -37,17 +41,40 @@ void main() {
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r;
 
-    float scale = mod(manualScale, 1.0);
+    vec2 bTexUV2 = vec2(x, y);
+    // bTexUV2 = adjustUV(bTexUV2, bTex2AR);
+    vec4 bTexColor2 = texture2D(bTex2, bTexUV2);
+    vec4 testLerp = mix(bTexColor, bTexColor2, clock);
+    brightness = testLerp.r;
 
-    if(sD == 1) {
-        scale = mod(vTime + noise + brightness, 1.0);
-    } else if(sI == 1) {
-        scale = mod(vTime + noise, 1.0);
+    float modValue = 1.00001;
+
+    float scale = mod(manualScale, modValue);
+
+    if(numBTexes == 1) {
+        if(sD == 1) {
+            // scale = mod(vTime + noise + brightness, modValue);
+            scale = mod(vTime + brightness, modValue);
+            // scale = mod(vTime, modValue);
+        } else if(sI == 1) {
+        // scale = mod(vTime + noise, modValue);
+            scale = mod(vTime, modValue);
+        }
+    } else if(numBTexes > 1) {
+        if(sD == 1) {
+            // scale = mod(vTime + noise + brightness, modValue);
+        // scale = mod(vTime + brightness, modValue);
+            scale = mod(vTime, modValue);
+        } else if(sI == 1) {
+        // scale = mod(vTime + noise, modValue);
+            scale = mod(vTime, modValue);
+        }
     }
 
     if(brightness <= clipDarkOutliers || brightness >= 1.0 - clipLightOutliers) {
         scale = 0.0;
     }
+    // scale = vTime;
 
     mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
     gl_Position = vec4((mvp * vec3(aPosition * (scale) + aPositionOffset, 1.0)).xy, 0.0, 1.0);

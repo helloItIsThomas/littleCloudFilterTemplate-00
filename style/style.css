@@ -76,11 +76,11 @@ body {
 
 #renderingScreen {
   position: absolute;
-  top: 0;
-  left: 0;
+  /* top: 0; */
+  /* left: 0; */
   width: 100vw;
   height: 100vh;
-  background-color: rgba(115, 201, 253, 0.666);
+  background-color: rgba(115, 201, 253, 0.8);
   z-index: 10000;
   backdrop-filter: blur(20px);
 

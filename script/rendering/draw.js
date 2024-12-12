@@ -1,11 +1,4 @@
 import { sv } from "../utils/variables.js";
-import { createStatsGUI } from "../utils/stats.js";
-
-let pauseClock = 0;
-let direction = 1;
-let pauseTime = 1000;
-let paused = false;
-createStatsGUI();
 
 export function draw() {
   if (sv.triangleMesh && sv.workerDone) {
@@ -20,42 +13,47 @@ export function draw() {
     uniforms.vTlThresh2 = sv.tlThresh2;
     uniforms.vTlThresh3 = sv.tlThresh3;
     if (sv.params.startInvisible) {
-      uniforms.time = pauseClock;
-      uniforms.vTime = pauseClock;
+      uniforms.time = sv.pauseClock;
+      uniforms.vTime = sv.pauseClock;
     } else {
       if (!sv.oneActiveImage) {
-        // uniforms.time = pauseClock;
-        // uniforms.vTime = pauseClock;
-        uniforms.time = sv.clock;
-        uniforms.vTime = sv.clock;
+        uniforms.time = sv.pauseClock;
+        uniforms.vTime = 1.0;
       } else {
         uniforms.time = sv.clock;
         uniforms.vTime = sv.clock;
       }
     }
   }
-  updateClock();
+  // updateClock();
 }
 
-function updateClock() {
-  if (!paused) {
-    pauseClock += direction * (sv.clock / 1000);
-    if (pauseClock >= 1 || pauseClock <= 0) {
-    }
-    if (pauseClock >= 1) {
-      pauseClock = 0.999999;
-      paused = true; // Pause when hitting 0 or 1
-      setTimeout(() => {
-        paused = false;
-        direction *= -1; // Reverse direction
-      }, pauseTime);
-    } else if (pauseClock <= 0) {
-      pauseClock = 0;
-      paused = true; // Pause when hitting 0 or 1
-      setTimeout(() => {
-        paused = false;
-        direction *= -1; // Reverse direction
-      }, pauseTime);
-    }
-  }
-}
+// function updateClock() {
+//   if (sv.p.int(sv.clock * 0.5) % 2.0 == 0.0) {
+//     gsap.to(sv, {
+//       pauseClock: 1,
+//       duration: 1,
+//       ease: "power1.inOut",
+//     });
+//   } else if (sv.p.int(sv.clock * 0.5) % 2.0 == 1.0) {
+//     gsap.to(sv, {
+//       pauseClock: 0,
+//       duration: 1,
+//       ease: "power1.inOut",
+//     });
+//   }
+// }
+// document.addEventListener("mousedown", () => {
+//   gsap.to(sv, {
+//     pauseClock: 1,
+//     duration: 1,
+//     ease: "power1.inOut",
+//   });
+//   document.addEventListener("mouseup", () => {
+//     gsap.to(sv, {
+//       pauseClock: 0,
+//       duration: 1,
+//       ease: "power1.inOut",
+//     });
+//   });
+// });

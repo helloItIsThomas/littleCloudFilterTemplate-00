@@ -21,7 +21,6 @@ uniform float rcAR;
 uniform float bTex1AR;
 uniform float bTex2AR;
 
-uniform int numBTexes;
 uniform float tlThresh1;
 uniform float tlThresh2;
 uniform float tlThresh3;
@@ -57,16 +56,18 @@ void main() {
     float brightness = bTexColor.r;
     float noise = texture2D(noiseTex, bTexUV).r;
 
-    float clock = mod(time + noise, 1.0);
+    // float clock = mod(time + noise, 1.0);
+    float clock = mod(time, 1.1);
 
     // If using bTex2
-    if(numBTexes == 2) {
-        vec2 bTexUV2 = vec2(x, y);
-        bTexUV2 = adjustUV(bTexUV2, bTex2AR);
-        vec4 bTexColor2 = texture2D(bTex2, bTexUV2);
-        vec4 testLerp = mix(bTexColor, bTexColor2, clock);
-        brightness = testLerp.r;
-    }
+    // if(numBTexes == 2) {
+    vec2 bTexUV2 = vec2(x, y);
+    bTexUV2 = adjustUV(bTexUV2, bTex2AR);
+    vec4 bTexColor2 = texture2D(bTex2, bTexUV2);
+        // vec4 testLerp = mix(bTexColor, bTexColor2, clock);
+    vec4 testLerp = mix(bTexColor, bTexColor2, clock);
+    brightness = testLerp.r;
+    // }
 
     // brightness = bTexColor.r + (time + (noise.r * 0.3));
     // brightness = bTexColor.r + ease(time, noise.r);
@@ -83,9 +84,9 @@ void main() {
     float hgUV_x;
     float rcUV_x;
 
-    float point1 = tlThresh1; //0.2;
-    float point2 = tlThresh2; //0.4;
-    float point3 = tlThresh3; //0.8;
+    float point1 = tlThresh1; //0.2; 0.0
+    float point2 = tlThresh2; //0.4; 0.0
+    float point3 = tlThresh3; //0.8; 0.0
 
     // Map brightness to lcUV.x (0.0 to 0.25 for brightness 0.0 to 0.25)
     if(brightness <= point1) {
@@ -134,7 +135,8 @@ void main() {
     // vec4 rightCircle = texture2D(rightCircleTex, scaledRCUV);
     vec4 debug = texture2D(hourglassTex, vUV);
     gl_FragColor = hourglass + rightCircle + leftCircle;
-    // gl_FragColor = vec4(0.0, brightness, clock, 1.0);
+    // gl_FragColor = vec4(brightness, brightness, brightness, 1.0);
+    // gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);
     // gl_FragColor = debug;
     // gl_FragColor = rightCircle;
     // gl_FragColor = vec4(0.0, bTex1AR, 0.0, 1.0);

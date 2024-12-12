@@ -63,7 +63,7 @@ export function showLoadIcon() {
   // console.log("show load icon");
   sv.loadIconDiv.style.display = "block";
   showTimeline.restart();
-  startLoadIconAnimation();
+  // startLoadIconAnimation();
   // sv.ticker.stop();
 }
 
