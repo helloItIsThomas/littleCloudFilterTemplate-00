@@ -25,9 +25,9 @@ export async function loadSetupImages() {
   );
 
   // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/img.jpg"];
-  const sourceImgPaths = ["/assets/debug/satan.png"];
+  // const sourceImgPaths = ["/assets/debug/satan.png"];
   // const sourceImgPaths = ["/assets/grad.png"];
-  // const sourceImgPaths = ["/assets/studio.png"];
+  const sourceImgPaths = ["/assets/studio.png", "/assets/debug/satan.png"];
   sv.totalSourceUploadNum = sourceImgPaths.length;
 
   sv.animUnderImgs = [];
@@ -54,7 +54,6 @@ const loadASetupIcon = (path) => {
 
     const img = new Image();
     img.onload = () => {
-      console.log("**°°° running loadASetupIcon: loaded svg");
       if (sv.color) ctx.fillStyle = sv.brandBlueConst;
       else ctx.fillStyle = "#000000";
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);

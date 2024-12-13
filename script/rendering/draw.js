@@ -12,6 +12,7 @@ export function draw() {
     uniforms.vTlThresh1 = sv.tlThresh1;
     uniforms.vTlThresh2 = sv.tlThresh2;
     uniforms.vTlThresh3 = sv.tlThresh3;
+
     if (sv.params.startInvisible) {
       uniforms.time = sv.pauseClock;
       uniforms.vTime = sv.pauseClock;

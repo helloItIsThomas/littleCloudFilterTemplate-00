@@ -65,20 +65,14 @@ export function showLoadIcon() {
   sv.loadIconDiv.style.display = "block";
   showTimeline.restart();
   startLoadIconAnimation();
-  sv.ticker.stop();
 }
 
 export function hideLoadIcon() {
   console.log("hide load icon");
-  // sv.ticker.start();
   // gsap.to("#pixiApp", { opacity: 1, duration: 0.1 });
-  // gsap.to("#bodyLeft", { opacity: 1, duration: 0.1 });
-  // gsap.to("#bodyRight", { opacity: 1, duration: 0.1 });
-  // set bodyleft and bodyright to 1 opacity
-
-  // document.getElementById("bodyLeft").style.opacity = 1;
-  // document.getElementById("bodyRight").style.opacity = 1;
-  // sv.loadIconDiv.style.display = "none";
+  document.getElementById("bodyLeft").style.opacity = 1;
+  document.getElementById("bodyRight").style.opacity = 1;
+  sv.loadIconDiv.style.display = "none";
   hideTimeline.restart();
   cancelAnimationFrame(sv.animationFrameId);
 }

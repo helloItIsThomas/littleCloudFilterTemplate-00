@@ -6,7 +6,6 @@ import { showLoadIcon, initializeLoadIcon } from "./icons.js";
 import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";
 import { gsap } from "gsap";
 import { updateSvgIcons } from "./loadImages.js";
-import { updateClock } from "../sketch.js";
 
 export function handleImgInputAtRuntime(p) {
   sv.animUnderImgs = [];
@@ -40,6 +39,7 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
   // Preprocess images
   const processedImages = _imgs.map((img) => {
     img = fitImageToWindow(img, resizeTo);
+    // check if both images are the same size and aspect ratio.
     const processed = img.get();
     processed.filter(sv.p.GRAY);
     return processed;
@@ -47,9 +47,23 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
 
   const imgs = processedImages;
 
+  //    • figure out how we are handling 2 images of different sizes. ATTEMPTING TO FIX THIS NOW.
   // this assumes all background images are the same size and aspect ratio(?)
-  sv.gridW = imgs[0].width;
-  sv.gridH = imgs[0].height;
+  // set the gridW and gridH to the maximum of both images
+
+  imgs.forEach((img) => {
+    console.log("img.width: ", img.width, " • img.height: ", img.height);
+  });
+  if (imgs.length > 1) {
+    console.log("multi image mode");
+    sv.gridW = Math.max(imgs[0].width, imgs[1].width);
+    sv.gridH = Math.max(imgs[0].height, imgs[1].height);
+  } else {
+    console.log("single image mode");
+    sv.gridW = imgs[0].width;
+    sv.gridH = imgs[0].height;
+  }
+  console.log("sv.gridW: ", sv.gridW, " • sv.gridH: ", sv.gridH);
   sv.workerDone = false;
   showLoadIcon();
 

@@ -33,10 +33,8 @@ export async function updateCellData(_processedImgs) {
     await shaderRendering();
 
     sv.workerDone = true;
-    // hideLoadIcon();
-    document.getElementById("bodyLeft").style.opacity = 1;
-    document.getElementById("bodyRight").style.opacity = 1;
-    sv.loadIconDiv.style.display = "none";
+    hideLoadIcon();
+
     console.log("workerDone: ", sv.workerDone);
 
     // setTimeout(() => {

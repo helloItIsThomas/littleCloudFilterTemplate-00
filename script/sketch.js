@@ -56,6 +56,7 @@ async function mySetup() {
   recalculateGrid();
   updateSvgIcons();
 
+  updateClock();
   sv.setupDone = true;
   sv.ticker.start();
 }
@@ -112,6 +113,11 @@ function render() {
   sv.stats.end();
 }
 
+// mousedown listener here
+document.addEventListener("mousedown", () => {
+  // updateClock();
+});
+
 export async function updateClock() {
   // Helper function to create a promise-based delay
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -119,11 +125,15 @@ export async function updateClock() {
   // Helper function for GSAP animations
   const animateClock = (pauseValue, duration = 2) => {
     return new Promise((resolve) => {
+      // console.log("pauseValue: ", pauseValue);
       gsap.to(sv, {
         pauseClock: pauseValue,
         duration: duration,
         ease: "power2.inOut",
-        onComplete: resolve,
+        onComplete: () => {
+          // console.log("°°° onComplete °°°");
+          resolve();
+        },
       });
     });
   };
@@ -133,11 +143,11 @@ export async function updateClock() {
     try {
       await delay(1000);
       await animateClock(1);
-      // console.log("first done");
+      // console.log("animate clock 1 done");
 
       await delay(1000);
       await animateClock(0);
-      // console.log("second done");
+      // console.log("animate clock 0 done");
     } catch (error) {
       console.error("Error updating clock:", error);
     }
