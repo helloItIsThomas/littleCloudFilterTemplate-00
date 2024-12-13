@@ -2,7 +2,10 @@ BRAND BLUE COLOR
 #55d4ff
 
 ETC
-    • implement noise offset in both image modes so they wrap cleanly.
+
+    • updateClock() is happening without regard to either our recording ticker nor drawing ticker.
+    It therefore is also not paying attention to sv.speed.
+    We need to either use something other than gsap, or we need to make the gsap .to lockstep with our tickers.
 
 on load sometimes:
     Unhandled Promise Rejection: TypeError: undefined is not an object (evaluating 'imgs[0].width')
@@ -11,6 +14,8 @@ DONE DONE DONE
     • figure out how we are handling 2 images of different sizes.
         - we aren't. 
     • make sure the cells have clean lines at 100% and 0% brightness in single image mode.
+    • implement noise offset in both image modes so they wrap cleanly.
+        - got rid of noise offset in all modes.
 
 POST SUNDAY
     SINGLE IMAGE MODE

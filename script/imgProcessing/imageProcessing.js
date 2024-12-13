@@ -28,7 +28,6 @@ export async function updateCellData(_processedImgs) {
     console.log("checking oneActiveImage state: ", sv.oneActiveImage);
     if (sv.oneActiveImage === true) {
       sv.iconAtlas = createGraphicsForSingleImage();
-      downloadCanvas(sv.iconAtlas.canvas, "singleImgIconAtlas.png");
     } else if (sv.oneActiveImage === false) createGraphicsForMultipleImages();
     else throw new Error("No valid images loaded");
 

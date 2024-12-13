@@ -53,10 +53,8 @@ void main() {
     float y = floor(indexFloat / colCount) / rowCount;
     vec2 bTexUV = vec2(x, y);
     vec4 bTexColor = texture2D(bTex1, bTexUV);
-    float brightness = bTexColor.r;
-    float noise = texture2D(noiseTex, bTexUV).r;
+    float noise = texture2D(noiseTex, bTexUV).r * noiseLevel;
 
-    // float clock = mod(time + noise, 1.0);
     float clock = mod(time, 1.1);
 
     // If using bTex2
@@ -66,14 +64,7 @@ void main() {
     vec4 bTexColor2 = texture2D(bTex2, bTexUV2);
         // vec4 testLerp = mix(bTexColor, bTexColor2, clock);
     vec4 testLerp = mix(bTexColor, bTexColor2, clock);
-    brightness = testLerp.r;
-    // }
-
-    // brightness = bTexColor.r + (time + (noise.r * 0.3));
-    // brightness = bTexColor.r + ease(time, noise.r);
-    // brightness = bTexColor.r;
-    // brightness = bTexColor.r + time;
-    // brightness = bTexColor.r + abs(sin(time));
+    float brightness = testLerp.r;
 
     // Apply offsets to the UV coordinates
     vec2 hgUV = vUV / vec2(hgAR, 1.0);

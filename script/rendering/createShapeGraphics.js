@@ -53,7 +53,7 @@ export function createGraphicsForSingleImage() {
       // p5TempCanvas is perfectly sharp here.
     }
   }
-  downloadCanvas(pg.canvas, "singleImgIconAtlas.png");
+
   return pg;
 }
 

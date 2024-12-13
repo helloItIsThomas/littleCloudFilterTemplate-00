@@ -194,9 +194,10 @@ const colorController = general.add(sv, "color", false).name("Color");
 const manualScaleController = general
   .add(sv, "manualScale", 0.0, 0.99, 0.01)
   .name("Manual Scale");
-const noiseController = general
-  .add(sv, "noiseOffset", 0, 1, 0.01)
-  .name("Noise Offset");
+
+// const noiseController = general
+// .add(sv, "noiseOffset", 0, 1, 0.01)
+// .name("Noise Offset");
 
 const threshController1 = general
   .add(sv, "tlThresh1", 0.0, 1.0)
@@ -214,10 +215,10 @@ colorController.onChange((value) => {
   recalculateGrid();
   updateSvgIcons();
 });
-noiseController.onChange((value) => {
-  sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
-  sv.triangleMesh.shader.resources.waveUniforms.uniforms.vNoiseLevel = value;
-});
+// noiseController.onChange((value) => {
+// sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
+// sv.triangleMesh.shader.resources.waveUniforms.uniforms.vNoiseLevel = value;
+// });
 manualScaleController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.manualScale = Math.min(
     value,

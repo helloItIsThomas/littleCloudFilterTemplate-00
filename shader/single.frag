@@ -27,7 +27,7 @@ void main() {
     float x = mod(indexFloat, colCount) / colCount;
     float y = floor(indexFloat / colCount) / rowCount;
     vec2 bTexUV = vec2(x, y);
-    float noise = texture2D(noiseTex, bTexUV).r;
+    float noise = (texture2D(noiseTex, bTexUV).r) * noiseLevel;
 
     vec4 bTexColor = texture2D(bTex1, bTexUV);
     float brightness = bTexColor.r + vTlThresh1;

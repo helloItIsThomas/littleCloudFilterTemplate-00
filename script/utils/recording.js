@@ -33,8 +33,7 @@ export async function resizeAbsoluteContainerForRecording() {
 export async function startRecording() {
   try {
     sv.ticker.stop();
-    // document.getElementById("renderingScreen").style.display = "flex";
-    document.getElementById("renderingScreen").style.display = "none";
+    document.getElementById("renderingScreen").style.display = "flex";
     await resizeAbsoluteContainerForRecording();
     // recalculate grid is running / finishing too late
     recalculateGrid("absoluteContainer"); //await
