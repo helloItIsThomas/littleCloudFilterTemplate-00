@@ -1,4 +1,4 @@
-/* BLUE COLOR = #73C9FD */
+/* BRAND BLUE COLOR = #55d4ff */
 
 * {
   padding: 0;
@@ -97,14 +97,22 @@ body {
   width: 150px;
   height: 25px;
   background-color: black;
-  padding: 2px;
+
   box-sizing: border-box;
+
+  display: flex;
+
+  box-sizing: border-box;
+  padding: 2px;
 }
 
-#renderingBarProgress {
-  width: 0%;
-  height: 100%;
+.renderingBarProgressSubIcons {
+  box-sizing: border-box;
+  width: calc(calc(100% / 6));
+  height: auto;
+
   background-color: white;
+  border: 1px solid black;
 }
 
 #renderingText {
@@ -249,7 +257,7 @@ body {
 .folder .dg .title {
   font-weight: bold;
 
-  color: #73c9fd;
+  color: #55d4ff;
   border: none !important;
 }
 
@@ -299,7 +307,7 @@ body {
 .dg .c .slider-fg {
   /* border-radius: 10px; */
   border-radius: 10px !important;
-  background-color: #73c9fd !important;
+  background-color: #55d4ff !important;
 }
 
 .close-bottom {
@@ -319,7 +327,7 @@ body {
   /* position: absolute; */
   /* z-index: 1; */
   /* box-sizing: border-box !important; */
-  border: 1px solid #73c9fd;
+  border: 1px solid #55d4ff;
   padding: 2px;
   border-radius: 10px;
   background: white !important;
@@ -328,7 +336,7 @@ body {
 }
 
 #closeGui:hover {
-  background: #73c9fd !important;
+  background: #55d4ff !important;
   color: white !important;
   cursor: pointer;
   transition: all 0.1s ease-in-out;
@@ -356,7 +364,7 @@ body {
 
 .title-class {
   border-top: 2px solid black !important;
-  color: #73c9fd !important;
+  color: #55d4ff !important;
   font-weight: bold;
 }
 

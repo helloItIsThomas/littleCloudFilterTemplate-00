@@ -32,6 +32,8 @@ export async function updateCellData(_processedImgs) {
 
     shaderRendering();
 
+    console.log("updateCellData: kjsdflksdufoisdufoisd");
+
     setTimeout(() => {
       sv.workerDone = true;
       hideLoadIcon();

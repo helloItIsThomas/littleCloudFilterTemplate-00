@@ -69,6 +69,7 @@ export function showLoadIcon() {
 }
 
 export function hideLoadIcon() {
+  console.log("hide load icon");
   // sv.ticker.start();
   // gsap.to("#pixiApp", { opacity: 1, duration: 0.1 });
   gsap.to("#bodyLeft", { opacity: 1, duration: 0.1 });

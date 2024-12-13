@@ -6,6 +6,7 @@ import { showLoadIcon, initializeLoadIcon } from "./icons.js";
 import { fitImageToWindow, downloadCanvas } from "../utils/utils.js";
 import { gsap } from "gsap";
 import { updateSvgIcons } from "./loadImages.js";
+import { updateClock } from "../sketch.js";
 
 export function handleImgInputAtRuntime(p) {
   sv.animUnderImgs = [];
@@ -31,7 +32,7 @@ export function handleImgInputAtRuntime(p) {
 }
 
 export async function recalculateGrid(resizeTo = "bodyRight") {
-  console.log("running recalculateGrid");
+  console.log("running recalculateGrid: ", "resizeTo", resizeTo);
   let _imgs = Array.isArray(sv.animUnderImgs)
     ? sv.animUnderImgs
     : [sv.animUnderImgs]; // Ensure _imgs is always an array
@@ -61,6 +62,7 @@ export async function recalculateGrid(resizeTo = "bodyRight") {
   sv.yExcess = (sv.cellH * sv.rowCount) / sv.gridH;
 
   await updateCellData(imgs);
+
   console.log("••••••recalculated grid");
 }
 
@@ -118,6 +120,7 @@ window.addEventListener("resize", () => {
   clearTimeout(resizeTimeout);
 
   if (!resizingStarted) {
+    console.log("£££ resizing £££");
     resizingStarted = true;
     // gsap.to("#pixiApp", { opacity: 0, duration: 0.1 });
     gsap.to("#bodyLeft", { opacity: 0, duration: 0.1 });

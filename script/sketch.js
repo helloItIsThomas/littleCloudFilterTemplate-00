@@ -56,8 +56,6 @@ async function mySetup() {
   recalculateGrid();
   updateSvgIcons();
 
-  updateClock();
-
   sv.setupDone = true;
   sv.ticker.start();
 }
@@ -67,7 +65,9 @@ window.addEventListener("load", () => {
 });
 
 export const tick = async () => {
-  console.log("tick running", sv.frame);
+  console.log(
+    "sv.frame / sv.frameRate" + sv.frame / sv.recordDuration / sv.frameRate
+  );
   sv.frame++;
   render();
 
@@ -77,9 +77,20 @@ export const tick = async () => {
 
   await sv.canvasRecorder.step();
 
-  const quantizedFrame = Math.floor((sv.frame / sv.frameRate) * 6); // Quantize to 6 values
-  const progress = (quantizedFrame / 6) * 100;
-  document.getElementById("renderingBarProgress").style.width = progress + "%";
+  const currentIcon = Math.floor(
+    (sv.frame / sv.recordDuration / sv.frameRate) * 6
+  );
+
+  const progressIcons = document.getElementsByClassName(
+    "renderingBarProgressSubIcons"
+  );
+
+  Array.from(progressIcons).forEach((icon, index) => {
+    icon.style.display = "none";
+    if (index <= currentIcon) {
+      icon.style.display = "block";
+    }
+  });
 
   if (sv.frame >= sv.recordDuration * sv.frameRate) {
     await stopRecording();
@@ -101,7 +112,7 @@ function render() {
   sv.stats.end();
 }
 
-async function updateClock() {
+export async function updateClock() {
   // Helper function to create a promise-based delay
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 

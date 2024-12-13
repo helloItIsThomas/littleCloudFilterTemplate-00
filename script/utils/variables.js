@@ -54,7 +54,6 @@ export const sv = {
   pauseTime: 2000,
   paused: false,
 
-  duration: 2000,
   startLoop: 1.01,
   endLoop: 1.99,
   stateStartTime: null,
@@ -70,6 +69,8 @@ export const sv = {
   // speed: 0.02,
   speed: 0.05,
   color: false,
+  fillColor: "#000",
+  brandBlueConst: "#55d4ff",
   params: {
     // clipOutliers: false,
     // coU: 0,
@@ -142,7 +143,7 @@ export const sv = {
   testImages: null,
 
   isRecording: false,
-  recordDuration: 3,
+  recordDuration: 4,
   takeScreenshot: false,
   tempUploadFiles: [],
 
@@ -156,11 +157,11 @@ recording.open();
 const screenshotController = recording
   .add(sv, "takeScreenshot")
   .name("Screenshot");
-const recordingController = recording.add(sv, "isRecording").name("Recording");
+sv.recordingController = recording.add(sv, "isRecording").name("Recording");
 
 recording.add(sv, "recordDuration", 1, 60, 1).name("Record Duration (sec)");
 
-recordingController.onChange((value) => {
+sv.recordingController.onChange((value) => {
   if (sv.isRecording) {
     startRecording();
   } else if (!sv.isRecording) {
@@ -207,6 +208,8 @@ const threshController3 = general
   .name("tlThresh3");
 
 colorController.onChange((value) => {
+  if (value) sv.fillColor = sv.brandBlueConst;
+  else sv.fillColor = "#000000";
   recalculateGrid();
   updateSvgIcons();
 });

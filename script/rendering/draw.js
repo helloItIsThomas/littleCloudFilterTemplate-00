@@ -25,35 +25,4 @@ export function draw() {
       }
     }
   }
-  // updateClock();
 }
-
-// function updateClock() {
-//   if (sv.p.int(sv.clock * 0.5) % 2.0 == 0.0) {
-//     gsap.to(sv, {
-//       pauseClock: 1,
-//       duration: 1,
-//       ease: "power1.inOut",
-//     });
-//   } else if (sv.p.int(sv.clock * 0.5) % 2.0 == 1.0) {
-//     gsap.to(sv, {
-//       pauseClock: 0,
-//       duration: 1,
-//       ease: "power1.inOut",
-//     });
-//   }
-// }
-// document.addEventListener("mousedown", () => {
-//   gsap.to(sv, {
-//     pauseClock: 1,
-//     duration: 1,
-//     ease: "power1.inOut",
-//   });
-//   document.addEventListener("mouseup", () => {
-//     gsap.to(sv, {
-//       pauseClock: 0,
-//       duration: 1,
-//       ease: "power1.inOut",
-//     });
-//   });
-// });

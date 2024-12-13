@@ -24,8 +24,8 @@ export async function loadSetupImages() {
     (_, i) => `/assets/brightnessSortedSVG/${i}.svg`
   );
 
-  const sourceImgPaths = ["/assets/debug/satan.png", "/assets/img.jpg"];
-  // const sourceImgPaths = ["/assets/debug/satan.png"];
+  // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/img.jpg"];
+  const sourceImgPaths = ["/assets/debug/satan.png"];
   // const sourceImgPaths = ["/assets/grad.png"];
   // const sourceImgPaths = ["/assets/studio.png"];
   sv.totalSourceUploadNum = sourceImgPaths.length;
@@ -55,7 +55,7 @@ const loadASetupIcon = (path) => {
     const img = new Image();
     img.onload = () => {
       console.log("**°°° running loadASetupIcon: loaded svg");
-      if (sv.color) ctx.fillStyle = "#73c9fd";
+      if (sv.color) ctx.fillStyle = sv.brandBlueConst;
       else ctx.fillStyle = "#000000";
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "source-in";

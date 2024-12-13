@@ -1,17 +1,31 @@
-BLUE COLOR
-#73c9fd
+BRAND BLUE COLOR
+#55d4ff
+
+
 
 ETC
-    • figure out how we are handling 2 images of different sizes.
+    • fix screen recording initialization issue.
+( when the app in the background goes from white to not white, this is probably the loading screen being hidden )
+    
+       
+
+
+
     • implement noise offset in multi image mode so it wraps cleanly.
+    • find out when to trigger updateClock(), rewrite if needed.
+    • figure out how we are handling 2 images of different sizes.
 
-    • fix problems that happen sometimes on page reload.
-    • fix screen recording initialization sizing issue.
+on load sometimes:
+    Unhandled Promise Rejection: TypeError: undefined is not an object (evaluating 'imgs[0].width')
 
+DONE DONE DONE
     ~~~ • FIX updateClock function (multiple image mode) ~~~
     ~~~ • make sure the cells have clean lines at 100% and 0% brightness. ~~~
      ~~~ • make sure loading icon is supported in all browsers. ~~~
     ~~~ • add a bad file warning for the user. ~~~
+    • un-tick recording button after recording is over.
+    • fix rendering bar width.
+    • fix color button in multi-image mode.
 
 POST WEDNESDAY
     SINGLE IMAGE MODE

@@ -3,7 +3,6 @@ import { sv } from "../utils/variables.js";
 
 const cDiamMult = 0.5;
 const scaleAmount = 1.0;
-let fillColor = "#000";
 
 export function createGraphicsForSingleImage() {
   console.log("••§∞¢§™£¡ running createGraphicsForSingleImage");
@@ -70,7 +69,7 @@ export function createLeftCircle(size) {
   sv.createLeftCircleGraphic = pg;
 
   pg.pixelDensity(2);
-  pg.fill(fillColor);
+  pg.fill(sv.fillColor);
   pg.noStroke();
   // pg.stroke(255, 0, 0);
   pg.background(0, 255, 0);
@@ -101,7 +100,7 @@ export function createRightCircle(size) {
 
   pg.pixelDensity(2);
   pg.noStroke();
-  pg.fill(fillColor);
+  pg.fill(sv.fillColor);
   // pg.stroke(255, 0, 0);
   pg.background(0, 255, 0);
   pg.clear();
@@ -136,7 +135,7 @@ export function createCenterGraphic(size) {
   // const cDiameter = height * cDiamMult * scaleAmount;
   const cDiameter = height * cDiamMult;
   pg.pixelDensity(2);
-  pg.fill(fillColor);
+  pg.fill(sv.fillColor);
   pg.stroke("#fff");
   // pg.strokeWeight(1);
   pg.noStroke();
