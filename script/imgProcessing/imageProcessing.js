@@ -23,20 +23,26 @@ export async function updateCellData(_processedImgs) {
     );
   }
 
-  await Promise.all(promises).then(() => {
+  await Promise.all(promises).then(async () => {
     console.log("checking oneActiveImage state: ", sv.oneActiveImage);
     if (sv.oneActiveImage === true)
       sv.iconAtlas = createGraphicsForSingleImage();
     else if (sv.oneActiveImage === false) createGraphicsForMultipleImages();
     else throw new Error("No valid images loaded");
 
-    shaderRendering();
+    await shaderRendering();
 
-    console.log("updateCellData: kjsdflksdufoisdufoisd");
+    sv.workerDone = true;
+    // hideLoadIcon();
+    document.getElementById("bodyLeft").style.opacity = 1;
+    document.getElementById("bodyRight").style.opacity = 1;
+    sv.loadIconDiv.style.display = "none";
+    console.log("workerDone: ", sv.workerDone);
 
-    setTimeout(() => {
-      sv.workerDone = true;
-      hideLoadIcon();
-    }, 1000);
+    // setTimeout(() => {
+    // sv.workerDone = true;
+    // hideLoadIcon();
+    // console.log("workerDone: ", sv.workerDone);
+    // }, 1000);
   });
 }

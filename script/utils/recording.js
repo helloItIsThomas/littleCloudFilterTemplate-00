@@ -37,8 +37,8 @@ export async function startRecording() {
     document.getElementById("renderingScreen").style.display = "none";
     await resizeAbsoluteContainerForRecording();
     // recalculate grid is running / finishing too late
-    await recalculateGrid("absoluteContainer");
-    await updateSvgIcons();
+    recalculateGrid("absoluteContainer"); //await
+    updateSvgIcons(); //await
 
     await setupRecorder();
 
