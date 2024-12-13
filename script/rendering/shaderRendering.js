@@ -49,6 +49,8 @@ export async function shaderRendering() {
   const offsetWidth = sv.pApp.renderer.width * 0.5 - sv.gridW * 0.5;
   const offsetHeight = sv.pApp.renderer.height * 0.5 - sv.gridH * 0.5;
 
+  // console.log(sv.pApp.renderer.width, " • ", sv.pApp.renderer.height);
+
   for (let i = 0; i < sv.totalTriangles; i++) {
     // assuming the grid of both images is the same...
     const cell = sv.stills[0].cells[i];
@@ -71,23 +73,11 @@ export async function shaderRendering() {
     usage: BufferUsage.VERTEX | BufferUsage.COPY_DST,
   });
 
-  // this seems to be a good thing to use for manual scaling
-  const sclr = 1.0;
-
   const geometry = new Geometry({
     topology: "triangle-strip",
     instanceCount: sv.totalTriangles,
     attributes: {
-      aPosition: [
-        0.0,
-        0.0,
-        sv.cellW * sclr,
-        0.0,
-        sv.cellW * sclr,
-        sv.cellH * sclr,
-        0.0,
-        sv.cellH * sclr,
-      ],
+      aPosition: [0.0, 0.0, sv.cellW, 0.0, sv.cellW, sv.cellH, 0.0, sv.cellH],
       aUV: [0, 0, 1, 0, 1, 1, 0, 1],
       aPositionOffset: {
         buffer: sv.instancePositionBuffer,
@@ -222,8 +212,8 @@ function createResources(noiseCanvas) {
       sD: { value: sv.params.sdU, type: "i32" },
       sI: { value: sv.params.siU, type: "i32" },
       cO: { value: sv.params.coU, type: "i32" },
-      clipDarkOutliers: { value: sv.params.clipDarkOutliers, type: "f32" },
-      clipLightOutliers: { value: sv.params.clipLightOutliers, type: "f32" },
+      clipDarkOutliers: { value: 0.0, type: "f32" },
+      clipLightOutliers: { value: 0.0, type: "f32" },
       noiseLevel: { value: sv.noiseOffset, type: "f32" },
       vNoiseLevel: { value: sv.noiseOffset, type: "f32" },
     },

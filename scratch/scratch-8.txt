@@ -1,23 +1,16 @@
 BRAND BLUE COLOR
 #55d4ff
 
-
 ETC
     • implement noise offset in both image modes so they wrap cleanly.
-    • figure out how we are handling 2 images of different sizes.
 
 on load sometimes:
     Unhandled Promise Rejection: TypeError: undefined is not an object (evaluating 'imgs[0].width')
 
 DONE DONE DONE
-    ~~~ • FIX updateClock function (multiple image mode) ~~~
-    ~~~ • make sure the cells have clean lines at 100% and 0% brightness. ~~~
-     ~~~ • make sure loading icon is supported in all browsers. ~~~
-    ~~~ • add a bad file warning for the user. ~~~
-    • un-tick recording button after recording is over.
-    • fix rendering bar width.
-    • fix color button in multi-image mode.
-    • find out when to trigger updateClock(), rewrite if needed.
+    • figure out how we are handling 2 images of different sizes.
+        - we aren't. 
+    • make sure the cells have clean lines at 100% and 0% brightness in single image mode.
 
 POST SUNDAY
     SINGLE IMAGE MODE

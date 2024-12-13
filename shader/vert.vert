@@ -53,30 +53,24 @@ void main() {
 
     if(numBTexes == 1) {
         if(sD == 1) {
-            // scale = mod(vTime + noise + brightness, modValue);
             scale = mod(vTime + brightness, modValue);
-            // scale = mod(vTime, modValue);
         } else if(sI == 1) {
-        // scale = mod(vTime + noise, modValue);
             scale = mod(vTime, modValue);
+        }
+        if(brightness <= clipDarkOutliers || brightness >= 1.0 - clipLightOutliers) {
+            //this is sometimes going off when it shouldn't on during page reload and maybe on page resize too.
+            scale = 0.25;
         }
     } else if(numBTexes > 1) {
         if(sD == 1) {
-            // scale = mod(vTime + noise + brightness, modValue);
-        // scale = mod(vTime + brightness, modValue);
-            scale = mod(vTime, modValue);
+            scale = mod(1.0, modValue);
         } else if(sI == 1) {
-        // scale = mod(vTime + noise, modValue);
-            scale = mod(vTime, modValue);
+            scale = mod(1.0, modValue);
         }
     }
 
-    if(brightness <= clipDarkOutliers || brightness >= 1.0 - clipLightOutliers) {
-        scale = 0.0;
-    }
-    // scale = vTime;
-
     mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
+
     gl_Position = vec4((mvp * vec3(aPosition * (scale) + aPositionOffset, 1.0)).xy, 0.0, 1.0);
 
     vUV = aUV;

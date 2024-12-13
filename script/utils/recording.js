@@ -64,8 +64,8 @@ export async function stopRecording() {
     bodyRight.appendChild(sv.pApp.canvas);
 
     sv.pApp.resizeTo = bodyRight;
-    await recalculateGrid();
-    await updateSvgIcons();
+    recalculateGrid();
+    updateSvgIcons();
 
     aCont.style.display = "none";
     document.getElementById("renderingScreen").style.display = "none";

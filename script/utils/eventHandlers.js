@@ -92,8 +92,6 @@ export function updateActiveImgBar() {
     sv.advanced.hide();
   } else throw console.error("Less than 1 active image detected");
 
-  console.log("oneActiveImage: ", sv.oneActiveImage);
-
   // get the background images
   const imgs = sv.animUnderImgs;
 
@@ -105,7 +103,7 @@ export function updateActiveImgBar() {
 
   // make a copy of each background image and put it in previewBar.
   // resizing for these is happening automatically with css.
-  imgs.forEach((img) => {
+  imgs.forEach((img, index) => {
     const previewImg = sv.p.createImage(img.width, img.height);
     previewImg.copy(
       img,
@@ -121,9 +119,19 @@ export function updateActiveImgBar() {
     const previewCanvas = Object.assign(document.createElement("canvas"), {
       width: previewImg.width,
       height: previewImg.height,
+      id: `${index}`,
     });
     previewCanvas.getContext("2d").drawImage(previewImg.canvas, 0, 0);
-    previewBar.appendChild(previewCanvas);
+    // Find the correct position to insert the canvas
+    const existingCanvases = previewBar.children;
+    let insertPosition = index;
+
+    // Insert at the correct position or append if it's the last element
+    if (insertPosition < existingCanvases.length) {
+      previewBar.insertBefore(previewCanvas, existingCanvases[insertPosition]);
+    } else {
+      previewBar.appendChild(previewCanvas);
+    }
   });
 }
 
@@ -142,8 +150,7 @@ window.addEventListener("resize", () => {
   }
 
   resizeTimeout = setTimeout(() => {
-    // resizeRecorderCanvas();
-    // initializeLoadIcon();
+    initializeLoadIcon();
     recalculateGrid();
     updateSvgIcons();
 

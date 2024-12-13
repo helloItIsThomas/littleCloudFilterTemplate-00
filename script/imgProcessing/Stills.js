@@ -10,10 +10,14 @@ export class Still {
   }
 
   populateGridWithWorker(image) {
-    // image here is a p5 image object.
+    // const originalW = image.width;
+    // const originalH = image.height;
 
-    const originalW = image.width;
-    const originalH = image.height;
+    // temp debug activity //
+    const originalW = sv.gridW;
+    const originalH = sv.gridH;
+    // temp debug activity OVER //
+
     // Create a temporary canvas to make sure the image is in native format.
     const tempCanvas = document.createElement("canvas");
     tempCanvas.width = originalW;

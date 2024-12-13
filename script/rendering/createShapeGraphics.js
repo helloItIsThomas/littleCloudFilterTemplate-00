@@ -9,10 +9,14 @@ export function createGraphicsForSingleImage() {
   // create a 5x4 texture atlas, or sprite sheet.
   const atlasColCount = 5;
   const atlasRowCount = 4;
+
+  const borderScaler = 0.95;
+  const oW = sv.singleImgIcons[0].width;
+  const oH = sv.singleImgIcons[0].height;
+  const atlasW = oW * atlasColCount;
+  const atlasH = oH * atlasRowCount;
   const iconW = sv.singleImgIcons[0].width;
   const iconH = sv.singleImgIcons[0].height;
-  const atlasW = iconW * atlasColCount;
-  const atlasH = iconH * atlasRowCount;
 
   if (sv.createGraphicsForSingleImageGraphic) {
     sv.createGraphicsForSingleImageGraphic.remove();
@@ -20,6 +24,7 @@ export function createGraphicsForSingleImage() {
   }
 
   const pg = sv.p.createGraphics(atlasW, atlasH);
+  pg.pixelDensity(2);
   sv.createGraphicsForSingleImageGraphic = pg;
 
   let i = 0;
@@ -38,10 +43,17 @@ export function createGraphicsForSingleImage() {
         p5TempCanvas.pixels[i] = imageData.data[i];
       }
       p5TempCanvas.updatePixels();
-      pg.image(p5TempCanvas, x * iconW, y * iconH, iconW, iconH);
+      pg.image(
+        p5TempCanvas,
+        x * iconW + (iconW * 0.5 - iconW * borderScaler * 0.5),
+        y * iconH + (iconH * 0.5 - iconH * borderScaler * 0.5),
+        iconW * borderScaler,
+        iconH * borderScaler
+      );
       // p5TempCanvas is perfectly sharp here.
     }
   }
+  downloadCanvas(pg.canvas, "singleImgIconAtlas.png");
   return pg;
 }
 

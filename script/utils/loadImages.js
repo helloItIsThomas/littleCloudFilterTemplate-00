@@ -25,16 +25,17 @@ export async function loadSetupImages() {
   );
 
   // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/img.jpg"];
-  // const sourceImgPaths = ["/assets/debug/satan.png"];
+  const sourceImgPaths = ["/assets/debug/satan.png"];
   // const sourceImgPaths = ["/assets/grad.png"];
-  const sourceImgPaths = ["/assets/studio.png", "/assets/debug/satan.png"];
+  // const sourceImgPaths = ["/assets/studio.png", "/assets/debug/satan.png"];
   sv.totalSourceUploadNum = sourceImgPaths.length;
 
   sv.animUnderImgs = [];
+
   await Promise.all(
-    sourceImgPaths.map(async (path) => {
+    sourceImgPaths.map(async (path, index) => {
       const img = await loadASetupImage(path);
-      sv.animUnderImgs.push(img);
+      sv.animUnderImgs[index] = img;
     })
   );
 
