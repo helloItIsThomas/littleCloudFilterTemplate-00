@@ -24,8 +24,8 @@ export async function loadSetupImages() {
     (_, i) => `/assets/brightnessSortedSVG/${i}.svg`
   );
 
-  // const sourceImgPaths = ["/assets/debug/satan.png", "/assets/img.jpg"];
-  const sourceImgPaths = ["/assets/debug/satan.png"];
+  const sourceImgPaths = ["/assets/debug/satan.png", "/assets/img.jpg"];
+  // const sourceImgPaths = ["/assets/debug/satan.png"];
   // const sourceImgPaths = ["/assets/grad.png"];
   // const sourceImgPaths = ["/assets/studio.png", "/assets/debug/satan.png"];
   sv.totalSourceUploadNum = sourceImgPaths.length;

@@ -216,6 +216,7 @@ colorController.onChange((value) => {
 });
 noiseController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
+  sv.triangleMesh.shader.resources.waveUniforms.uniforms.vNoiseLevel = value;
 });
 manualScaleController.onChange((value) => {
   sv.triangleMesh.shader.resources.waveUniforms.uniforms.manualScale = Math.min(
