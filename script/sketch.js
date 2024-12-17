@@ -56,7 +56,7 @@ async function mySetup() {
   recalculateGrid();
   updateSvgIcons();
 
-  updateClock();
+  // updateClock();
   sv.setupDone = true;
   sv.ticker.start();
 }
@@ -103,6 +103,8 @@ export const tick = async () => {
 function render() {
   sv.stats.begin();
 
+  updateClock();
+
   if (sv.setupDone) {
     draw();
   }
@@ -115,38 +117,9 @@ function render() {
 // the main problem is that once started, it appears to not be able to be dynamically changed.
 
 export async function updateClock() {
-  // Helper function to create a promise-based delay
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-  // Helper function for GSAP animations
-  const animateClock = (pauseValue, duration = 2) => {
-    return new Promise((resolve) => {
-      gsap
-        .to(sv, {
-          pauseClock: pauseValue,
-          duration: sv.speed * 100.0,
-          ease: "power2.inOut",
-          onComplete: () => {
-            resolve();
-          },
-        })
-        .timeScale(sv.speed * 500.0);
-      // .timeScale(sv.speed);
-    });
-  };
-
-  // Infinite loop
-  while (true) {
-    try {
-      await delay(1000);
-      await animateClock(1);
-      // console.log("animate clock 1 done");
-
-      await delay(1000);
-      await animateClock(0);
-      // console.log("animate clock 0 done");
-    } catch (error) {
-      console.error("Error updating clock:", error);
-    }
-  }
+  const sharp = 20;
+  let wave = sv.p.sin(sv.clock);
+  wave = sv.p.atan(sharp * wave) / sv.p.atan(sharp);
+  wave = sv.p.map(wave, -1, 1, 0, 1);
+  sv.pauseClock = wave;
 }
