@@ -110,6 +110,10 @@ function render() {
   sv.stats.end();
 }
 
+// the updateClock function populates the pauseClock variable.
+// it sets pauseClock to 1, then delay, then 0, then delay, etc.
+// the main problem is that once started, it appears to not be able to be dynamically changed.
+
 export async function updateClock() {
   // Helper function to create a promise-based delay
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -117,15 +121,17 @@ export async function updateClock() {
   // Helper function for GSAP animations
   const animateClock = (pauseValue, duration = 2) => {
     return new Promise((resolve) => {
-      gsap.to(sv, {
-        pauseClock: pauseValue,
-        duration: duration,
-        ease: "power2.inOut",
-        onComplete: () => {
-          // console.log("°°° onComplete °°°");
-          resolve();
-        },
-      });
+      gsap
+        .to(sv, {
+          pauseClock: pauseValue,
+          duration: sv.speed * 100.0,
+          ease: "power2.inOut",
+          onComplete: () => {
+            resolve();
+          },
+        })
+        .timeScale(sv.speed * 500.0);
+      // .timeScale(sv.speed);
     });
   };
 

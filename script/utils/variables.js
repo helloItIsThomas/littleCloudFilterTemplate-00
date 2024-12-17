@@ -8,7 +8,7 @@ import { downloadCanvas } from "./utils";
 import { createGraphicsForSingleImage } from "../rendering/createShapeGraphics";
 import { shaderRendering } from "../rendering/shaderRendering";
 import { updateSvgIcons } from "./loadImages";
-
+import { updateClock } from "../sketch";
 export const gui = new dat.GUI({
   autoPlace: false,
 });
@@ -66,7 +66,6 @@ export const sv = {
   manualScale: 1.0,
   transitionSpeed: 3000.0,
   transitionDelay: 0.5,
-  // speed: 0.02,
   speed: 0.05,
   color: false,
   fillColor: "#000",
@@ -187,7 +186,9 @@ general.open();
 const gridResController = general
   .add(sv, "gridResolutionBuffer")
   .name("Grid Resolution");
-general.add(sv, "speed", 0.0, 0.1).name("Speed");
+
+const speedController = general.add(sv, "speed", 0.0, 0.1).name("Speed");
+// general.add(sv, "speed", 0.0, 0.1).name("Speed");
 
 const colorController = general.add(sv, "color", false).name("Color");
 
@@ -214,6 +215,10 @@ colorController.onChange((value) => {
   else sv.fillColor = "#000000";
   recalculateGrid();
   updateSvgIcons();
+});
+speedController.onChange((value) => {
+  sv.speed = value;
+  updateClock();
 });
 // noiseController.onChange((value) => {
 // sv.triangleMesh.shader.resources.waveUniforms.uniforms.noiseLevel = value;
