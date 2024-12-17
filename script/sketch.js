@@ -117,7 +117,7 @@ function render() {
 // the main problem is that once started, it appears to not be able to be dynamically changed.
 
 export async function updateClock() {
-  const sharp = 20;
+  const sharp = 10;
   let wave = sv.p.sin(sv.clock);
   wave = sv.p.atan(sharp * wave) / sv.p.atan(sharp);
   wave = sv.p.map(wave, -1, 1, 0, 1);

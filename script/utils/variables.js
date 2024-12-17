@@ -142,7 +142,7 @@ export const sv = {
   testImages: null,
 
   isRecording: false,
-  recordDuration: 3,
+  recordDuration: 5,
   takeScreenshot: false,
   tempUploadFiles: [],
 

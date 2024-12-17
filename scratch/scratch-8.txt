@@ -3,10 +3,6 @@ BRAND BLUE COLOR
 
 ETC
 
-    • updateClock() is happening without regard to either our recording ticker nor drawing ticker.
-    It therefore is also not paying attention to sv.speed.
-    We need to either use something other than gsap, or we need to make the gsap .to lockstep with our tickers.
-
 on load sometimes:
     Unhandled Promise Rejection: TypeError: undefined is not an object (evaluating 'imgs[0].width')
 
